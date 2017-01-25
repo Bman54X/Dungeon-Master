@@ -6,7 +6,7 @@ public class DoorClose : MonoBehaviour {
     public bool doorOpen;
     bool doorMoving;
     float openHeight = 7.5f, closedHeight = 2.5f;
-    float moveSpeed = 0.1f;
+    float moveSpeed = 0.125f;
     Vector3 doorPos;
 
 	// Use this for initialization
