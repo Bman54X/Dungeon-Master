@@ -7,11 +7,9 @@ public class DoorClose : MonoBehaviour {
     bool doorMoving;
     float openHeight = 7.5f, closedHeight = 2.5f;
     float moveSpeed = 0.125f;
-    Vector3 doorPos;
 
 	// Use this for initialization
 	void Start () {
-        doorPos = transform.position;
         doorMoving = false;
         if (doorOpen) {
             transform.position = new Vector3(transform.position.x, openHeight, transform.position.z);
