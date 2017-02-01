@@ -16,6 +16,8 @@ public class ChangeFloorColor : MonoBehaviour {
         foreach (Transform t in transform)
         {
             t.gameObject.tag = "Path1";
+       //     t.position = t.position + new Vector3(0, -0.06f, 0);
+            t.GetComponent<Collider>().isTrigger = true;
         }
     //    gameObject.tag = "theTag";
     }
