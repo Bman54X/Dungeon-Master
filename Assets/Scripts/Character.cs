@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Character : MonoBehaviour {
     Vector3 moveDirection;
@@ -8,9 +8,11 @@ public class Character : MonoBehaviour {
 				 rotateSpeed = 5.0f, gravity = 9.81f;
     CharacterController cc;
     Animator anim;
+	public Transform cameraTransform;
 	bool waitToJump, jumpPressed, crouching, walking;
 	bool startWalkCounter;
-	int jumpCounter, walkCounter;
+	int jumpCounter = 0, walkCounter = 0, holdAttack = 0;
+	Vector3 prevLoc, curLoc, forward, right;
 
     // Use this for initialization
     void Start () {
@@ -27,32 +29,53 @@ public class Character : MonoBehaviour {
 		waitToJump = false; jumpPressed = false;
 		crouching = false; walking = false;
 		startWalkCounter = false;
-		jumpCounter = 0; walkCounter = 0;
+
+		curLoc = transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (cc.isGrounded && !jumpPressed) {
-			if (Input.GetButtonDown ("NormalAttack")) {
-				anim.SetTrigger ("NormalAttack");
-			} else if (Input.GetButtonDown ("StrongAttack")) {
-				anim.SetTrigger ("StrongAttack");
+			if (Input.GetButton ("NormalAttack")) {
+				holdAttack++;
+			} else if (Input.GetButtonUp ("NormalAttack")) {
+				if (holdAttack >= 45) {
+					anim.SetTrigger ("StrongAttack");
+				} else {
+					anim.SetTrigger ("NormalAttack");
+				}
+				holdAttack = 0;
 			}  else if (Input.GetButtonDown ("Stab")) {
 				anim.SetTrigger ("Stab");
 			}
 
-			moveDirection = new Vector3 (0, 0, Input.GetAxis ("Vertical"));
-			moveDirection = transform.TransformDirection (moveDirection);
+			float x = Input.GetAxis ("Horizontal");
+			float z = Input.GetAxis ("Vertical");
             
 			if (Input.GetButton ("Crouch") && !walking) {
 				anim.SetBool ("CrouchHeld", true);
 				crouching = true;
-			} else if (Input.GetButton ("Walk") && !crouching) {
+			} //else if ((Input.GetButton ("Walk") && !crouching) || (z > 0 && z < 0.5f)) {
+			else if (Input.GetButton ("Walk") && !crouching) {
 				anim.SetFloat ("Speed", 0.3f);
 				walking = true;
-			} else{
+			} else {
 				anim.SetBool ("CrouchHeld", false);
 				crouching = false; walking = false;
+			}
+
+			forward = cameraTransform.TransformDirection(Vector3.forward);
+     		forward.y = 0;
+     		forward = forward.normalized;
+     		right = new Vector3(forward.z, 0, -forward.x);
+
+     		moveDirection = (x * right  + z * forward).normalized;
+
+			prevLoc = curLoc;
+			curLoc = transform.position;
+
+			if (prevLoc != curLoc) {
+				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation (transform.position - prevLoc), Time.fixedDeltaTime * rotateSpeed);
 			}
 
 			if (Input.GetButtonUp ("Walk")) {
@@ -66,7 +89,7 @@ public class Character : MonoBehaviour {
 			}
 
 			//Key Press Stuff
-			if (Input.GetButtonDown ("Jump")) {
+			if (Input.GetButtonDown ("Jump") && !crouching) {
 				waitToJump = true;
 				jumpPressed = true;
 			}
@@ -82,8 +105,6 @@ public class Character : MonoBehaviour {
 
 			if (moveDirection.x == 0 && moveDirection.z == 0) {
 				anim.SetFloat ("Speed", 0);
-			} else if (Input.GetAxis("Vertical") < 0) {
-				anim.SetFloat ("Speed", -1);
 			} else if (!walking && !startWalkCounter) {
 				anim.SetFloat("Speed", 1);
 			}
@@ -100,8 +121,8 @@ public class Character : MonoBehaviour {
 				jumpPressed = false; waitToJump = false;
 			}
 		}
-
-        transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
+			
+        //transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
         moveDirection.y -= gravity * Time.deltaTime;
         cc.Move(moveDirection * Time.deltaTime);
     }
