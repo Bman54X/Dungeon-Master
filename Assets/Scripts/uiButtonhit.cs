@@ -73,7 +73,7 @@ public class uiButtonhit : MonoBehaviour {
         }
         if (gameObject.tag == "E1")
         {
-            Debug.Log("spawn enemy");
+        //    Debug.Log("spawn enemy");
         }
       //  Debug.Log("Room1 button");
     }
