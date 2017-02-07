@@ -3,16 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Character : MonoBehaviour {
-    Vector3 moveDirection;
-    public float speed = 6.0f, jumpSpeed = 50.0f,
-				 rotateSpeed = 5.0f, gravity = 9.81f;
-    CharacterController cc;
-    Animator anim;
+	CharacterController cc;
+	Animator anim;
 	public Transform cameraTransform;
-	bool waitToJump, jumpPressed, crouching, walking;
-	bool startWalkCounter;
-	int jumpCounter = 0, walkCounter = 0, holdAttack = 0;
+
+    Vector3 moveDirection;
 	Vector3 prevLoc, curLoc, forward, right;
+
+	bool waitToJump = false, jumpPressed = false, crouching = false, walking = false;
+	bool startWalkCounter = false;
+
+	int jumpCounter = 0, walkCounter = 0, holdAttack = 0;
+
+	const float maxHealth = 100;
+	public float speed = 6.0f, jumpSpeed = 50.0f,
+	rotateSpeed = 5.0f, gravity = 9.81f;
+	float gold = 0.0f, _health;
 
     // Use this for initialization
     void Start () {
@@ -26,11 +32,8 @@ public class Character : MonoBehaviour {
 			Debug.Log("No Animator found.");
 		}
 
-		waitToJump = false; jumpPressed = false;
-		crouching = false; walking = false;
-		startWalkCounter = false;
-
 		curLoc = transform.position;
+		_health = maxHealth;
 	}
 	
 	// Update is called once per frame
@@ -55,8 +58,7 @@ public class Character : MonoBehaviour {
 			if (Input.GetButton ("Crouch") && !walking) {
 				anim.SetBool ("CrouchHeld", true);
 				crouching = true;
-			} //else if ((Input.GetButton ("Walk") && !crouching) || (z > 0 && z < 0.5f)) {
-			else if (Input.GetButton ("Walk") && !crouching) {
+			} else if (Input.GetButton ("Walk") && !crouching) {
 				anim.SetFloat ("Speed", 0.3f);
 				walking = true;
 			} else {
@@ -73,9 +75,13 @@ public class Character : MonoBehaviour {
 
 			prevLoc = curLoc;
 			curLoc = transform.position;
+			float dist = Mathf.Abs(Vector3.Distance (prevLoc, curLoc));
 
-			if (prevLoc != curLoc) {
+			if (dist >= 0.01f) {
+				float xx = transform.rotation.x;
+				float zz = transform.rotation.z;
 				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation (transform.position - prevLoc), Time.fixedDeltaTime * rotateSpeed);
+				transform.rotation = new Quaternion (xx, transform.rotation.y, zz, transform.rotation.w);
 			}
 
 			if (Input.GetButtonUp ("Walk")) {
@@ -122,8 +128,29 @@ public class Character : MonoBehaviour {
 			}
 		}
 			
-        //transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
         moveDirection.y -= gravity * Time.deltaTime;
         cc.Move(moveDirection * Time.deltaTime);
     }
+
+	public float health {
+		get { return _health; }
+		set { _health = value; }
+	}
+
+	void OnTriggerEnter(Collider other) {
+		if (other.gameObject.CompareTag("Health")) {
+			if (health < maxHealth) {
+				health += 10;
+				if (health > maxHealth) {
+					health = maxHealth;
+				}
+			}
+
+			Destroy (other.gameObject);
+		} else if (other.gameObject.CompareTag("Gold")) {
+			gold += Random.Range (1, 21);
+
+			Destroy (other.gameObject);
+		}
+	}	
 }

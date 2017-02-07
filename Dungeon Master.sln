@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{B80C217D-2DEC-CFD2-BA80-13804168E4C4}") = "Dungeon Master", "Assembly-CSharp.csproj", "{C60524B7-7FF2-916A-AB43-9782575D93F8}"
 EndProject
+Project("{B80C217D-2DEC-CFD2-BA80-13804168E4C4}") = "Dungeon Master", "Assembly-CSharp-Editor.csproj", "{DDAFDEEE-A31B-D295-F35C-1B2422FCA6E1}"
+EndProject
 Project("{B80C217D-2DEC-CFD2-BA80-13804168E4C4}") = "Dungeon Master", "Assembly-UnityScript-firstpass.unityproj", "{2E758FD0-5C9B-2353-53EB-C2F3687C32D4}"
 EndProject
 Global
@@ -15,6 +17,10 @@ Global
 		{C60524B7-7FF2-916A-AB43-9782575D93F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C60524B7-7FF2-916A-AB43-9782575D93F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C60524B7-7FF2-916A-AB43-9782575D93F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDAFDEEE-A31B-D295-F35C-1B2422FCA6E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDAFDEEE-A31B-D295-F35C-1B2422FCA6E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDAFDEEE-A31B-D295-F35C-1B2422FCA6E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDAFDEEE-A31B-D295-F35C-1B2422FCA6E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E758FD0-5C9B-2353-53EB-C2F3687C32D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E758FD0-5C9B-2353-53EB-C2F3687C32D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E758FD0-5C9B-2353-53EB-C2F3687C32D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
