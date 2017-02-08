@@ -47,12 +47,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\CharacterMotor.js" />
-     <None Include="Assets\Earthborn Troll\Shader\Alpha_Texture.shader" />
+     <None Include="Assets\Downloaded Assets\Earthborn Troll\Shader\Alpha_Texture.shader" />
      <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\MOBILE_2SIDEDBumpedSpecularCUTOUT.shader" />
      <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\2SIDEDDisplaceBumpedSpecularRefRimDX11CUTOUT.shader" />
      <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\MOBILE_BumpedSpecular.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_Fade.shader" />
-     <None Include="Assets\Earthborn Troll\Shader\DoubleSided-Light-Spec.shader" />
+     <None Include="Assets\Downloaded Assets\Earthborn Troll\Shader\DoubleSided-Light-Spec.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_ClearAll.shader" />
      <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\BumpedSpecularRefRim.shader" />
      <None Include="Assets\SteamVR\InteractionSystem\Hints\Shaders\ControllerButtonHints.shader" />
