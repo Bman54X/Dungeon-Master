@@ -9,8 +9,10 @@ public class PotionUI : MonoBehaviour {
 	int potionAmount;
 
 	public GameObject[] potions = new GameObject[4];
+	//Text[] potionAmountsText = new Text[4];
 
 	Dictionary<Character.Potions, GameObject> potionImages = new Dictionary<Character.Potions, GameObject>();
+	Dictionary<GameObject, Text> potionAmountTexts = new Dictionary<GameObject, Text>();
 
 	// Use this for initialization
 	void Start () {
@@ -23,14 +25,21 @@ public class PotionUI : MonoBehaviour {
 
 		for (int i = 0; i < 4; i++) {
 			potions [i].SetActive (false);
+			potionAmountTexts.Add(potions[i], potions[i].GetComponentInChildren<Text>());
 		}
 
 		potionImages [currentPotion].SetActive (true);
+		potionAmountTexts[potionImages[currentPotion]].text = potionAmount.ToString();
 	}
 
 	void Update() {
 		if (player.getChangedPotions()) {
 			changedPotions (player.getPotion(), player.getPotionAmount());
+		}
+
+		if (player.getPotionUsed()) {
+			potionAmount--;
+			potionAmountTexts [potionImages [currentPotion]].text = potionAmount.ToString ();
 		}
 	}
 	
@@ -39,6 +48,7 @@ public class PotionUI : MonoBehaviour {
 			currentPotion = newPotion; potionAmount = numPotions;
 			potionImages [currentPotion].SetActive (true);
 			potionImages [previousPotion].SetActive (false);
+			potionAmountTexts [potionImages [currentPotion]].text = numPotions.ToString ();
 			previousPotion = currentPotion;
 		}
 	}

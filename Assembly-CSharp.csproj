@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\ChangeNumber.cs" />
      <Compile Include="Assets\Scripts\Character.cs" />
      <Compile Include="Assets\Scripts\CheckCode.cs" />
+     <Compile Include="Assets\Scripts\DPadButtons.cs" />
      <Compile Include="Assets\Scripts\Destory.cs" />
      <Compile Include="Assets\Scripts\DoorClose.cs" />
      <Compile Include="Assets\Scripts\DoorTrigger.cs" />

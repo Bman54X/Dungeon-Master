@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Character : MonoBehaviour {
-	public enum Potions { SPEED, HEALTH, DEFENSE, GOLD }
+	public enum Potions { GOFOR, HEALTH, DEFENSE, SPEED, GOLD, GOBACK }
 
 	CharacterController cc;
 	Animator anim;
@@ -15,16 +15,18 @@ public class Character : MonoBehaviour {
 
 	bool waitToJump = false, jumpPressed = false, crouching = false, walking = false;
 	bool startWalkCounter = false, crossbowFound = false, swordEquipped = true;
-	bool changedPotions;
+	bool changedPotions = false, potionActivated = false, potionUsed = false;
 
 	const int maxHealth = 100, maxArrows = 30;
-	int jumpCounter = 0, walkCounter = 0, holdAttack = 0, potionCount = 0;
+	int jumpCounter = 0, walkCounter = 0, holdAttack = 0;
 	int bowAmmo = 0, bombAmmo = 0, gold = 0, _health;
+	int speedMultiplier = 1, goldMultiplier = 1;
 
 	const float gravity = 9.81f;
 	float speed = 6.0f, jumpSpeed = 15.0f, rotateSpeed = 10.0f;
+	float potionTimer = 15.0f;
 
-	public Text healthText, goldText, addedGold, bowAmmoText;
+	public Text healthText, goldText, addedGold, bowAmmoText, countdownText;
 	public Slider healthSlider;
 
 	public GameObject backCrossbow, handCrossbow, backSword, handSword;
@@ -33,6 +35,7 @@ public class Character : MonoBehaviour {
 	Potions potionEquipped = Potions.HEALTH;
 
 	Dictionary<Potions, int> potionInventory = new Dictionary<Potions, int>();
+	private Dictionary<Potions, System.Action> potionEffect = new Dictionary<Potions, System.Action>();
 
     // Use this for initialization
     void Awake () {
@@ -53,6 +56,7 @@ public class Character : MonoBehaviour {
 		healthText.text = _health.ToString();
 		goldText.text = "Gold: " + gold;
 		addedGold.text = "";
+		countdownText.text = "";
 		bowAmmoText.text = bowAmmo.ToString();
 
 		crossbowFound = true;
@@ -61,8 +65,11 @@ public class Character : MonoBehaviour {
 		backSword.SetActive (false); handSword.SetActive (true);
 		bowIcon.SetActive (false); swordIcon.SetActive (true);
 
-		potionInventory.Add (Potions.HEALTH, 0); potionInventory.Add (Potions.GOLD, 0);
-		potionInventory.Add (Potions.DEFENSE, 0); potionInventory.Add (Potions.SPEED, 0);
+		potionInventory.Add (Potions.HEALTH, 4); potionInventory.Add (Potions.GOLD, 2);
+		potionInventory.Add (Potions.DEFENSE, 5); potionInventory.Add (Potions.SPEED, 3);
+
+		potionEffect.Add (Potions.HEALTH, giveHealth); potionEffect.Add (Potions.GOLD, moreGold);
+		potionEffect.Add (Potions.DEFENSE, doubleDefense); potionEffect.Add (Potions.SPEED, fastSpeed);
 	}
 	
 	// Update is called once per frame
@@ -73,42 +80,7 @@ public class Character : MonoBehaviour {
 		bowAmmoText.text = bowAmmo.ToString();
 
 		if (cc.isGrounded && !jumpPressed) {
-			if (Input.GetButton ("NormalAttack") && swordEquipped) {
-				holdAttack++;
-			} else if (Input.GetButtonUp ("NormalAttack") && swordEquipped) {
-				if (holdAttack >= 45) {
-					anim.SetTrigger ("StrongAttack");
-				} else {
-					anim.SetTrigger ("NormalAttack");
-				}
-				holdAttack = 0;
-			} else if (Input.GetButtonDown ("Stab") && swordEquipped) {
-				anim.SetTrigger ("Stab");
-			} else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound) {
-				anim.SetTrigger ("GetSword");
-				Invoke("switchWeapons", 0.4f);
-			}
-
-			if (potionCount > 0 && potionCount < 5) {
-				potionCount++;
-			} else if (potionCount >= 5) {
-				
-				potionCount = 0;
-			}
-			changedPotions = false;
-			if (Input.GetButtonDown("HealthPotion")) {
-				potionEquipped = Potions.HEALTH;
-				changedPotions = true; potionCount++;
-			} else if (Input.GetButtonDown("DefensePotion")) {
-				potionEquipped = Potions.DEFENSE;
-				changedPotions = true; potionCount++;
-			} else if (Input.GetButtonDown("SpeedPotion")) {
-				potionEquipped = Potions.SPEED;
-				changedPotions = true; potionCount++;
-			} else if (Input.GetButtonDown("GoldPotion")) {
-				potionEquipped = Potions.GOLD;
-				changedPotions = true; potionCount++;
-			}
+			checkButtonPresses();
 
 			float x = Input.GetAxis ("Horizontal");
 			float z = Input.GetAxis ("Vertical");
@@ -147,12 +119,11 @@ public class Character : MonoBehaviour {
 			}
 
 			if (crouching || walking) {
-				moveDirection *= speed / 2.0f;
+				moveDirection *= (speed / 2.0f) * speedMultiplier;
 			} else {
-				moveDirection *= speed;
+				moveDirection *= speed * speedMultiplier;
 			}
 
-			//Key Press Stuff
 			if (Input.GetButtonDown ("Jump") && !crouching) {
 				waitToJump = true;
 				jumpPressed = true;
@@ -188,7 +159,83 @@ public class Character : MonoBehaviour {
 			
         moveDirection.y -= gravity * Time.deltaTime;
         cc.Move(moveDirection * Time.deltaTime);
+
+		if (potionActivated) {
+			potionTimer -= Time.deltaTime;
+			int g = (int)potionTimer;
+			countdownText.text = g.ToString();
+
+			if (potionTimer <= 0.0f) {
+				potionActivated = false;
+				potionTimer = 15.0f;
+
+				speedMultiplier = 1; goldMultiplier = 1;
+				countdownText.text = "";
+			}
+		}
     }
+
+	void checkButtonPresses() {
+		//Checking attack
+		if (Input.GetButton ("NormalAttack") && swordEquipped) {
+			holdAttack++;
+		} else if (Input.GetButtonUp ("NormalAttack") && swordEquipped) {
+			if (holdAttack >= 45) {
+				anim.SetTrigger ("StrongAttack");
+			} else {
+				anim.SetTrigger ("NormalAttack");
+			}
+			holdAttack = 0;
+		} else if (Input.GetButtonDown ("Stab") && swordEquipped) {
+			anim.SetTrigger ("Stab");
+		} else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound) {
+			anim.SetTrigger ("GetSword");
+			Invoke("switchWeapons", 0.4f);
+		}
+
+		//Switching Potions on keyboard
+		changedPotions = false;
+		if (Input.GetButtonDown("HealthPotion")) {
+			potionEquipped = Potions.HEALTH;
+			changedPotions = true;
+		} else if (Input.GetButtonDown("DefensePotion")) {
+			potionEquipped = Potions.DEFENSE;
+			changedPotions = true;
+		} else if (Input.GetButtonDown("SpeedPotion")) {
+			potionEquipped = Potions.SPEED;
+			changedPotions = true;
+		} else if (Input.GetButtonDown("GoldPotion")) {
+			potionEquipped = Potions.GOLD;
+			changedPotions = true;
+		}
+
+		//Switching potions on joystick
+		if (DPadButtons.right) {
+			potionEquipped++;
+			if (potionEquipped == Potions.GOBACK) {
+				potionEquipped = Potions.HEALTH;
+			}
+			changedPotions = true;
+		} else if (DPadButtons.left) {
+			potionEquipped--;
+			if (potionEquipped == Potions.GOFOR) {
+				potionEquipped = Potions.GOLD;
+			}
+			changedPotions = true;
+		}
+
+		potionUsed = false;
+		//Checking if using potion
+		if (Input.GetButtonDown("DrinkPotion") && !potionActivated && potionInventory [potionEquipped] > 0) {
+			if (potionEquipped != Potions.HEALTH) {
+				potionActivated = true;
+			}
+
+			potionUsed = true;
+			potionInventory[potionEquipped]--;
+			potionEffect[potionEquipped]();
+		}
+	}
 
 	public int health {
 		get { return _health; }
@@ -197,6 +244,10 @@ public class Character : MonoBehaviour {
 
 	public bool getChangedPotions() {
 		return changedPotions;
+	}
+
+	public bool getPotionUsed() {
+		return potionUsed;
 	}
 
 	public Potions getPotion() {
@@ -224,6 +275,7 @@ public class Character : MonoBehaviour {
 			} else {
 				gold += Random.Range (51, 100);
 			}
+			gold *= goldMultiplier;
 			addedGold.text = "+" + gold.ToString ();
 			Invoke("resetGoldText", 1.5f);
 
@@ -256,5 +308,24 @@ public class Character : MonoBehaviour {
 		}
 
 		swordEquipped = !swordEquipped;
+	}
+
+	void giveHealth() {
+		health += 50;
+		if (health > maxHealth) {
+			health = maxHealth;
+		}
+	}
+
+	void fastSpeed() {
+		speedMultiplier = 2;
+	}
+
+	void doubleDefense() {
+		
+	}
+
+	void moreGold() {
+		goldMultiplier = 2;
 	}
 }
