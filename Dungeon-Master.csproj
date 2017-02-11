@@ -79,34 +79,36 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-UnityScript-firstpass">
-      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ActivateDisplay.cs" />
-    <Compile Include="Assets\Scripts\Betterc.cs" />
-    <Compile Include="Assets\Scripts\ChangeFloorColor.cs" />
-    <Compile Include="Assets\Scripts\ChangeNumber.cs" />
-    <Compile Include="Assets\Scripts\Character.cs" />
-    <Compile Include="Assets\Scripts\CheckCode.cs" />
-    <Compile Include="Assets\Scripts\Destory.cs" />
-    <Compile Include="Assets\Scripts\DoorClose.cs" />
-    <Compile Include="Assets\Scripts\DoorTrigger.cs" />
-    <Compile Include="Assets\Scripts\EasyControl.cs" />
-    <Compile Include="Assets\Scripts\EnemyHitTest.cs" />
-    <Compile Include="Assets\Scripts\EquipWep.cs" />
-    <Compile Include="Assets\Scripts\GetButtonInput.cs" />
-    <Compile Include="Assets\Scripts\GetSpeed.cs" />
-    <Compile Include="Assets\Scripts\GetVelocity.cs" />
-    <Compile Include="Assets\Scripts\MouseOrbit.cs" />
-    <Compile Include="Assets\Scripts\MoveIfDead.cs" />
-    <Compile Include="Assets\Scripts\RotateThisObject.cs" />
-    <Compile Include="Assets\Scripts\ScaleThis.cs" />
-    <Compile Include="Assets\Scripts\SetActive.cs" />
-    <Compile Include="Assets\Scripts\SpawnObject.cs" />
-    <Compile Include="Assets\Scripts\SpawnToShop.cs" />
-    <Compile Include="Assets\Scripts\uiButtonhit.cs" />
+    <Compile Include="Assets\Scripts\Character Scripts\Character.cs" />
+    <Compile Include="Assets\Scripts\Character Scripts\DPadButtons.cs" />
+    <Compile Include="Assets\Scripts\Character Scripts\MouseOrbit.cs" />
+    <Compile Include="Assets\Scripts\Character Scripts\PotionUI.cs" />
+    <Compile Include="Assets\Scripts\Room Scripts\DoorClose.cs" />
+    <Compile Include="Assets\Scripts\Room Scripts\DoorTrigger.cs" />
+    <Compile Include="Assets\Scripts\Room Scripts\Puzzle Room 1\ChangeFloorColor.cs" />
+    <Compile Include="Assets\Scripts\Room Scripts\Puzzle Room 1\ChangeNumber.cs" />
+    <Compile Include="Assets\Scripts\Room Scripts\Puzzle Room 1\CheckCode.cs" />
+    <Compile Include="Assets\Scripts\Room Scripts\SpawnToShop.cs" />
+    <Compile Include="Assets\Scripts\Room Scripts\Spinner.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\ActivateDisplay.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\AoEArrowHit.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\Betterc.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\Destory.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\EasyControl.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\EnemyHitTest.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\EquipWep.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\FireArrowHit.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\GetButtonInput.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\GetSpeed.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\GetVelocity.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\MoveIfDead.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\RotateThisObject.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\ScaleThis.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\SetActive.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\SlowArrowHit.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\uiButtonhit.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_Teleporter.cs" />
@@ -211,21 +213,21 @@
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\2SIDEDBumpedSpecularRefRim.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\2SIDEDBumpedSpecularRefRimCUTOUT.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\2SIDEDDisplaceBumpedSpecularRefRimDX11.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\2SIDEDDisplaceBumpedSpecularRefRimDX11CUTOUT.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\BumpedRim.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\BumpedRimReflective.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\BumpedSpecularRefRim.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\DisplaceBumpedSpecularRefRimDX11.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\MOBILE_2SIDEDBumpedSpecularCUTOUT.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\MOBILE_BumpedSpecular.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\MOBILE_SuperShader.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Matarial Library\Custom Shaders\MOBILE_SuperShaderCUTOUT.shader" />
-    <None Include="Assets\Downloaded Assets\ManyWorlds\Stealth Character\StealthChar.txt" />
-    <None Include="Assets\Earthborn Troll\Shader\Alpha_Texture.shader" />
-    <None Include="Assets\Earthborn Troll\Shader\DoubleSided-Light-Spec.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\2SIDEDBumpedSpecularRefRim.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\2SIDEDBumpedSpecularRefRimCUTOUT.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\2SIDEDDisplaceBumpedSpecularRefRimDX11.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\2SIDEDDisplaceBumpedSpecularRefRimDX11CUTOUT.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\BumpedRim.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\BumpedRimReflective.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\BumpedSpecularRefRim.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\DisplaceBumpedSpecularRefRimDX11.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\MOBILE_2SIDEDBumpedSpecularCUTOUT.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\MOBILE_BumpedSpecular.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\MOBILE_SuperShader.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\MOBILE_SuperShaderCUTOUT.shader" />
+    <None Include="Assets\Downloaded Assets\Character\Stealth Character\StealthChar.txt" />
+    <None Include="Assets\Downloaded Assets\Earthborn Troll\Shader\Alpha_Texture.shader" />
+    <None Include="Assets\Downloaded Assets\Earthborn Troll\Shader\DoubleSided-Light-Spec.shader" />
     <None Include="Assets\Materials\Shader\3DText.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\Silhouette.shader" />

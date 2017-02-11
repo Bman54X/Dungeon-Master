@@ -17,6 +17,7 @@ namespace Valve.VR.InteractionSystem
         private Hand hand;
         private Longbow bow;
 
+        public bool flameArrow = false;
         public GameObject[] currentArrow;
         // public GameObject currentArrow2;
         public GameObject[] arrow1;
@@ -290,21 +291,10 @@ namespace Valve.VR.InteractionSystem
 
                 arrow[i].arrowHeadRB.AddForce(currentArrow[i].transform.forward * bow.GetArrowVelocity(), ForceMode.VelocityChange);
                 arrow[i].arrowHeadRB.AddTorque(currentArrow[i].transform.forward * 10);
-            }
-       //     arrow[1] = currentArrow2.GetComponent<Arrow>();
-            //   Arrow arrow2 = currentArrow2.GetComponent<Arrow>();
-       //     arrow[1].shaftRB.isKinematic = false;
-        //    arrow[1].shaftRB.useGravity = true;
-         //   arrow[1].shaftRB.transform.GetComponent<BoxCollider>().enabled = true;
-//
-         //   arrow[1].arrowHeadRB.isKinematic = false;
-        //    arrow[1].arrowHeadRB.useGravity = true;
-        //    arrow[1].arrowHeadRB.transform.GetComponent<BoxCollider>().enabled = true;
 
-         //   arrow[1].arrowHeadRB.AddForce(currentArrow2.transform.forward * bow.GetArrowVelocity(), ForceMode.VelocityChange);
-         //   arrow[1].arrowHeadRB.AddTorque(currentArrow2.transform.forward * 10);
-            //   }         
-            //   }         
+            
+            }
+      
             nocked = false;
             for (int i = 0; i < NumOfArrowsToShoot; i++)
             {

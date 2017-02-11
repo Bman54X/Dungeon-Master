@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class uiButtonhit : MonoBehaviour {
-    private Betterc bc;
-
+    private Betterc bc;   
     public GameObject S1;
     public bool b1 = false;
     public bool b1a = false;
