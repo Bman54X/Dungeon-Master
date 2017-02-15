@@ -2,7 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Character Scripts\Character.cs">
     <Files>
-      <File FileName="Assets\Scripts\Character Scripts\Character.cs" Line="85" Column="40" />
+      <File FileName="Assets\Scripts\Character Scripts\Character.cs" Line="64" Column="63" />
+      <File FileName="Assets\Scripts\Potion Scripts\Potion.cs" Line="16" Column="83" />
+      <File FileName="Assets\Scripts\Potion Scripts\HealthPotion.cs" Line="8" Column="3" />
+      <File FileName="Assets\Scripts\Potion Scripts\GoldPotion.cs" Line="9" Column="84" />
+      <File FileName="Assets\Scripts\Potion Scripts\DefensePotion.cs" Line="10" Column="84" />
+      <File FileName="Assets\Scripts\Potion Scripts\SpeedPotion.cs" Line="9" Column="84" />
+      <File FileName="Assets\Scripts\Character Scripts\PotionUI.cs" Line="22" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

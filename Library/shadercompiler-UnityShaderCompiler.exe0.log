@@ -1,2 +1,34 @@
 Base path: C:/Program Files/Unity/Editor/Data
 Cmd: getPlatforms
+Cmd: preprocess
+  insize=12804 outsize=3878 ok=1
+Cmd: preprocess
+  insize=12279 outsize=3807 ok=1
+Cmd: preprocess
+  insize=16259 outsize=5121 ok=1
+Cmd: preprocess
+  insize=15923 outsize=4552 ok=1
+Cmd: preprocess
+  insize=39592 outsize=10789 ok=1
+Cmd: preprocess
+  insize=21040 outsize=8631 ok=1
+Cmd: preprocess
+  insize=19873 outsize=6990 ok=1
+Cmd: preprocess
+  insize=24648 outsize=9485 ok=1
+Cmd: preprocess
+  insize=40950 outsize=10955 ok=1
+Cmd: preprocess
+  insize=18813 outsize=6252 ok=1
+Cmd: preprocess
+  insize=20538 outsize=8583 ok=1
+Cmd: preprocess
+  insize=40037 outsize=10779 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=6132 outsize=1562 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=6132 outsize=3282 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=5905 outsize=1562 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=5905 outsize=3090 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP ok=1

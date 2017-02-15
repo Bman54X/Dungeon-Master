@@ -50,6 +50,11 @@
      <Compile Include="Assets\Scripts\Character Scripts\DPadButtons.cs" />
      <Compile Include="Assets\Scripts\Character Scripts\MouseOrbit.cs" />
      <Compile Include="Assets\Scripts\Character Scripts\PotionUI.cs" />
+     <Compile Include="Assets\Scripts\Potion Scripts\DefensePotion.cs" />
+     <Compile Include="Assets\Scripts\Potion Scripts\GoldPotion.cs" />
+     <Compile Include="Assets\Scripts\Potion Scripts\HealthPotion.cs" />
+     <Compile Include="Assets\Scripts\Potion Scripts\Potion.cs" />
+     <Compile Include="Assets\Scripts\Potion Scripts\SpeedPotion.cs" />
      <Compile Include="Assets\Scripts\Room Scripts\DoorClose.cs" />
      <Compile Include="Assets\Scripts\Room Scripts\DoorTrigger.cs" />
      <Compile Include="Assets\Scripts\Room Scripts\Puzzle Room 1\ChangeFloorColor.cs" />
@@ -58,11 +63,13 @@
      <Compile Include="Assets\Scripts\Room Scripts\SpawnToShop.cs" />
      <Compile Include="Assets\Scripts\Room Scripts\Spinner.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\ActivateDisplay.cs" />
+     <Compile Include="Assets\Scripts\VR Scripts\AoEArrowHit.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\Betterc.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\Destory.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\EasyControl.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\EnemyHitTest.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\EquipWep.cs" />
+     <Compile Include="Assets\Scripts\VR Scripts\FireArrowHit.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\GetButtonInput.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\GetSpeed.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\GetVelocity.cs" />
@@ -70,6 +77,7 @@
      <Compile Include="Assets\Scripts\VR Scripts\RotateThisObject.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\ScaleThis.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\SetActive.cs" />
+     <Compile Include="Assets\Scripts\VR Scripts\SlowArrowHit.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\uiButtonhit.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />

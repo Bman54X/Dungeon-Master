@@ -5,31 +5,23 @@ using UnityEngine.UI;
 
 public class PotionUI : MonoBehaviour {
 	public Character player;
-	Character.Potions currentPotion, previousPotion;
-	int potionAmount;
+	int potionAmount, currentPotion, previousPotion;
 
 	public GameObject[] potions = new GameObject[4];
-	//Text[] potionAmountsText = new Text[4];
-
-	Dictionary<Character.Potions, GameObject> potionImages = new Dictionary<Character.Potions, GameObject>();
-	Dictionary<GameObject, Text> potionAmountTexts = new Dictionary<GameObject, Text>();
+	Text[] potionsTexts = new Text[4];
 
 	// Use this for initialization
 	void Start () {
-		currentPotion = player.getPotion ();
-		potionAmount = player.getPotionAmount ();
+		currentPotion = player.getPotion();
 		previousPotion = currentPotion;
-
-		potionImages.Add (Character.Potions.HEALTH, potions[0]); potionImages.Add (Character.Potions.DEFENSE, potions[1]); 
-		potionImages.Add (Character.Potions.SPEED, potions[2]); potionImages.Add (Character.Potions.GOLD, potions[3]);
 
 		for (int i = 0; i < 4; i++) {
 			potions [i].SetActive (false);
-			potionAmountTexts.Add(potions[i], potions[i].GetComponentInChildren<Text>());
+			potionsTexts [i] = potions [i].GetComponentInChildren<Text>();
 		}
 
-		potionImages [currentPotion].SetActive (true);
-		potionAmountTexts[potionImages[currentPotion]].text = potionAmount.ToString();
+		potions [currentPotion].SetActive (true);
+		potionsTexts[currentPotion].text = player.getPotionAmount().ToString();
 	}
 
 	void Update() {
@@ -38,17 +30,16 @@ public class PotionUI : MonoBehaviour {
 		}
 
 		if (player.getPotionUsed()) {
-			potionAmount--;
-			potionAmountTexts [potionImages [currentPotion]].text = potionAmount.ToString ();
+			potionsTexts [currentPotion].text = player.getPotionAmount().ToString();
 		}
 	}
-	
-	void changedPotions(Character.Potions newPotion, int numPotions) {
+
+	void changedPotions(int newPotion, int numPotions) {
 		if (newPotion != currentPotion) {
-			currentPotion = newPotion; potionAmount = numPotions;
-			potionImages [currentPotion].SetActive (true);
-			potionImages [previousPotion].SetActive (false);
-			potionAmountTexts [potionImages [currentPotion]].text = numPotions.ToString ();
+			currentPotion = newPotion;
+			potions [currentPotion].SetActive (true);
+			potions [previousPotion].SetActive (false);
+			potionsTexts [currentPotion].text = player.getPotionAmount().ToString();
 			previousPotion = currentPotion;
 		}
 	}

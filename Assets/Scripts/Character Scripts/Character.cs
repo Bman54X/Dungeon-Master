@@ -4,8 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Character : MonoBehaviour {
-	public enum Potions { GOFOR, HEALTH, DEFENSE, SPEED, GOLD, GOBACK }
-
 	CharacterController cc;
 	Animator anim;
 	public Transform cameraTransform;
@@ -32,10 +30,8 @@ public class Character : MonoBehaviour {
 	public GameObject backCrossbow, handCrossbow, backSword, handSword;
 	public GameObject swordIcon, bowIcon;
 
-	Potions potionEquipped = Potions.HEALTH;
-
-	Dictionary<Potions, int> potionInventory = new Dictionary<Potions, int>();
-	private Dictionary<Potions, System.Action> potionEffect = new Dictionary<Potions, System.Action>();
+	Potion[] potionInventory = new Potion[4];
+	int currentPotion;
 
     // Use this for initialization
     void Awake () {
@@ -65,11 +61,12 @@ public class Character : MonoBehaviour {
 		backSword.SetActive (false); handSword.SetActive (true);
 		bowIcon.SetActive (false); swordIcon.SetActive (true);
 
-		potionInventory.Add (Potions.HEALTH, 4); potionInventory.Add (Potions.GOLD, 2);
-		potionInventory.Add (Potions.DEFENSE, 5); potionInventory.Add (Potions.SPEED, 3);
+		potionInventory[0] = GameObject.FindWithTag("Inventory").GetComponent<HealthPotion>();
+		potionInventory[1] = GameObject.FindWithTag("Inventory").GetComponent<GoldPotion>();
+		potionInventory[2] = GameObject.FindWithTag("Inventory").GetComponent<DefensePotion>();
+		potionInventory[3] = GameObject.FindWithTag("Inventory").GetComponent<SpeedPotion>();
 
-		potionEffect.Add (Potions.HEALTH, giveHealth); potionEffect.Add (Potions.GOLD, moreGold);
-		potionEffect.Add (Potions.DEFENSE, doubleDefense); potionEffect.Add (Potions.SPEED, fastSpeed);
+		currentPotion = 0;
 	}
 	
 	// Update is called once per frame
@@ -196,50 +193,63 @@ public class Character : MonoBehaviour {
 		//Switching Potions on keyboard
 		changedPotions = false;
 		if (Input.GetButtonDown("HealthPotion")) {
-			potionEquipped = Potions.HEALTH;
+			currentPotion = 0;
 			changedPotions = true;
 		} else if (Input.GetButtonDown("DefensePotion")) {
-			potionEquipped = Potions.DEFENSE;
+			currentPotion = 1;
 			changedPotions = true;
 		} else if (Input.GetButtonDown("SpeedPotion")) {
-			potionEquipped = Potions.SPEED;
+			currentPotion = 2;
 			changedPotions = true;
 		} else if (Input.GetButtonDown("GoldPotion")) {
-			potionEquipped = Potions.GOLD;
+			currentPotion = 3;
 			changedPotions = true;
 		}
 
 		//Switching potions on joystick
 		if (DPadButtons.right) {
-			potionEquipped++;
-			if (potionEquipped == Potions.GOBACK) {
-				potionEquipped = Potions.HEALTH;
+			currentPotion++;
+			if (currentPotion == 4) {
+				currentPotion = 0;
 			}
 			changedPotions = true;
 		} else if (DPadButtons.left) {
-			potionEquipped--;
-			if (potionEquipped == Potions.GOFOR) {
-				potionEquipped = Potions.GOLD;
+			currentPotion--;
+			if (currentPotion == -1) {
+				currentPotion = 3;
 			}
 			changedPotions = true;
 		}
 
 		potionUsed = false;
 		//Checking if using potion
-		if (Input.GetButtonDown("DrinkPotion") && !potionActivated && potionInventory [potionEquipped] > 0) {
-			if (potionEquipped != Potions.HEALTH) {
-				potionActivated = true;
-			}
+		if (Input.GetButtonDown("DrinkPotion") && !potionActivated && potionInventory[currentPotion].getInventory() > 0) {
+			potionInventory[currentPotion].potionEffect();
+			potionInventory[currentPotion].changeInventory (-1);
 
 			potionUsed = true;
-			potionInventory[potionEquipped]--;
-			potionEffect[potionEquipped]();
 		}
 	}
 
 	public int health {
 		get { return _health; }
 		set { _health = value; }
+	}
+
+	public int _maxHealth {
+		get { return maxHealth; }
+	}
+
+	public int _speedMultiplier {
+		set { speedMultiplier = value; }
+	}
+
+	public int _goldMultiplier {
+		set { goldMultiplier = value; }
+	}
+
+	public bool _potionActivated {
+		set { potionActivated = value; }
 	}
 
 	public bool getChangedPotions() {
@@ -250,12 +260,12 @@ public class Character : MonoBehaviour {
 		return potionUsed;
 	}
 
-	public Potions getPotion() {
-		return potionEquipped;
+	public int getPotion() {
+		return currentPotion;
 	}
 
 	public int getPotionAmount() {
-		return potionInventory[potionEquipped];
+		return potionInventory[currentPotion].getInventory();
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -270,13 +280,14 @@ public class Character : MonoBehaviour {
 			Destroy (other.gameObject);
 		} else if (other.gameObject.CompareTag("Gold")) {
 			int chance = Random.Range (1, 11);
+			int addedGoldNum;
 			if (chance <= 8) {
-				gold += Random.Range (5, 51);
+				addedGoldNum = Random.Range (5, 51) * goldMultiplier;
 			} else {
-				gold += Random.Range (51, 100);
+				addedGoldNum = Random.Range (51, 100) * goldMultiplier;
 			}
-			gold *= goldMultiplier;
-			addedGold.text = "+" + gold.ToString ();
+			gold += addedGoldNum;
+			addedGold.text = "+" + addedGoldNum.ToString();
 			Invoke("resetGoldText", 1.5f);
 
 			Destroy (other.gameObject);
@@ -308,24 +319,5 @@ public class Character : MonoBehaviour {
 		}
 
 		swordEquipped = !swordEquipped;
-	}
-
-	void giveHealth() {
-		health += 50;
-		if (health > maxHealth) {
-			health = maxHealth;
-		}
-	}
-
-	void fastSpeed() {
-		speedMultiplier = 2;
-	}
-
-	void doubleDefense() {
-		
-	}
-
-	void moreGold() {
-		goldMultiplier = 2;
 	}
 }
