@@ -16,6 +16,8 @@ public class MouseOrbit : MonoBehaviour {
 
 	Rigidbody rb;
 
+	bool paused = false;
+
 	float x = 0.0f;
 	float y = 0.0f;
 
@@ -34,7 +36,7 @@ public class MouseOrbit : MonoBehaviour {
 	}
 
 	void LateUpdate() {
-		if (target) {
+		if (target && !paused) {
 			x += Input.GetAxis ("Mouse X") * xSpeed * distance * 0.02f;
 			y -= Input.GetAxis ("Mouse Y") * ySpeed * 0.02f;
 
@@ -59,5 +61,9 @@ public class MouseOrbit : MonoBehaviour {
 			angle -= 360F;
 		}
 		return Mathf.Clamp(angle, min, max);
+	}
+
+	public void setPaused(bool newPause) {
+		paused = newPause;
 	}
 }

@@ -20,17 +20,17 @@ public class PotionUI : MonoBehaviour {
 			potionsTexts [i] = potions [i].GetComponentInChildren<Text>();
 		}
 
-		potions [currentPotion].SetActive (true);
+		potions[currentPotion].SetActive (true);
 		potionsTexts[currentPotion].text = player.getPotionAmount().ToString();
 	}
 
 	void Update() {
 		if (player.getChangedPotions()) {
-			changedPotions (player.getPotion(), player.getPotionAmount());
+			changedPotions(player.getPotion(), player.getPotionAmount());
 		}
 
 		if (player.getPotionUsed()) {
-			potionsTexts [currentPotion].text = player.getPotionAmount().ToString();
+			potionsTexts[currentPotion].text = player.getPotionAmount().ToString();
 		}
 	}
 
