@@ -6,10 +6,14 @@ using System.Collections.Generic;
 public class Character : MonoBehaviour {
 	CharacterController cc;
 	Animator anim;
-	public Transform cameraTransform;
+	public Transform cameraTransform, arrowSpawn;
 
     Vector3 moveDirection;
 	Vector3 prevLoc, curLoc, forward, right;
+	Vector3 crossbowAimRot;
+	Quaternion crossbowInitRot;
+	Vector3 crossbowAimPos = new Vector3 (0.013f, 0.008f, 0.024f);
+	Vector3 crossbowInitPos;
 
 	bool waitToJump = false, jumpPressed = false, crouching = false, walking = false;
 	bool startWalkCounter = false, crossbowFound = false, swordEquipped = true;
@@ -17,11 +21,11 @@ public class Character : MonoBehaviour {
 	bool paused = false;
 
 	const int maxHealth = 100, maxArrows = 30;
-	int bowAmmo = 0, bombAmmo = 0, gold = 0, _health;
+	int bowAmmo = 10, bombAmmo = 0, gold = 0, _health;
 	int speedMultiplier = 1, goldMultiplier = 1;
 
 	const float gravity = 9.81f, attackTimer = 1.0f;
-	float speed = 6.0f, jumpSpeed = 15.0f, rotateSpeed = 10.0f;
+	float speed = 6.0f, jumpSpeed = 15.0f, rotateSpeed = 10.0f, arrowSpeed = 15.0f;
 	float potionTimer = 15.0f, holdAttack = 0.0f, walkCounter = 0.0f, jumpCounter = 0.0f;
 
 	public Text healthText, goldText, addedGold, bowAmmoText, countdownText;
@@ -29,7 +33,7 @@ public class Character : MonoBehaviour {
 	Slider attackSlider;
 
 	public GameObject backCrossbow, handCrossbow, backSword, handSword;
-	public GameObject swordIcon, bowIcon, attackSliderObject;
+	public GameObject swordIcon, bowIcon, attackSliderObject, arrowPrefab;
 
 	Potion[] potionInventory = new Potion[4];
 	int currentPotion;
@@ -60,6 +64,10 @@ public class Character : MonoBehaviour {
 		attackSlider = attackSliderObject.GetComponent<Slider> ();
 
 		crossbowFound = true;
+
+		crossbowInitPos = handCrossbow.transform.localPosition;
+		crossbowInitRot = handCrossbow.transform.localRotation;
+		crossbowAimRot = new Vector3 (41.4f, 81.3f, 109.07f);
 
 		//Show and hide various parts of the UI
 		backCrossbow.SetActive (true); handCrossbow.SetActive (false);
@@ -208,7 +216,7 @@ public class Character : MonoBehaviour {
 				attackSliderObject.SetActive (true);
 			}
 			attackSlider.value = holdAttack;
-		//When the attack button has been released
+			//When the attack button has been released
 		} else if (Input.GetButtonUp ("NormalAttack") && swordEquipped) {
 			//Based on how long the button was held, attack with a weak or strong attack
 			if (holdAttack >= attackTimer) {
@@ -218,10 +226,26 @@ public class Character : MonoBehaviour {
 			}
 			attackSliderObject.SetActive (false);
 			holdAttack = 0.0f;
-		//Check for stab input
+			//Check for stab input
 		} else if (Input.GetButtonDown ("Stab") && swordEquipped) {
 			anim.SetTrigger ("Stab");
-		//Check if the player wishes to switch weapons
+			//Check if the player wishes to switch weapons
+		} else if (Input.GetButton ("AimBow") && !swordEquipped) {
+			anim.SetBool ("Aiming", true);
+			handCrossbow.transform.localEulerAngles = crossbowAimRot;
+			handCrossbow.transform.localPosition = crossbowAimPos;
+
+			if (Input.GetButtonDown ("NormalAttack") && bowAmmo > 0) {
+				bowAmmo--;
+				bowAmmoText.text = bowAmmo.ToString();
+
+				GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;
+				temp.GetComponent<Rigidbody>().AddForce(temp.transform.forward * arrowSpeed, ForceMode.Impulse);
+			}
+		} else if (Input.GetButtonUp("AimBow") && !swordEquipped) {
+			anim.SetBool ("Aiming", false);
+			handCrossbow.transform.localRotation = crossbowInitRot;
+			handCrossbow.transform.localPosition = crossbowInitPos;
 		} else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound) {
 			anim.SetTrigger ("GetSword");
 			Invoke("switchWeapons", 0.4f);
