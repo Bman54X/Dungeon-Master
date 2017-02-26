@@ -15,8 +15,7 @@ namespace Valve.VR.InteractionSystem
 	{
 		//-------------------------------------------------
 		private void OnDetachedFromHand( Hand hand )
-		{      
-                
+		{
 			Destroy( gameObject );
 		}
 	}

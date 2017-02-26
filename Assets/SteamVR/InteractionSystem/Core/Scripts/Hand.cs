@@ -18,7 +18,6 @@ namespace Valve.VR.InteractionSystem
 	//-------------------------------------------------------------------------
 	public class Hand : MonoBehaviour
 	{
-        public bool buttontester = false;
 		public enum HandType
 		{
 			Left,
@@ -801,7 +800,6 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		public bool GetStandardInteractionButtonDown()
 		{
-            buttontester = true;
 			if ( noSteamVRFallbackCamera )
 			{
 				return Input.GetMouseButtonDown( 0 );
@@ -809,7 +807,6 @@ namespace Valve.VR.InteractionSystem
 			else if ( controller != null )
 			{
 				return controller.GetHairTriggerDown();
-               
 			}
 
 			return false;

@@ -55,9 +55,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
     </Reference>
@@ -100,9 +97,6 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.VR">
       <HintPath>Library\UnityAssemblies\UnityEditor.VR.dll</HintPath>
     </Reference>
@@ -129,7 +123,48 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\AimIKInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\AimPoserInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\BipedIKInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\BipedIKSolversInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\CCDIKInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\ConstraintsInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\FABRIKInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\FABRIKRootInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\FingerRigInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\FullBodyBipedIKInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKEffectorInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKExecutionOrderInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverAimInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverFABRIKRootInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverFullBodyBipedInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverFullBodyInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverHeuristicInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverLimbInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverLookAtInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverTrigonometricInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\InteractionTargetInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\InteractionTriggerInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\LimbIKInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\LookAtIKInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\RotationLimitAngleInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\RotationLimitHingeInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\RotationLimitInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\RotationLimitPolygonalInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\RotationLimitSplineInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\TrigonometricIKInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\VRIKInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\_DEMOS\BendGoalInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\BipedReferencesInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\CameraControllerInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\CommentsInspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\Inspector.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\LargeHeaderDrawer.cs" />
+    <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\SerializedContent.cs" />
     <Compile Include="Assets\SteamVR\Editor\SteamVR_Editor.cs" />
+    <Compile Include="Assets\SteamVR\Editor\SteamVR_Preferences.cs" />
     <Compile Include="Assets\SteamVR\Editor\SteamVR_RenderModelEditor.cs" />
     <Compile Include="Assets\SteamVR\Editor\SteamVR_Settings.cs" />
     <Compile Include="Assets\SteamVR\Editor\SteamVR_SkyboxEditor.cs" />

@@ -32,7 +32,6 @@ namespace Valve.VR.InteractionSystem
 		}
 
 		public ItemPackage _itemPackage;
-		private ItemPackage prevItemPackage;
 
 		private bool useItemPackagePreview = true;
 		private bool useFadedPreview = false;
@@ -280,7 +279,7 @@ namespace Valve.VR.InteractionSystem
 
 
 		//-------------------------------------------------
-		public void SpawnAndAttachObject( Hand hand )
+		private void SpawnAndAttachObject( Hand hand )
 		{
 			if ( hand.otherHand != null )
 			{
@@ -325,7 +324,6 @@ namespace Valve.VR.InteractionSystem
 
 			spawnedItem = GameObject.Instantiate( itemPackage.itemPrefab );
 			spawnedItem.SetActive( true );
-            Debug.Log(attachmentPoint);
 			hand.AttachObject( spawnedItem, attachmentFlags, attachmentPoint );
 
 			if ( ( itemPackage.otherHandItemPrefab != null ) && ( hand.otherHand.controller != null ) )
@@ -347,24 +345,4 @@ namespace Valve.VR.InteractionSystem
 			}
 		}
 	}
-
-#if UNITY_EDITOR
-	//-------------------------------------------------------------------------
-	[CustomEditor( typeof( ItemPackageSpawner ) )]
-	public class ItemPackageSpawnerEditor : Editor
-	{
-		//-------------------------------------------------
-		public override void OnInspectorGUI()
-		{
-			if ( Selection.activeTransform )
-			{
-				ItemPackageSpawner script = target as ItemPackageSpawner;
-
-				script.itemPackage = script._itemPackage;
-			}
-
-			DrawDefaultInspector();
-		}
-	}
-#endif
 }

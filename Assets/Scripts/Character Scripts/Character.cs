@@ -21,7 +21,7 @@ public class Character : MonoBehaviour {
 	bool paused = false;
 
 	const int maxHealth = 100, maxArrows = 30;
-	int bowAmmo = 10, bombAmmo = 0, gold = 0, _health;
+	public int bowAmmo = 10, bombAmmo = 0, gold = 0, _health;
 	int speedMultiplier = 1, goldMultiplier = 1;
 
 	const float gravity = 9.81f, attackTimer = 1.0f;
