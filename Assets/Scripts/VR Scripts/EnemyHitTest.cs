@@ -34,7 +34,7 @@ namespace Valve.VR.InteractionSystem
              //   Debug.Log(SwordR);               
                 Debug.Log("sword hit enemy");
                character = cPlayer.gameObject.GetComponent<Character>();
-               character._health = character._health - 10;
+               character.health -= 10;
                 hand = c.gameObject.GetComponentInParent<Hand>();                      
                 c.gameObject.transform.position = c.gameObject.transform.position - c.gameObject.transform.right;
               Instantiate(SwordS, c.gameObject.transform.position, c.gameObject.transform.rotation);
@@ -44,7 +44,7 @@ namespace Valve.VR.InteractionSystem
             {
                 Debug.Log("arrow hit enemy");
                 character = cPlayer.gameObject.GetComponent<Character>();
-                character._health = character._health - 10;
+                character.health -= 10;
             }
             
         }

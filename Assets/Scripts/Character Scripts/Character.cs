@@ -2,18 +2,18 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using RootMotion.FinalIK;
 
 public class Character : MonoBehaviour {
 	CharacterController cc;
 	Animator anim;
-	public Transform cameraTransform, arrowSpawn;
+	public Transform arrowSpawn;
+	Transform cameraTransform;
+
+	AimIK aimIK;
 
     Vector3 moveDirection;
 	Vector3 prevLoc, curLoc, forward, right;
-	Vector3 crossbowAimRot;
-	Quaternion crossbowInitRot;
-	Vector3 crossbowAimPos = new Vector3 (0.013f, 0.008f, 0.024f);
-	Vector3 crossbowInitPos;
 
 	bool waitToJump = false, jumpPressed = false, crouching = false, walking = false;
 	bool startWalkCounter = false, crossbowFound = false, swordEquipped = true;
@@ -21,7 +21,7 @@ public class Character : MonoBehaviour {
 	bool paused = false;
 
 	const int maxHealth = 100, maxArrows = 30;
-	public int bowAmmo = 10, bombAmmo = 0, gold = 0, _health;
+	int bowAmmo = 10, bombAmmo = 0, gold = 0, _health;
 	int speedMultiplier = 1, goldMultiplier = 1;
 
 	const float gravity = 9.81f, attackTimer = 1.0f;
@@ -34,6 +34,9 @@ public class Character : MonoBehaviour {
 
 	public GameObject backCrossbow, handCrossbow, backSword, handSword;
 	public GameObject swordIcon, bowIcon, attackSliderObject, arrowPrefab;
+	public GameObject mainCamera, crossbowCamera;
+
+	MouseLook mouseLook;
 
 	Potion[] potionInventory = new Potion[4];
 	int currentPotion;
@@ -62,18 +65,22 @@ public class Character : MonoBehaviour {
 		bowAmmoText.text = bowAmmo.ToString();
 
 		attackSlider = attackSliderObject.GetComponent<Slider> ();
+		mouseLook = gameObject.GetComponent<MouseLook>();
+		mouseLook.changeCanLook (false);
 
 		crossbowFound = true;
-
-		crossbowInitPos = handCrossbow.transform.localPosition;
-		crossbowInitRot = handCrossbow.transform.localRotation;
-		crossbowAimRot = new Vector3 (41.4f, 81.3f, 109.07f);
 
 		//Show and hide various parts of the UI
 		backCrossbow.SetActive (true); handCrossbow.SetActive (false);
 		backSword.SetActive (false); handSword.SetActive (true);
 		bowIcon.SetActive (false); swordIcon.SetActive (true);
 		attackSliderObject.SetActive (false);
+
+		aimIK = gameObject.GetComponent<AimIK>();
+		aimIK.solver.IKPositionWeight = 0f;﻿
+
+		cameraTransform = mainCamera.transform;
+		crossbowCamera.SetActive (false);
 
 		//Add all the avilable potions to the inventory
 		potionInventory[0] = GameObject.FindWithTag("Inventory").GetComponent<HealthPotion>();
@@ -232,8 +239,11 @@ public class Character : MonoBehaviour {
 			//Check if the player wishes to switch weapons
 		} else if (Input.GetButton ("AimBow") && !swordEquipped) {
 			anim.SetBool ("Aiming", true);
-			handCrossbow.transform.localEulerAngles = crossbowAimRot;
-			handCrossbow.transform.localPosition = crossbowAimPos;
+			crossbowCamera.SetActive (true);
+			mainCamera.SetActive (false);
+			handCrossbow.SetActive (false);
+			mouseLook.changeCanLook(true);
+			aimIK.solver.IKPositionWeight = 1f;
 
 			if (Input.GetButtonDown ("NormalAttack") && bowAmmo > 0) {
 				bowAmmo--;
@@ -244,8 +254,11 @@ public class Character : MonoBehaviour {
 			}
 		} else if (Input.GetButtonUp("AimBow") && !swordEquipped) {
 			anim.SetBool ("Aiming", false);
-			handCrossbow.transform.localRotation = crossbowInitRot;
-			handCrossbow.transform.localPosition = crossbowInitPos;
+			crossbowCamera.SetActive (false);
+			handCrossbow.SetActive (true);
+			mainCamera.SetActive (true);
+			mouseLook.changeCanLook(false);
+			aimIK.solver.IKPositionWeight = 0f;﻿
 		} else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound) {
 			anim.SetTrigger ("GetSword");
 			Invoke("switchWeapons", 0.4f);

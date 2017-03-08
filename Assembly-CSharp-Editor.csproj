@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{DDAFDEEE-A31B-D295-F35C-1B2422FCA6E1}</ProjectGuid>
+    <ProjectGuid>{1FE6739A-4CF0-13A1-56A2-F92F82BC85D3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -46,7 +46,48 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\AimIKInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\AimPoserInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\BipedIKInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\BipedIKSolversInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\CCDIKInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\ConstraintsInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\FABRIKInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\FABRIKRootInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\FingerRigInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\FullBodyBipedIKInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKEffectorInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKExecutionOrderInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverAimInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverFABRIKRootInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverFullBodyBipedInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverFullBodyInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverHeuristicInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverLimbInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverLookAtInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\IKSolverTrigonometricInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\InteractionTargetInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\InteractionTriggerInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\LimbIKInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\LookAtIKInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\RotationLimitAngleInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\RotationLimitHingeInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\RotationLimitInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\RotationLimitPolygonalInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\RotationLimitSplineInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\TrigonometricIKInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\VRIKInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\FinalIK\_DEMOS\BendGoalInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\BipedReferencesInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\CameraControllerInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\CommentsInspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\Inspector.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\LargeHeaderDrawer.cs" />
+     <Compile Include="Assets\FinalIK\Editor\RootMotion\Shared Scripts\SerializedContent.cs" />
      <Compile Include="Assets\SteamVR\Editor\SteamVR_Editor.cs" />
+     <Compile Include="Assets\SteamVR\Editor\SteamVR_Preferences.cs" />
      <Compile Include="Assets\SteamVR\Editor\SteamVR_RenderModelEditor.cs" />
      <Compile Include="Assets\SteamVR\Editor\SteamVR_Settings.cs" />
      <Compile Include="Assets\SteamVR\Editor\SteamVR_SkyboxEditor.cs" />
@@ -78,9 +119,6 @@
      <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\BumpedRimReflective.shader" />
      <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\MOBILE_SuperShaderCUTOUT.shader" />
      <None Include="Assets\SteamVR\InteractionSystem\Readme_InteractionSystem.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
@@ -123,9 +161,6 @@
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
  </Reference>
@@ -141,9 +176,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{C60524B7-7FF2-916A-AB43-9782575D93F8}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{FAB48452-BA18-54BA-ED23-31D13566339D}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript.unityproj">
-      <Project>{5ED9C3B9-083A-7C4A-1700-17DE42B5B05E}</Project>      <Name>Assembly-UnityScript</Name>    </ProjectReference>
+      <Project>{06B817CC-5906-2239-DA54-1AEEFFC983D6}</Project>      <Name>Assembly-UnityScript</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
