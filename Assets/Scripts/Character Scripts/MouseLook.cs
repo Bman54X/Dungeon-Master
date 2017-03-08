@@ -24,10 +24,10 @@ public class MouseLook : MonoBehaviour {
 	public float minimumX = -360F;
 	public float maximumX = 360F;
 
-	float minimumY = 20F;
-	float maximumY = 60F;
+	public float minimumY = 20F;
+	public float maximumY = 60F;
 
-	float rotationY = 0F;
+	float rotationY = 37.6F;
     bool canLook;
 
 	void Update () {
@@ -35,17 +35,10 @@ public class MouseLook : MonoBehaviour {
             if (axes == RotationAxes.MouseX) {
                 transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
             } else {
-				transform.Rotate(Input.GetAxis("Mouse Y") * -sensitivityY, 0, 0);
+				rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+				rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
-				//Vector3 tempTransform = transform.localEulerAngles;
-				if (transform.localEulerAngles.x <= minimumY) {
-					transform.localEulerAngles = new Vector3 (minimumY, -115.7f, -193.4f);
-				} else if (transform.localEulerAngles.x >= maximumY) {
-					transform.localEulerAngles = new Vector3 (maximumY, -135.18f, -206.9f);
-				}
-
-				//transform.localEulerAngles = new Vector3(transform.localEulerAngles.y, transform.localEulerAngles.y, 0);
-				//ransform.localEulerAngles = tempTransform;
+				transform.localEulerAngles = new Vector3(rotationY, transform.localEulerAngles.y, transform.localEulerAngles.z);
             }
         }
 	}
