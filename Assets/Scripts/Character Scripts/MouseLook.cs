@@ -17,7 +17,7 @@ using System.Collections;
 [AddComponentMenu("Camera-Control/Mouse Look")]
 public class MouseLook : MonoBehaviour {
 	public enum RotationAxes { MouseX, MouseY }
-	public RotationAxes axes = RotationAxes.MouseX;
+	public RotationAxes axes;
 	public float sensitivityX = 15F;
 	public float sensitivityY = 15F;
 
@@ -36,6 +36,7 @@ public class MouseLook : MonoBehaviour {
                 transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
             } else {
 				rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+				//Debug.Log(Input.GetAxis("Mouse Y"));
 				rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
 				transform.localEulerAngles = new Vector3(rotationY, transform.localEulerAngles.y, transform.localEulerAngles.z);
@@ -44,10 +45,12 @@ public class MouseLook : MonoBehaviour {
 	}
 	
 	void Awake() {
-        canLook = true;
+		if (gameObject.tag == "CrossbowCamera") {
+			canLook = true;
+		}
 		// Make the rigid body not change rotation
-		if (GetComponent<Rigidbody> ()) {
-			GetComponent<Rigidbody> ().freezeRotation = true;
+		if (GetComponent<Rigidbody>()) {
+			GetComponent<Rigidbody>().freezeRotation = true;
 		}
 	}
 

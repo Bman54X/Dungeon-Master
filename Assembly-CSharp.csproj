@@ -217,6 +217,7 @@
      <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\TriggerEventBroadcaster.cs" />
      <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\V3Tools.cs" />
      <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\Warning.cs" />
+     <Compile Include="Assets\Scripts\Character Scripts\Arrow.cs" />
      <Compile Include="Assets\Scripts\Character Scripts\Character.cs" />
      <Compile Include="Assets\Scripts\Character Scripts\DPadButtons.cs" />
      <Compile Include="Assets\Scripts\Character Scripts\MouseLook.cs" />

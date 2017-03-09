@@ -237,31 +237,30 @@ public class Character : MonoBehaviour {
 		} else if (Input.GetButtonDown ("Stab") && swordEquipped) {
 			anim.SetTrigger ("Stab");
 			//Check if the player wishes to switch weapons
-		} else if (Input.GetButton ("AimBow") && !swordEquipped) {
+		} else if ((Input.GetButton ("AimBow") || Input.GetAxis("AimBowJoystick") >= 0.5f) && !swordEquipped) {
 			anim.SetBool ("Aiming", true);
 			crossbowCamera.SetActive (true);
 			mainCamera.SetActive (false);
 			handCrossbow.SetActive (false);
 			mouseLook.changeCanLook(true);
 			aimIK.solver.IKPositionWeight = 1f;
-
 			if (Input.GetButtonDown ("NormalAttack") && bowAmmo > 0) {
 				bowAmmo--;
 				bowAmmoText.text = bowAmmo.ToString();
 
 				GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;
-				temp.GetComponent<Rigidbody>().AddForce(temp.transform.forward * arrowSpeed, ForceMode.Impulse);
+				temp.GetComponent<Rigidbody>().AddForce(arrowSpawn.transform.forward * arrowSpeed, ForceMode.Impulse);
 			}
-		} else if (Input.GetButtonUp("AimBow") && !swordEquipped) {
+		} else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound) {
+			anim.SetTrigger ("GetSword");
+			Invoke("switchWeapons", 0.4f);
+		} else if ((Input.GetButtonUp("AimBow") || Input.GetAxis("AimBowJoystick") <= 0.5f) && !swordEquipped) {
 			anim.SetBool ("Aiming", false);
 			crossbowCamera.SetActive (false);
 			handCrossbow.SetActive (true);
 			mainCamera.SetActive (true);
 			mouseLook.changeCanLook(false);
 			aimIK.solver.IKPositionWeight = 0f;﻿
-		} else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound) {
-			anim.SetTrigger ("GetSword");
-			Invoke("switchWeapons", 0.4f);
 		}
 
 		//Switching potions on keyboard
