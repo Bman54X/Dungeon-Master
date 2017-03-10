@@ -9,6 +9,7 @@ public class PotionUI : MonoBehaviour {
 
 	public GameObject[] potions = new GameObject[4];
 	Text[] potionsTexts = new Text[4];
+	public GameObject maxHealth;
 
 	// Use this for initialization
 	void Start () {
@@ -17,10 +18,11 @@ public class PotionUI : MonoBehaviour {
 
 		for (int i = 0; i < 4; i++) {
 			potions [i].SetActive (false);
-			potionsTexts [i] = potions [i].GetComponentInChildren<Text>();
+			potionsTexts [i] = potions[i].GetComponentInChildren<Text>();
 		}
 
 		potions[currentPotion].SetActive (true);
+		maxHealth.SetActive (false);
 		potionsTexts[currentPotion].text = player.getPotionAmount().ToString();
 	}
 
@@ -32,6 +34,11 @@ public class PotionUI : MonoBehaviour {
 		if (player.getPotionUsed()) {
 			potionsTexts[currentPotion].text = player.getPotionAmount().ToString();
 		}
+
+		if (player.getMaxHealthAlready ()) {
+			maxHealth.SetActive (true);
+			Invoke("resetMaxHealth", 1.5f);
+		}
 	}
 
 	void changedPotions(int newPotion, int numPotions) {
@@ -42,5 +49,9 @@ public class PotionUI : MonoBehaviour {
 			potionsTexts [currentPotion].text = player.getPotionAmount().ToString();
 			previousPotion = currentPotion;
 		}
+	}
+
+	void resetMaxHealth() {
+		maxHealth.SetActive (false);
 	}
 }

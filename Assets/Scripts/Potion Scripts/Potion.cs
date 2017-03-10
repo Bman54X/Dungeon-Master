@@ -11,10 +11,7 @@ public class Potion : MonoBehaviour {
 	public string potionTag;
 
 	// Use this for initialization
-	void Start () {
-		inventory = 0;
-		character = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
-		potionTag = "";
+	void Start() {
 	}
 
 	public void changeInventory(int num) {
@@ -25,6 +22,10 @@ public class Potion : MonoBehaviour {
 		return inventory;
 	}
 
-	public virtual void potionEffect() {
+	public virtual bool potionEffect() {
+		return true;
+	}
+
+	public virtual void deactivate() {
 	}
 }

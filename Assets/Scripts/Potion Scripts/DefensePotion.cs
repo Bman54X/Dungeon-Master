@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class DefensePotion : Potion {
 	// Use this for initialization
-	void Start () {
+	void Awake() {
 		potionTag = "defense";
 		inventory = 8;
 		character = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
 	}
 
-	public override void potionEffect() {
+	public override bool potionEffect() {
+		character._defense = 2;
 		character._potionActivated = true;
+		return true;
+	}
+
+	public override void deactivate() {
+		character._defense = 1;
 	}
 }

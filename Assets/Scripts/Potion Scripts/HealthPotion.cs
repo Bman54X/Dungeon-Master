@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthPotion : Potion {
-	void Start() {
+	void Awake() {
 		potionTag = "health";
 		character = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
 		inventory = 3;
 	}
 
-	public override void potionEffect() {
+	public override bool potionEffect() {
 		int h = character.health;
-		h += 50;
-		if (h > character._maxHealth) {
-			h = character._maxHealth;
+		int mh = character._maxHealth;
+
+		if (h < mh) {
+			h += 50;
+			if (h > mh) {
+				h = mh;
+			}
+			character.health = h;
+			return true;
+		} else {
+			return false;
 		}
-		character.health = h;
 	}
 }

@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpeedPotion : Potion {
-	void Start() {
+	void Awake() {
 		potionTag = "speed";
 		inventory = 5;
 		character = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
 	}
 
-	public override void potionEffect() {
+	public override bool potionEffect() {
 		character._speedMultiplier = 2;
 		character._potionActivated = true;
+		return true;
+	}
+
+	public override void deactivate() {
+		character._speedMultiplier = 1;
 	}
 }
