@@ -217,11 +217,13 @@
      <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\TriggerEventBroadcaster.cs" />
      <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\V3Tools.cs" />
      <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\Warning.cs" />
-     <Compile Include="Assets\Scripts\Character Scripts\Arrow.cs" />
      <Compile Include="Assets\Scripts\Character Scripts\Character.cs" />
      <Compile Include="Assets\Scripts\Character Scripts\DPadButtons.cs" />
      <Compile Include="Assets\Scripts\Character Scripts\MouseLook.cs" />
      <Compile Include="Assets\Scripts\Character Scripts\MouseOrbit.cs" />
+     <Compile Include="Assets\Scripts\Object Scripts\Arrow.cs" />
+     <Compile Include="Assets\Scripts\Object Scripts\Gold.cs" />
+     <Compile Include="Assets\Scripts\Object Scripts\SoundBank.cs" />
      <Compile Include="Assets\Scripts\Potion Scripts\DefensePotion.cs" />
      <Compile Include="Assets\Scripts\Potion Scripts\GoldPotion.cs" />
      <Compile Include="Assets\Scripts\Potion Scripts\HealthPotion.cs" />

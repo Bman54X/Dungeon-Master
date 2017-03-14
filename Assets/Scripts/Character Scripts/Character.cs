@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using RootMotion.FinalIK;
 
+using soundEffect = SoundBank.SoundEffect;
+
 public class Character : MonoBehaviour {
 	CharacterController cc;
 	Animator anim;
@@ -21,7 +23,7 @@ public class Character : MonoBehaviour {
 	bool paused = false, alive = true, maxHealthAlready = false;
 
 	const int maxHealth = 100, maxArrows = 30;
-	int bowAmmo = 10, bombAmmo = 0, gold = 0, _health;
+	int bowAmmo = 10, gold = 0, _health;
 	int speedMultiplier = 1, goldMultiplier = 1, defense = 1;
 
 	const float gravity = 9.81f, attackTimer = 1.0f;
@@ -37,6 +39,7 @@ public class Character : MonoBehaviour {
 	public GameObject mainCamera, crossbowCamera;
 
 	MouseLook mouseLook;
+	SoundBank soundBank;
 
 	Potion[] potionInventory = new Potion[4];
 	int currentPotion;
@@ -67,6 +70,7 @@ public class Character : MonoBehaviour {
 		attackSlider = attackSliderObject.GetComponent<Slider> ();
 		mouseLook = gameObject.GetComponent<MouseLook>();
 		mouseLook.changeCanLook (false);
+		soundBank = gameObject.GetComponentInChildren<SoundBank>();
 
 		crossbowFound = true;
 
@@ -171,9 +175,11 @@ public class Character : MonoBehaviour {
 
 			//Changed the current animation based on the movement speed
 			if (moveDirection.x == 0 && moveDirection.z == 0) {
+				soundBank.footstepSounds(false);
 				anim.SetFloat ("Speed", 0);
 			} else if (!walking && !startWalkCounter) {
 				anim.SetFloat ("Speed", 1);
+				soundBank.footstepSounds(true);
 			}
 
 			anim.SetBool ("Jump", false);
@@ -229,6 +235,7 @@ public class Character : MonoBehaviour {
 				anim.SetTrigger ("StrongAttack");
 			} else {
 				anim.SetTrigger ("NormalAttack");
+				soundBank.playClip (soundEffect.SWORD_SWING);
 			}
 			attackSliderObject.SetActive (false);
 			holdAttack = 0.0f;
@@ -248,11 +255,13 @@ public class Character : MonoBehaviour {
 
 				GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;
 				temp.GetComponent<Rigidbody>().AddForce (arrowSpawn.transform.forward * arrowSpeed, ForceMode.Impulse);
+				soundBank.playClip (soundEffect.SHOOT_ARROW);
 			}
 		//Check if the player wishes to switch weapons
 		} else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound) {
 			anim.SetTrigger ("GetSword");
 			Invoke("switchWeapons", 0.4f);
+			soundBank.playClip (soundEffect.SWITCH_WEAPON);
 		} else if ((Input.GetButtonUp("AimBow") || Input.GetAxis("AimBowJoystick") < 0.5f) && !swordEquipped) {
 			anim.SetBool ("Aiming", false);
 			crossbowCamera.SetActive (false);
@@ -370,23 +379,28 @@ public class Character : MonoBehaviour {
 			Destroy (other.gameObject);
 		//If the player has picked up gold
 		} else if (other.gameObject.CompareTag("Gold")) {
-			//80% chance to get lower amount of gold
-			int chance = Random.Range (1, 11);
-			int addedGoldNum;
+			Gold thisGold = other.gameObject.GetComponent<Gold>();
+			if (!thisGold.pickedUp) {
+				//80% chance to get lower amount of gold
+				int chance = Random.Range (1, 11);
+				int addedGoldNum;
 
-			if (chance <= 8) {
-				addedGoldNum = Random.Range (5, 51) * goldMultiplier;
-			} else {
-				addedGoldNum = Random.Range (51, 100) * goldMultiplier;
+				if (chance <= 8) {
+					addedGoldNum = Random.Range (5, 51) * goldMultiplier;
+				} else {
+					addedGoldNum = Random.Range (51, 100) * goldMultiplier;
+				}
+
+				//Update gold values
+				gold += addedGoldNum;
+				goldText.text = "Gold: " + gold;
+				addedGold.text = "+" + addedGoldNum.ToString ();
+				Invoke ("resetGoldText", 1.5f);
+				soundBank.playClip (soundEffect.GOLD);
+				thisGold.pickedUp = true;
+
+				Destroy (other.gameObject);
 			}
-
-			//Update gold values
-			gold += addedGoldNum;
-			goldText.text = "Gold: " + gold;
-			addedGold.text = "+" + addedGoldNum.ToString();
-			Invoke("resetGoldText", 1.5f);
-
-			Destroy (other.gameObject);
 		//If the player has picked up an arrow bundle,
 		//add 5 up to the maximum
 		}  else if (other.gameObject.CompareTag("ArrowBundle")) {
