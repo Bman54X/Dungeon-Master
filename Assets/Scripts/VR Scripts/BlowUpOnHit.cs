@@ -21,5 +21,9 @@ public class BlowUpOnHit : MonoBehaviour {
         pobjectM.bomb = true;
         objectThrown = true;
     }
+    public void setTrueRock() {
+        pobjectM.rock = true;
+        objectThrown = true;
+    }
 
 }

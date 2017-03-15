@@ -52,6 +52,9 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -67,6 +70,9 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
     </Reference>
@@ -75,8 +81,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BlowUpOnHit.cs" />
-    <Compile Include="Assets\BlowUpOnHit2.cs" />
     <Compile Include="Assets\FinalIK\RootMotion\FinalIK\BipedIK\BipedIK.cs" />
     <Compile Include="Assets\FinalIK\RootMotion\FinalIK\BipedIK\BipedIKSolvers.cs" />
     <Compile Include="Assets\FinalIK\RootMotion\FinalIK\Constraints\Constraint.cs" />
@@ -254,6 +258,7 @@
     <Compile Include="Assets\Scripts\Character Scripts\MouseOrbit.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\Arrow.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\Gold.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\HealthVial.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\SoundBank.cs" />
     <Compile Include="Assets\Scripts\Potion Scripts\DefensePotion.cs" />
     <Compile Include="Assets\Scripts\Potion Scripts\GoldPotion.cs" />
@@ -272,6 +277,8 @@
     <Compile Include="Assets\Scripts\VR Scripts\ActivateDisplay.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\AoEArrowHit.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\Betterc.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\BlowUpOnHit.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\BlowUpOnHit2.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\Destory.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\EasyControl.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\EnemyHitTest.cs" />
@@ -287,6 +294,9 @@
     <Compile Include="Assets\Scripts\VR Scripts\SlowArrowHit.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\hittriggerteseter.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\hpVR.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\pMoveToThis.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\pObjectManager.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\pStartThisRooom.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\uiButtonhit.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />
@@ -390,9 +400,6 @@
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_TrackedObject.cs" />
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_UpdatePoses.cs" />
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_Utils.cs" />
-    <Compile Include="Assets\pMoveToThis.cs" />
-    <Compile Include="Assets\pObjectManager.cs" />
-    <Compile Include="Assets\pStartThisRooom.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\2SIDEDBumpedSpecularRefRim.shader" />
