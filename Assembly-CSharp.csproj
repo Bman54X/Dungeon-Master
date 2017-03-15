@@ -223,6 +223,7 @@
      <Compile Include="Assets\Scripts\Character Scripts\MouseOrbit.cs" />
      <Compile Include="Assets\Scripts\Object Scripts\Arrow.cs" />
      <Compile Include="Assets\Scripts\Object Scripts\Gold.cs" />
+     <Compile Include="Assets\Scripts\Object Scripts\HealthVial.cs" />
      <Compile Include="Assets\Scripts\Object Scripts\SoundBank.cs" />
      <Compile Include="Assets\Scripts\Potion Scripts\DefensePotion.cs" />
      <Compile Include="Assets\Scripts\Potion Scripts\GoldPotion.cs" />
@@ -241,6 +242,8 @@
      <Compile Include="Assets\Scripts\VR Scripts\ActivateDisplay.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\AoEArrowHit.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\Betterc.cs" />
+     <Compile Include="Assets\Scripts\VR Scripts\BlowUpOnHit.cs" />
+     <Compile Include="Assets\Scripts\VR Scripts\BlowUpOnHit2.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\Destory.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\EasyControl.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\EnemyHitTest.cs" />
@@ -256,6 +259,9 @@
      <Compile Include="Assets\Scripts\VR Scripts\SlowArrowHit.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\hittriggerteseter.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\hpVR.cs" />
+     <Compile Include="Assets\Scripts\VR Scripts\pMoveToThis.cs" />
+     <Compile Include="Assets\Scripts\VR Scripts\pObjectManager.cs" />
+     <Compile Include="Assets\Scripts\VR Scripts\pStartThisRooom.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\uiButtonhit.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />

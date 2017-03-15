@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundBank : MonoBehaviour {
-	public enum SoundEffect { SWORD_SWING, SWITCH_WEAPON, SHOOT_ARROW, GOLD };
+	public enum SoundEffect { SWORD_SWING, HEAVY_SWORD_SWING, SWITCH_WEAPON, SHOOT_ARROW, GOLD,
+							  DRINK_POTION, HEALTH_VIAL, LIGHT_HIT, STRONG_HIT};
 	[SerializeField]
-	private AudioClip footsteps, swordSwing, switchWeapon, shootArrow, gold;
+	private AudioClip footsteps, swordSwing, heavySwordSwing, switchWeapon, shootArrow, gold,
+					  drinkPotion, healthVial, lightHit, strongHit;
 
 	Dictionary<SoundEffect, AudioClip> clips = new Dictionary<SoundEffect, AudioClip>();
 
@@ -28,9 +30,14 @@ public class SoundBank : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		clips.Add (SoundEffect.SWORD_SWING, swordSwing);
+		clips.Add (SoundEffect.HEAVY_SWORD_SWING, heavySwordSwing);
 		clips.Add (SoundEffect.SWITCH_WEAPON, switchWeapon);
 		clips.Add (SoundEffect.SHOOT_ARROW, shootArrow);
 		clips.Add (SoundEffect.GOLD, gold);
+		clips.Add (SoundEffect.DRINK_POTION, drinkPotion);
+		clips.Add (SoundEffect.HEALTH_VIAL, healthVial);
+		clips.Add (SoundEffect.LIGHT_HIT, lightHit);
+		clips.Add (SoundEffect.STRONG_HIT, strongHit);
 	}
 
 	public void playClip(SoundEffect sound) {

@@ -107,7 +107,7 @@ public class Character : MonoBehaviour {
 		//If on the ground and jump has not already been pressed
 		if (cc.isGrounded && !jumpPressed) {
 			//Check various inputs
-			checkButtonPresses();
+			checkButtonPresses ();
 
 			//Update movement based on player's input
 			float x = Input.GetAxis ("Horizontal");
@@ -175,14 +175,23 @@ public class Character : MonoBehaviour {
 
 			//Changed the current animation based on the movement speed
 			if (moveDirection.x == 0 && moveDirection.z == 0) {
-				soundBank.footstepSounds(false);
+				soundBank.footstepSounds (false);
 				anim.SetFloat ("Speed", 0);
 			} else if (!walking && !startWalkCounter) {
 				anim.SetFloat ("Speed", 1);
-				soundBank.footstepSounds(true);
+				soundBank.footstepSounds (true);
 			}
 
 			anim.SetBool ("Jump", false);
+		} else if (!cc.isGrounded) {
+			RaycastHit hitInfo = new RaycastHit();
+			if (Physics.Raycast (new Ray (transform.position, Vector3.down), out hitInfo, 0.2f)) {
+				cc.Move (hitInfo.point - transform.position);
+			}
+
+			if (!cc.isGrounded) {
+				soundBank.footstepSounds (false);
+			}
 		}
 
 		//If jump has been pressed, wait a bit to add jump velocity due to animation delay
@@ -202,7 +211,7 @@ public class Character : MonoBehaviour {
 		//Move the character controller
 		cc.Move (moveDirection * Time.deltaTime);
 
-		//If the player has actiavted a potion, start the potion timer
+		//If the player has activated a potion, start the potion timer
 		//and reset it and its effects when it reaches 0
 		if (potionActivated) {
 			potionTimer -= Time.deltaTime;
@@ -233,6 +242,7 @@ public class Character : MonoBehaviour {
 			//Based on how long the button was held, attack with a weak or strong attack
 			if (holdAttack >= attackTimer) {
 				anim.SetTrigger ("StrongAttack");
+				Invoke("strongHitSound", 0.6f);
 			} else {
 				anim.SetTrigger ("NormalAttack");
 				soundBank.playClip (soundEffect.SWORD_SWING);
@@ -316,6 +326,7 @@ public class Character : MonoBehaviour {
 			potionUsed = true;
 			healthSlider.value = _health;
 			healthText.text = _health.ToString();
+			soundBank.playClip (soundEffect.DRINK_POTION);
 		}
 	}
 
@@ -334,13 +345,24 @@ public class Character : MonoBehaviour {
 		swordEquipped = !swordEquipped;
 	}
 
+	//Reset the added gold text
+	void resetGoldText() {
+		addedGold.text = "";
+	}
+
+	void strongHitSound() {
+		soundBank.playClip (soundEffect.HEAVY_SWORD_SWING);
+	}
+
 	public void takeDamage(int damage) {
 		_health -= damage / defense;
 
 		if (damage < 20) {
 			anim.SetTrigger ("Hit1");
+			soundBank.playClip (soundEffect.LIGHT_HIT);
 		} else {
 			anim.SetTrigger ("Hit2");
+			soundBank.playClip (soundEffect.STRONG_HIT);
 		}
 
 		//Update health and various text
@@ -366,35 +388,32 @@ public class Character : MonoBehaviour {
 		//If the player has picked up a health vial,
 		//add 50 health up to the maximum
 		if (other.gameObject.CompareTag("Health")) {
-			if (health < maxHealth) {
-				health += 10;
-				if (health > maxHealth) {
-					health = maxHealth;
+			HealthVial thisVial = other.gameObject.GetComponent<HealthVial>();
+			if (!thisVial.pickedUp) {
+				if (health < maxHealth) {
+					health += thisVial.getValue();
+					if (health > maxHealth) {
+						health = maxHealth;
+					}
 				}
+
+				healthSlider.value = _health;
+				healthText.text = _health.ToString();
+				soundBank.playClip (soundEffect.HEALTH_VIAL);
+				thisVial.pickedUp = true;
+
+				Destroy (other.gameObject);
 			}
-
-			healthSlider.value = _health;
-			healthText.text = _health.ToString();
-
-			Destroy (other.gameObject);
 		//If the player has picked up gold
 		} else if (other.gameObject.CompareTag("Gold")) {
 			Gold thisGold = other.gameObject.GetComponent<Gold>();
 			if (!thisGold.pickedUp) {
-				//80% chance to get lower amount of gold
-				int chance = Random.Range (1, 11);
-				int addedGoldNum;
-
-				if (chance <= 8) {
-					addedGoldNum = Random.Range (5, 51) * goldMultiplier;
-				} else {
-					addedGoldNum = Random.Range (51, 100) * goldMultiplier;
-				}
+				int addedGoldNum = thisGold.getValue() * goldMultiplier;
 
 				//Update gold values
 				gold += addedGoldNum;
 				goldText.text = "Gold: " + gold;
-				addedGold.text = "+" + addedGoldNum.ToString ();
+				addedGold.text = "+" + addedGoldNum.ToString();
 				Invoke ("resetGoldText", 1.5f);
 				soundBank.playClip (soundEffect.GOLD);
 				thisGold.pickedUp = true;
@@ -414,11 +433,6 @@ public class Character : MonoBehaviour {
 
 			Destroy (other.gameObject);
 		}
-	}
-
-	//Reset the added gold text
-	void resetGoldText() {
-		addedGold.text = "";
 	}
 
 	//various getters and setters
