@@ -8,13 +8,13 @@ public class BlowUpOnHit : MonoBehaviour {
     public GameObject pObjectMan;
 	// Use this for initialization
 	void Start () {
-
+        pObjectMan = GameObject.FindGameObjectWithTag("pObjectM");
         pobjectM = pObjectMan.GetComponent<pObjectManager>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        Debug.Log(pobjectM.bomb);
 	}
     public void setTrue()
     {

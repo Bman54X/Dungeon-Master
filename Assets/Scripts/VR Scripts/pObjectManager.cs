@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class pObjectManager : MonoBehaviour {
+    public GameObject vrThrowingplat;
+    public GameObject bombPrefab;
+    public GameObject rockPrefab;
+    public Transform bombSpawnPoint;
     public bool bomb;
     public bool arrow;
     public bool rock;
@@ -20,9 +24,12 @@ public class pObjectManager : MonoBehaviour {
             bombRespawnTime = bombRespawnTime - Time.deltaTime;
             if (bombRespawnTime <= 0){
                 //spawn new bomb
+              GameObject clone =  Instantiate(bombPrefab, bombSpawnPoint.position, Quaternion.identity);
+                clone.transform.parent = vrThrowingplat.transform;
                 bomb = false;
+                bombRespawnTime = 10.0f;
             }
-            Debug.Log("bomb resapwn");
+          //  Debug.Log("bomb resapwn");
         }
         if (arrow == true){
             arrowRespawnTime = arrowRespawnTime - Time.deltaTime;

@@ -178,8 +178,8 @@ namespace Valve.VR.InteractionSystem
 			}
 			else
 			{
-				velocity = Player.instance.trackingOriginTransform.TransformVector( hand.controller.velocity ) * 3;
-				angularVelocity = Player.instance.trackingOriginTransform.TransformVector( hand.controller.angularVelocity ) * 3;
+				velocity = Player.instance.trackingOriginTransform.TransformVector( hand.controller.velocity );
+				angularVelocity = Player.instance.trackingOriginTransform.TransformVector( hand.controller.angularVelocity );
 				position = hand.transform.position;
 			}
 
