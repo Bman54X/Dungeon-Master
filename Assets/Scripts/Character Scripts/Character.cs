@@ -96,7 +96,7 @@ public class Character : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		//Only check for input and update position when not paused
 		if (!paused && alive) {
 			checkMovement();
@@ -203,6 +203,7 @@ public class Character : MonoBehaviour {
 				moveDirection.y = jumpSpeed;
 				jumpPressed = false;
 				waitToJump = false;
+				anim.SetBool ("Jump", false);
 			}
 		}
 
