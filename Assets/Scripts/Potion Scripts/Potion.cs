@@ -11,7 +11,7 @@ public class Potion : MonoBehaviour {
 	public string potionTag;
 
 	// Use this for initialization
-	void Start() {
+	void Awake() {
 	}
 
 	public void changeInventory(int num) {

@@ -14,7 +14,7 @@ public class BlowUpOnHit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(pobjectM.bomb);
+        //Debug.Log(pobjectM.bomb);
 	}
     public void setTrue()
     {

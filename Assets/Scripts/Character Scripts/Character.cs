@@ -27,7 +27,7 @@ public class Character : MonoBehaviour {
 	int speedMultiplier = 1, goldMultiplier = 1, defense = 1;
 
 	const float gravity = 9.81f, attackTimer = 1.0f;
-	float speed = 6.0f, jumpSpeed = 15.0f, rotateSpeed = 10.0f, arrowSpeed = 15.0f;
+	float speed = 6.0f, jumpSpeed = 15.0f, rotateSpeed = 10.0f, arrowSpeed = 60.0f;
 	float potionTimer = 15.0f, holdAttack = 0.0f, walkCounter = 0.0f, jumpCounter = 0.0f;
 
 	public Text healthText, goldText, addedGold, bowAmmoText, countdownText;
@@ -41,11 +41,12 @@ public class Character : MonoBehaviour {
 	MouseLook mouseLook;
 	SoundBank soundBank;
 
-	Potion[] potionInventory = new Potion[4];
+	List<Potion> potionInventory = new List<Potion>();
+	//Potion[] potionInventory = new Potion[4];
 	int currentPotion;
 
     // Use this for initialization
-    void Awake () {
+    void Start () {
         cc = GetComponent<CharacterController>();
         if (cc == null) {
             Debug.Log("No CharacterController found.");
@@ -86,17 +87,17 @@ public class Character : MonoBehaviour {
 		cameraTransform = mainCamera.transform;
 		crossbowCamera.SetActive (false);
 
-		//Add all the avilable potions to the inventory
-		potionInventory[0] = GameObject.FindWithTag("Inventory").GetComponent<HealthPotion>();
-		potionInventory[1] = GameObject.FindWithTag("Inventory").GetComponent<GoldPotion>();
-		potionInventory[2] = GameObject.FindWithTag("Inventory").GetComponent<DefensePotion>();
-		potionInventory[3] = GameObject.FindWithTag("Inventory").GetComponent<SpeedPotion>();
+		//Add all the available potions to the inventory
+		potionInventory.Add(GameObject.FindWithTag("Inventory").GetComponent<HealthPotion>());
+		potionInventory.Add(GameObject.FindWithTag("Inventory").GetComponent<GoldPotion>());
+		potionInventory.Add(GameObject.FindWithTag("Inventory").GetComponent<DefensePotion>());
+		potionInventory.Add(GameObject.FindWithTag("Inventory").GetComponent<SpeedPotion>());
 
 		currentPotion = 0;
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 		//Only check for input and update position when not paused
 		if (!paused && alive) {
 			checkMovement();
@@ -174,15 +175,13 @@ public class Character : MonoBehaviour {
 			}
 
 			//Changed the current animation based on the movement speed
-			if (moveDirection.x == 0 && moveDirection.z == 0) {
+			if (x == 0 && z == 0) {
 				soundBank.footstepSounds (false);
 				anim.SetFloat ("Speed", 0);
 			} else if (!walking && !startWalkCounter) {
 				anim.SetFloat ("Speed", 1);
 				soundBank.footstepSounds (true);
 			}
-
-			anim.SetBool ("Jump", false);
 		} else if (!cc.isGrounded) {
 			RaycastHit hitInfo = new RaycastHit();
 			if (Physics.Raycast (new Ray (transform.position, Vector3.down), out hitInfo, 0.2f)) {
@@ -201,8 +200,7 @@ public class Character : MonoBehaviour {
 			if (jumpCounter >= 0.4f) {
 				jumpCounter = 0.0f;
 				moveDirection.y = jumpSpeed;
-				jumpPressed = false;
-				waitToJump = false;
+				jumpPressed = false; waitToJump = false;
 				anim.SetBool ("Jump", false);
 			}
 		}

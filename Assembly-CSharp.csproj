@@ -255,6 +255,7 @@
      <Compile Include="Assets\Scripts\VR Scripts\GetSpeed.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\GetVelocity.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\MoveIfDead.cs" />
+     <Compile Include="Assets\Scripts\VR Scripts\MovePlayerIfHit.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\RotateThisObject.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\ScaleThis.cs" />
      <Compile Include="Assets\Scripts\VR Scripts\SetActive.cs" />
