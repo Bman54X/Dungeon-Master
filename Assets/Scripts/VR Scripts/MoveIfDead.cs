@@ -17,6 +17,7 @@ public class MoveIfDead : MonoBehaviour {
     public Transform VRPLAT4;
     public Transform VRplat3;
     public Transform VRplat4;
+    private MovePlayerIfHit movePifHit1;
     private MovePlayerIfHit movePifHit2;
     private MovePlayerIfHit movePifHit3;
     private MovePlayerIfHit movePifHit4;
@@ -27,7 +28,7 @@ public class MoveIfDead : MonoBehaviour {
     public Transform rangeRoomSpawnPoint;
     // Use this for initialization
     void Start () {
-
+       // movePifHit1 = VRPLAT1.GetComponent<MovePlayerIfHit>();
         movePifHit2 = VRPLAT2.GetComponent<MovePlayerIfHit>();
         movePifHit3 = VRPLAT3.GetComponent<MovePlayerIfHit>();
         movePifHit4 = VRPLAT4.GetComponent<MovePlayerIfHit>();

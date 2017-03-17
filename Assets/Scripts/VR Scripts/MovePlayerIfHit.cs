@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MovePlayerIfHit : MonoBehaviour {
+    public bool moveP1 = false;
     public bool moveP2 = false;
     public bool moveP3 = false;
     public bool moveP4 = false;
@@ -15,8 +16,10 @@ public class MovePlayerIfHit : MonoBehaviour {
 	void Update () {
 		
 	}
-    public void OnTriggerEnter(Collider other)
-    {
+    public void OnTriggerEnter(Collider other){
+        if(gameObject.name == "MoveToSpot1"){
+            moveP1 = true;
+        }
         if (gameObject.name == "MoveToSpot2"){
             moveP2 = true;
         }

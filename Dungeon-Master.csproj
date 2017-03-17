@@ -52,9 +52,6 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -69,9 +66,6 @@
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
@@ -257,11 +251,14 @@
     <Compile Include="Assets\Scripts\Character Scripts\MouseLook.cs" />
     <Compile Include="Assets\Scripts\Character Scripts\MouseOrbit.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\Arrow.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\Door.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\Gold.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\HealthVial.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\PlatformMover.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\SoundBank.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\Switch.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\Sword.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\TimedSwitch.cs" />
     <Compile Include="Assets\Scripts\Potion Scripts\DefensePotion.cs" />
     <Compile Include="Assets\Scripts\Potion Scripts\GoldPotion.cs" />
     <Compile Include="Assets\Scripts\Potion Scripts\HealthPotion.cs" />
