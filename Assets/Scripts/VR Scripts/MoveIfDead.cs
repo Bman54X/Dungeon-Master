@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MoveIfDead : MonoBehaviour {
     public bool dead = false;
+    public bool cRoom = false;
+    public bool rRoom = false;
     public GameObject skeletonP;
     public GameObject throwingPlat;
     public Transform deadP;
@@ -21,6 +23,8 @@ public class MoveIfDead : MonoBehaviour {
     public GameObject pOBJref;
     private pObjectManager pOBJ;
     public GameObject vrBomb;
+    public Transform combatRoomSpawnPoint;
+    public Transform rangeRoomSpawnPoint;
     // Use this for initialization
     void Start () {
 
@@ -56,6 +60,16 @@ public class MoveIfDead : MonoBehaviour {
             transform.position = VRplat4.transform.position;
             throwingPlat.transform.position = VRplat4.transform.position + new Vector3(2, 0, 0);
             movePifHit4.moveP4 = false;
+        }
+        if(cRoom == true)
+        {
+            skeletonP.transform.position = combatRoomSpawnPoint.transform.position;
+            transform.position = combatRoomSpawnPoint.transform.position;
+        }
+        if (rRoom == true)
+        {
+            skeletonP.transform.position = rangeRoomSpawnPoint.transform.position;
+            transform.position = rangeRoomSpawnPoint.transform.position;
         }
     }
 }

@@ -264,7 +264,11 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		void Awake()
 		{
-			if ( trackingOriginTransform == null )
+            
+         
+                
+
+            if ( trackingOriginTransform == null )
 			{
 				trackingOriginTransform = this.transform;
 			}

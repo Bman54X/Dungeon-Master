@@ -252,7 +252,6 @@
     <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\TriggerEventBroadcaster.cs" />
     <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\V3Tools.cs" />
     <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\Warning.cs" />
-    <Compile Include="Assets\MovePlayerIfHit.cs" />
     <Compile Include="Assets\Scripts\Character Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\Character Scripts\DPadButtons.cs" />
     <Compile Include="Assets\Scripts\Character Scripts\MouseLook.cs" />
@@ -291,6 +290,7 @@
     <Compile Include="Assets\Scripts\VR Scripts\GetSpeed.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\GetVelocity.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\MoveIfDead.cs" />
+    <Compile Include="Assets\Scripts\VR Scripts\MovePlayerIfHit.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\RotateThisObject.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\ScaleThis.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\SetActive.cs" />
