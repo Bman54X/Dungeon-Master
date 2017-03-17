@@ -41,13 +41,11 @@ namespace Valve.VR.InteractionSystem
                 c.gameObject.transform.position = c.gameObject.transform.position - c.gameObject.transform.right;
                 Instantiate(SwordS, c.gameObject.transform.position, c.gameObject.transform.rotation);
                 hand.DetachObject(c.gameObject);
-            }
-            if(c.gameObject.tag == "Arrow")
+            }else if(c.gameObject.tag == "Arrow" && c.gameObject.GetComponent<Arrow>().tag == "enemy")
             {
                 Debug.Log("arrow hit enemy");
 				character.takeDamage(10);
             }
-            
         }
     }
 }
