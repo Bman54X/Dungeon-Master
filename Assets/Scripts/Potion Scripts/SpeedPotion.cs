@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpeedPotion : Potion {
-	void Awake() {
+	public SpeedPotion() {
 		potionTag = "speed";
 		inventory = 5;
 		character = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();

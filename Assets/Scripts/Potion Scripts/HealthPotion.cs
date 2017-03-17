@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthPotion : Potion {
-	void Awake() {
+	public HealthPotion() {
 		potionTag = "health";
 		character = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
 		inventory = 3;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DefensePotion : Potion {
 	// Use this for initialization
-	void Awake() {
+	public DefensePotion() {
 		potionTag = "defense";
 		inventory = 8;
 		character = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
