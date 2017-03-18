@@ -20,10 +20,13 @@ public class hpVR : MonoBehaviour {
             mid.dead = true;
         }	
 	}
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider c)
     {
-        Debug.Log(other.gameObject.name);
-        hp = hp - 95;
+        if (c.gameObject.tag == "Arrow" && c.gameObject.GetComponent<ArrowProjectile>().shooter == "player")
+        {
+            Debug.Log(c.gameObject.name);
+            hp = hp - 95;
+        }
     }
 
 }

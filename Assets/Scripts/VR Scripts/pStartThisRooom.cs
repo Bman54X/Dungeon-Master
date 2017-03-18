@@ -13,8 +13,13 @@ public class pStartThisRooom : MonoBehaviour {
 	void Update () {
 		
 	}
-    private void OnTriggerEnter(Collider other)
-    {
+    private void OnTriggerEnter(Collider other) {
         pMove.startButton = true;
     }
+   /* private void OnTriggerStay(Collider other) {
+        pMove.startButton = true;
+    }
+    private void OnTriggerExit(Collider other) {
+        pMove.startButton = false;
+    }*/
 }

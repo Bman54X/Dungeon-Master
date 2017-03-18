@@ -32,8 +32,8 @@ public class MoveIfDead : MonoBehaviour {
         movePifHit2 = VRPLAT2.GetComponent<MovePlayerIfHit>();
         movePifHit3 = VRPLAT3.GetComponent<MovePlayerIfHit>();
         movePifHit4 = VRPLAT4.GetComponent<MovePlayerIfHit>();
-        skeletonP.transform.position = VRPLAT.position;
-        transform.position = VRPLAT.position;
+      //  skeletonP.transform.position = VRPLAT.position;
+       // transform.position = VRPLAT.position;
 	}
 	// Update is called once per frame
 	void Update () {
