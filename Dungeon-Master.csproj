@@ -250,7 +250,7 @@
     <Compile Include="Assets\Scripts\Character Scripts\DPadButtons.cs" />
     <Compile Include="Assets\Scripts\Character Scripts\MouseLook.cs" />
     <Compile Include="Assets\Scripts\Character Scripts\MouseOrbit.cs" />
-    <Compile Include="Assets\Scripts\Object Scripts\Arrow.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\ArrowProjectile.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\Door.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\Gold.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\HealthVial.cs" />

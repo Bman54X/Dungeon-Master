@@ -65,7 +65,8 @@ namespace Valve.VR.InteractionSystem
 		{
 			GameObject arrow = Instantiate( arrowPrefab, arrowNockTransform.position, arrowNockTransform.rotation ) as GameObject;
 			arrow.name = "Bow Arrow";
-			arrow.transform.parent = arrowNockTransform;
+            arrow.GetComponent<ArrowProjectile>().shooter = "enemy";
+            arrow.transform.parent = arrowNockTransform;
 			Util.ResetTransform( arrow.transform );
 
 			arrowList.Add( arrow );

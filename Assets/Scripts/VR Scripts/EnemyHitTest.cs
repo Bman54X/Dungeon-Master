@@ -36,14 +36,14 @@ namespace Valve.VR.InteractionSystem
              //   Debug.Log(SwordR);               
                 Debug.Log("sword hit enemy");
                
-				character.takeDamage(10);
+				character.takeDamage(20);
                 hand = c.gameObject.GetComponentInParent<Hand>();                      
                 c.gameObject.transform.position = c.gameObject.transform.position - c.gameObject.transform.right;
                 Instantiate(SwordS, c.gameObject.transform.position, c.gameObject.transform.rotation);
                 hand.DetachObject(c.gameObject);
-            }else if(c.gameObject.tag == "Arrow" && c.gameObject.GetComponent<Arrow>().tag == "enemy")
+            } else if(c.gameObject.tag == "Arrow" && c.gameObject.GetComponent<ArrowProjectile>().shooter == "enemy")
             {
-                Debug.Log("arrow hit enemy");
+                Destroy(c.gameObject);
 				character.takeDamage(10);
             }
         }
