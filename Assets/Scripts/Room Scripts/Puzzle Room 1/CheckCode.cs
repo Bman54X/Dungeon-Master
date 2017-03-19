@@ -1,30 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckCode : MonoBehaviour {
-    public GameObject N1;
-    public GameObject N2;
-    public GameObject N3;
-    // Use this for initialization
-    void Start () {
-        N1 = GameObject.Find("N1");
-        N2 = GameObject.Find("N2");
-        N3 = GameObject.Find("N3");
-    }
+    public GameObject N1, N2, N3;
+	public GameObject crossbowTutorial, switchTutorial;
+	public Text acquireCrossbow;
+	public Transform pedestal, pedestalPosition;
+	int speed = 2;
+
+	bool correct = false;
+
+	void Start() {
+		crossbowTutorial.SetActive (false); switchTutorial.SetActive (false);
+		acquireCrossbow.text = "";
+	}
 	
 	// Update is called once per frame
 	void Update () {
-        checkCode();
+		if (!correct) {
+			checkCode ();
+		} else {
+			pedestal.position = Vector3.MoveTowards (pedestal.position, pedestalPosition.position, speed * Time.deltaTime);
+		}
 	}
-    void checkCode()
-    {
-        if (N1 != null)
-        {
-            if (N1.GetComponentInChildren<TextMesh>().text == 1.ToString() && N2.GetComponentInChildren<TextMesh>().text == 2.ToString() && N3.GetComponentInChildren<TextMesh>().text == 3.ToString())
-            {
-                Destroy(N1);
+
+    void checkCode() {
+        if (N1 != null) {
+            if (N1.GetComponentInChildren<TextMesh>().text == 9.ToString() && 
+				N2.GetComponentInChildren<TextMesh>().text == 7.ToString() && 
+				N3.GetComponentInChildren<TextMesh>().text == 2.ToString()) {
+				correct = true;
+				crossbowTutorial.SetActive (true); switchTutorial.SetActive (true);
+				Invoke ("resetCrossbowText", 3.0f);
+				acquireCrossbow.text = "You acquired the crossbow!";
             }
         }
     }
+
+	void resetCrossbowText() {
+		acquireCrossbow.text = "";
+	}
 }

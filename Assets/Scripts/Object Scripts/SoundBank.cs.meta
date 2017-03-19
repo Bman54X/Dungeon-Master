@@ -1,10 +1,20 @@
 fileFormatVersion: 2
 guid: e63b457f063d58740a8a4ef8b1a42ac4
-timeCreated: 1489463660
+timeCreated: 1489883283
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - footsteps: {fileID: 8300000, guid: 1cbc10338656d2e44b5bc6222a979186, type: 3}
+  - swordSwing: {fileID: 8300000, guid: 48f6671814a1ef6409ee54285eac3e2b, type: 3}
+  - heavySwordSwing: {fileID: 8300000, guid: f1c1d8752e90add4c934cd82ba7cf879, type: 3}
+  - switchWeapon: {fileID: 8300000, guid: fb0ceac995eaeaf488d7e0e6bcbff433, type: 3}
+  - shootArrow: {fileID: 8300000, guid: 7a91acc266f587d41a30b4f7ad7f9f01, type: 3}
+  - gold: {fileID: 8300000, guid: 778b7445917be0a47bbd9361900e0b80, type: 3}
+  - drinkPotion: {fileID: 8300000, guid: 88ab0ad6b12af5243881868b8f2b7f65, type: 3}
+  - healthVial: {fileID: 8300000, guid: b9f2c7d19123d7b4aa78dd3aef92318f, type: 3}
+  - lightHit: {fileID: 8300000, guid: fbc7eadf90748264cb94ec0b7e01b656, type: 3}
+  - strongHit: {fileID: 8300000, guid: e04c2aa4aee53c04e92e1adaab37ee43, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

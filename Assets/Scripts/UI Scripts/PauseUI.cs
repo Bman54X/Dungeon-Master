@@ -5,12 +5,15 @@ using UnityEngine;
 public class PauseUI : MonoBehaviour {
 	Character player;
 	MouseOrbit mouse;
+	public MouseLook crossbowYCamera;
+	MouseLook crossbowXCamera;
 	public GameObject pausePanel;
 	bool paused = false;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		player = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
+		crossbowXCamera = GameObject.FindGameObjectWithTag ("player").GetComponent<MouseLook> ();
 		mouse = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MouseOrbit>();
 		pausePanel.SetActive (false);
 	}
@@ -21,6 +24,8 @@ public class PauseUI : MonoBehaviour {
 			paused = !paused;
 			player.setPaused (paused);
 			mouse.setPaused (paused);
+			crossbowXCamera.changeCanLook (!paused);
+			crossbowYCamera.changeCanLook (!paused);
 
 			if (paused) {
 				Time.timeScale = 0.0f;

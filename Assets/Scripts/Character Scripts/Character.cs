@@ -10,7 +10,7 @@ public class Character : MonoBehaviour {
 	CharacterController cc;
 	Animator anim;
 	public Transform arrowSpawn;
-	Transform cameraTransform;
+	Transform cameraTransform, spawnPoint;
 
 	AimIK aimIK;
 
@@ -28,10 +28,10 @@ public class Character : MonoBehaviour {
 	int speedMultiplier = 1, goldMultiplier = 1, defense = 1;
 
 	const float gravity = 9.81f, attackTimer = 1.0f;
-	float speed = 6.0f, jumpSpeed = 18.4f, rotateSpeed = 10.0f, arrowSpeed = 60.0f;
+	float speed = 6.0f, jumpSpeed = 15.0f, rotateSpeed = 10.0f, arrowSpeed = 80.0f;
 	float potionTimer = 15.0f, holdAttack = 0.0f, walkCounter = 0.0f, jumpCounter = 0.0f;
 
-    public Text healthText, goldText, addedGold, bowAmmoText, countdownText;
+	public Text healthText, goldText, addedGold, bowAmmoText, countdownText;
 	public Slider healthSlider;
 	Slider attackSlider;
 
@@ -347,16 +347,16 @@ public class Character : MonoBehaviour {
 		//Checking if using potion
 		if (Input.GetButtonDown("DrinkPotion") && !potionActivated && potionInventory[currentPotion].getInventory() > 0) {
 			bool check = potionInventory[currentPotion].potionEffect();
+
 			if (!check) {
 				maxHealthAlready = true;
 			} else {
 				potionInventory [currentPotion].changeInventory (-1);
+				potionUsed = true;
+				healthSlider.value = _health;
+				healthText.text = _health.ToString();
+				soundBank.playClip (soundEffect.DRINK_POTION);
 			}
-
-			potionUsed = true;
-			healthSlider.value = _health;
-			healthText.text = _health.ToString();
-			soundBank.playClip (soundEffect.DRINK_POTION);
 		}
 	}
 
@@ -420,6 +420,21 @@ public class Character : MonoBehaviour {
 	void playerDeath() {
 		anim.SetTrigger ("Dead");
 		alive = false;
+		Invoke ("respawn", 3.0f);
+	}
+
+	void respawn() {
+		alive = true;
+		anim.SetTrigger ("Alive");
+		transform.position = spawnPoint.position;
+
+		//Set deafult values
+		curLoc = transform.position;
+		_health = maxHealth;
+
+		healthSlider.value = _health;
+		healthText.text = _health.ToString();
+		bowAmmoText.text = bowAmmo.ToString();
 	}
 		
 	void OnTriggerEnter(Collider other) {
@@ -460,7 +475,7 @@ public class Character : MonoBehaviour {
 			}
 		//If the player has picked up an arrow bundle,
 		//add 5 up to the maximum
-		}  else if (other.gameObject.CompareTag("ArrowBundle")) {
+		} else if (other.gameObject.CompareTag("ArrowBundle")) {
 			if (bowAmmo < maxArrows) {
 				bowAmmo += 5;
 				if (bowAmmo > maxArrows) {
@@ -468,6 +483,10 @@ public class Character : MonoBehaviour {
 				}
 			}
 			bowAmmoText.text = bowAmmo.ToString();
+
+			Destroy (other.gameObject);
+		} else if (other.gameObject.CompareTag("Crossbow")) {
+			crossbowFound = true;
 
 			Destroy (other.gameObject);
 		}
@@ -525,5 +544,9 @@ public class Character : MonoBehaviour {
 
 	public void setPaused(bool newPause) {
 		paused = newPause;
+	}
+
+	public void setSpawnPoint(Transform spawn) {
+		spawnPoint = spawn;
 	}
 }

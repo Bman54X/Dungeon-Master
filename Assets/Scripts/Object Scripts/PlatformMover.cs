@@ -8,6 +8,7 @@ public class PlatformMover : MonoBehaviour {
 	bool startIsTarget;
 	float waitTime, counter, speed;
 	bool activated;
+	public bool backAndForth;
 
 	// Use this for initialization
 	void Awake() {
@@ -21,12 +22,16 @@ public class PlatformMover : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate() {
 		if (activated) {
-			transform.position = Vector3.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
-			if (transform.position == target.position) {
-				counter += Time.deltaTime;
-				if (counter >= waitTime) {
-					changeTarget ();
+			if (backAndForth) {
+				transform.position = Vector3.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
+				if (transform.position == target.position) {
+					counter += Time.deltaTime;
+					if (counter >= waitTime) {
+						changeTarget ();
+					}
 				}
+			} else {
+				transform.position = Vector3.MoveTowards (transform.position, end.position, speed * Time.deltaTime);
 			}
 		}
 	}

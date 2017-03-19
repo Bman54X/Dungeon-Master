@@ -4,30 +4,27 @@ using UnityEngine;
 
 public class ChangeNumber : MonoBehaviour {
     int i = 0;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-    void changeNumber()
-    {
+	bool hit = false;
+
+    void changeNumber() {
         GetComponent<TextMesh>().text = i.ToString();
         i++;
-        if (i == 11)
-        {
+        if (i == 11) {
             i = 0;
             GetComponent<TextMesh>().text = i.ToString();
         }
+		hit = true;
+
+		Invoke("resetHit", Time.deltaTime);
     }
-     void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "player" && Input.GetKeyDown("space"))
-        {
-            changeNumber();
+
+    void OnTriggerStay(Collider other) {
+		if (other.gameObject.tag == "player" && Input.GetButtonUp("Interact") && !hit) {
+			changeNumber ();
         }
     }
+
+	void resetHit() {
+		hit = false;
+	}
 }
