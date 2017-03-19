@@ -5,7 +5,7 @@ using UnityEngine;
 public class hpVR : MonoBehaviour {
     public int hp = 100;
     public Transform parent1;
-    
+    public bool hitonce = false;
     private MoveIfDead mid;
 	// Use this for initialization
 	void Start () {
@@ -22,10 +22,24 @@ public class hpVR : MonoBehaviour {
 	}
     private void OnTriggerEnter(Collider c)
     {
+        if (c.gameObject.tag == "Sword" && c.gameObject.GetComponent<Sword>().swinging == true)
+        {
+            
+            Debug.Log("player sword hit vr");
+        }
         if (c.gameObject.tag == "Arrow" && c.gameObject.GetComponent<ArrowProjectile>().shooter == "player")
         {
             Debug.Log(c.gameObject.name);
             hp = hp - 95;
+        }
+    }
+    private void OnTriggerStay(Collider c)
+    {
+        if (c.gameObject.tag == "Sword" && c.gameObject.GetComponent<Sword>().swinging == true)
+        {
+
+            Debug.Log("player sword hit vr");
+            c.gameObject.GetComponent<Sword>().swinging = false;
         }
     }
 

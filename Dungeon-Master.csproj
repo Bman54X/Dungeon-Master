@@ -52,6 +52,9 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -67,6 +70,9 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
     </Reference>
@@ -75,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BombDamage.cs" />
     <Compile Include="Assets\FinalIK\RootMotion\FinalIK\BipedIK\BipedIK.cs" />
     <Compile Include="Assets\FinalIK\RootMotion\FinalIK\BipedIK\BipedIKSolvers.cs" />
     <Compile Include="Assets\FinalIK\RootMotion\FinalIK\Constraints\Constraint.cs" />
@@ -246,6 +253,7 @@
     <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\TriggerEventBroadcaster.cs" />
     <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\V3Tools.cs" />
     <Compile Include="Assets\FinalIK\RootMotion\Shared Scripts\Warning.cs" />
+    <Compile Include="Assets\RespawnRockCR.cs" />
     <Compile Include="Assets\Scripts\Character Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\Character Scripts\DPadButtons.cs" />
     <Compile Include="Assets\Scripts\Character Scripts\MouseLook.cs" />
@@ -255,6 +263,7 @@
     <Compile Include="Assets\Scripts\Object Scripts\Gold.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\HealthVial.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\PlatformMover.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\SetSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\SoundBank.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\Switch.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\Sword.cs" />
@@ -298,6 +307,7 @@
     <Compile Include="Assets\Scripts\VR Scripts\pObjectManager.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\pStartThisRooom.cs" />
     <Compile Include="Assets\Scripts\VR Scripts\uiButtonhit.cs" />
+    <Compile Include="Assets\SpawnNewRockCrossbow.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_Teleporter.cs" />
@@ -400,6 +410,8 @@
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_TrackedObject.cs" />
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_UpdatePoses.cs" />
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_Utils.cs" />
+    <Compile Include="Assets\blowuponhit3.cs" />
+    <Compile Include="Assets\testscript1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\2SIDEDBumpedSpecularRefRim.shader" />
@@ -429,6 +441,7 @@
     <None Include="Assets\SteamVR\Resources\SteamVR_Fade.shader" />
     <None Include="Assets\SteamVR\Resources\SteamVR_SphericalProjection.shader" />
     <None Include="Assets\SteamVR\readme.txt" />
+    <None Include="Assets\True Explosions\System\Shaders\SphereVolumetricExplosion.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -31,7 +31,16 @@ namespace Valve.VR.InteractionSystem
 
         void OnTriggerEnter(Collider c)
         {
-            if (c.gameObject.tag == "Sword")
+            if(c.gameObject.tag == "vrRock")
+            {
+                character.takeDamage(5);
+            }
+            if(c.gameObject.tag =="vrBomb")
+            {
+                character.takeDamage(10);
+                Debug.Log("vrbomb");
+            }
+            if (c.gameObject.tag == "vrSword")
             {
              //   Debug.Log(SwordR);               
                 Debug.Log("sword hit enemy");
