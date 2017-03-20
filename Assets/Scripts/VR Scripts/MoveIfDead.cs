@@ -48,7 +48,8 @@ public class MoveIfDead : MonoBehaviour {
             crossbowVRpr = false;
         }
 		if (dead == true){
-          //  transform.position = deadP.position;
+            transform.position = deadP.position;
+            dead = false;
         }
         if(dead == false){
           // transform.position = roomP.position;
@@ -89,6 +90,11 @@ public class MoveIfDead : MonoBehaviour {
             skeletonP.transform.position = rangeRoomSpawnPoint.transform.position;
             transform.position = rangeRoomSpawnPoint.transform.position;
             rRoom = false;
+        }
+        if(vrPlatR == true)
+        {
+            skeletonP.transform.position = VRPLAT.position;
+            transform.position = VRPLAT.position;
         }
     }
 }

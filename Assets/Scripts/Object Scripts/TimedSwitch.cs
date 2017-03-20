@@ -8,10 +8,12 @@ public class TimedSwitch : MonoBehaviour {
 	public Door door;
 	float resetTime = 5.0f, counter = 0.0f;
 	public TimedSwitch otherSwitch;
+ 
 
-	// Use this for initialization
-	void Start () {
-		activated = false;
+    // Use this for initialization
+    void Start () {
+        
+        activated = false;
 		mesh = GetComponent<MeshRenderer>();
 		mesh.material.color = Color.red;
 		door.setActivation (false);

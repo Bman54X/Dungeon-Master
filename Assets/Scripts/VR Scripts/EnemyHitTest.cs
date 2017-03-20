@@ -25,7 +25,10 @@ namespace Valve.VR.InteractionSystem
         void Update()
         {
            SwordR = GameObject.FindGameObjectWithTag("Sword");
-           Gspeed = SwordR.gameObject.GetComponent<GetSpeed>();
+            if (Gspeed != null)
+            {
+                Gspeed = SwordR.gameObject.GetComponent<GetSpeed>();
+            }
          //   Debug.Log(Gspeed.speed);            
         }
 

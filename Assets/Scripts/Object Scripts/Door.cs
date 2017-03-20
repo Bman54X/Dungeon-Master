@@ -7,17 +7,21 @@ public class Door : MonoBehaviour {
 	int numActivations = 2, totalActivations;
 	float speed;
 	bool activated;
-
-	// Use this for initialization
-	void Awake() {
-		activated = true;
+    public GameObject vrPlayer;
+    private MoveIfDead mid;
+    // Use this for initialization
+   
+    void Awake() {
+        mid = vrPlayer.gameObject.GetComponent<MoveIfDead>(); 
+        activated = true;
 		speed = 5.0f;
 	}
 
 	void FixedUpdate() {
 		if (activated) {
 			transform.position = Vector3.MoveTowards (transform.position, end.position, speed * Time.deltaTime);
-		} else {
+            mid.rRoom = true;
+        } else {
 			transform.position = Vector3.MoveTowards (transform.position, start.position, speed * Time.deltaTime);
 		}
 	}

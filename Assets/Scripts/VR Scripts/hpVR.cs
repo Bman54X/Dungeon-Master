@@ -9,13 +9,13 @@ public class hpVR : MonoBehaviour {
     private MoveIfDead mid;
 	// Use this for initialization
 	void Start () {
-        parent1 = gameObject.transform.root;
+      //  parent1 = gameObject.transform.root;
         mid = parent1.GetComponentInChildren<MoveIfDead>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (hp < 10)
+        if (hp < 1)
         {
             mid.dead = true;
         }	

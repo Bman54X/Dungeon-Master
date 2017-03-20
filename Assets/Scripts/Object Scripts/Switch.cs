@@ -6,10 +6,12 @@ public class Switch : MonoBehaviour {
 	MeshRenderer mesh;
 	bool activated;
 	public PlatformMover platform;
-
+    public GameObject vrPlayer;
+    private MoveIfDead mid;
 	// Use this for initialization
 	void Start () {
-		activated = false;
+        mid = vrPlayer.gameObject.GetComponent<MoveIfDead>();
+        activated = false;
 		mesh = GetComponent<MeshRenderer>();
 		mesh.material.color = Color.red;
 		platform.setActivation (false);
@@ -18,6 +20,7 @@ public class Switch : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag ("Arrow")) {
 			switchActivate();
+            mid.crossbowVRpr = true;
 			Destroy (other.gameObject);
 		}
 	}

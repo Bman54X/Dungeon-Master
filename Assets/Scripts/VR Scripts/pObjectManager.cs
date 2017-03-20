@@ -7,9 +7,10 @@ public class pObjectManager : MonoBehaviour {
     public GameObject bombPrefab;
     public GameObject rockPrefab;
     public Transform bombSpawnPoint;
+    public Transform rockSpawnPoint;
     public bool bomb;
     public bool arrow;
-    public bool rock;
+    public bool rock = true;
     public int rockAmount = 0;
     public float bombRespawnTime = 10.0f;
     public float arrowRespawnTime = 10.0f;
@@ -39,16 +40,17 @@ public class pObjectManager : MonoBehaviour {
             }
             Debug.Log("bomb resapwn");
         }
-        if(rock == true)
-        {
-            spawnNewRock();
-            rock = false;
+        if(rock == true){
+            if (rockAmount < 5){
+                spawnNewRock();      
+            }
         }
     }
-    void spawnNewRock()
-    {
+   public  void spawnNewRock(){
         //spawn rock
-        rockAmount = rockAmount + 1;
+        GameObject clone = Instantiate(rockPrefab, rockSpawnPoint.position, Quaternion.identity);
+        clone.transform.parent = vrThrowingplat.transform;
+       
     }
 }
 
