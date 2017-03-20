@@ -9,7 +9,6 @@ public class Door : MonoBehaviour {
 	bool activated;
     public GameObject vrPlayer;
     private MoveIfDead mid;
-    // Use this for initialization
    
     void Awake() {
         mid = vrPlayer.gameObject.GetComponent<MoveIfDead>(); 

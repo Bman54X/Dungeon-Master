@@ -5,7 +5,7 @@ using UnityEngine;
 public class GoldPotion : Potion {
 	public GoldPotion() {
 		potionTag = "gold";
-		inventory = 4;
+		inventory = 3;
 		character = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
 	}
 

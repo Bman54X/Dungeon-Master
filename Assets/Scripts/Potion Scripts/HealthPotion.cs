@@ -6,7 +6,7 @@ public class HealthPotion : Potion {
 	public HealthPotion() {
 		potionTag = "health";
 		character = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
-		inventory = 3;
+		inventory = 5;
 	}
 
 	public override bool potionEffect() {

@@ -6,15 +6,14 @@ using UnityEngine.UI;
 public class CheckCode : MonoBehaviour {
     public GameObject N1, N2, N3;
 	public GameObject crossbowTutorial, switchTutorial;
-	public Text acquireCrossbow;
 	public Transform pedestal, pedestalPosition;
+	public TextMesh prompt;
 	int speed = 2;
 
 	bool correct = false;
 
 	void Start() {
 		crossbowTutorial.SetActive (false); switchTutorial.SetActive (false);
-		acquireCrossbow.text = "";
 	}
 	
 	// Update is called once per frame
@@ -33,13 +32,8 @@ public class CheckCode : MonoBehaviour {
 				N3.GetComponentInChildren<TextMesh>().text == 2.ToString()) {
 				correct = true;
 				crossbowTutorial.SetActive (true); switchTutorial.SetActive (true);
-				Invoke ("resetCrossbowText", 3.0f);
-				acquireCrossbow.text = "You acquired the crossbow!";
+				prompt.text = "Correct! Collect your reward to the right!";
             }
         }
     }
-
-	void resetCrossbowText() {
-		acquireCrossbow.text = "";
-	}
 }

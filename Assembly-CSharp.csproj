@@ -226,6 +226,7 @@
      <Compile Include="Assets\Scripts\Object Scripts\Door.cs" />
      <Compile Include="Assets\Scripts\Object Scripts\Gold.cs" />
      <Compile Include="Assets\Scripts\Object Scripts\HealthVial.cs" />
+     <Compile Include="Assets\Scripts\Object Scripts\MoveDoor.cs" />
      <Compile Include="Assets\Scripts\Object Scripts\PlatformMover.cs" />
      <Compile Include="Assets\Scripts\Object Scripts\SetSpawnPoint.cs" />
      <Compile Include="Assets\Scripts\Object Scripts\SoundBank.cs" />
@@ -237,6 +238,7 @@
      <Compile Include="Assets\Scripts\Potion Scripts\HealthPotion.cs" />
      <Compile Include="Assets\Scripts\Potion Scripts\Potion.cs" />
      <Compile Include="Assets\Scripts\Potion Scripts\SpeedPotion.cs" />
+     <Compile Include="Assets\Scripts\Room Scripts\DeathTrigger.cs" />
      <Compile Include="Assets\Scripts\Room Scripts\DoorClose.cs" />
      <Compile Include="Assets\Scripts\Room Scripts\DoorTrigger.cs" />
      <Compile Include="Assets\Scripts\Room Scripts\Puzzle Room 1\ChangeFloorColor.cs" />
@@ -404,9 +406,6 @@
      <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\BumpedRimReflective.shader" />
      <None Include="Assets\Downloaded Assets\Character\Matarial Library\Custom Shaders\MOBILE_SuperShaderCUTOUT.shader" />
      <None Include="Assets\SteamVR\InteractionSystem\Readme_InteractionSystem.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -421,9 +420,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

@@ -11,6 +11,7 @@ public class Character : MonoBehaviour {
 	Animator anim;
 	public Transform arrowSpawn;
 	Transform cameraTransform, spawnPoint;
+	public Transform startingPoint;
 
 	AimIK aimIK;
 
@@ -31,7 +32,7 @@ public class Character : MonoBehaviour {
 	float speed = 6.0f, jumpSpeed = 15.0f, rotateSpeed = 10.0f, arrowSpeed = 80.0f;
 	float potionTimer = 15.0f, holdAttack = 0.0f, walkCounter = 0.0f, jumpCounter = 0.0f;
 
-	public Text healthText, goldText, addedGold, bowAmmoText, countdownText;
+	public Text healthText, goldText, addedGold, bowAmmoText, countdownText, acquiredCrossbow;
 	public Slider healthSlider;
 	Slider attackSlider;
 
@@ -58,15 +59,17 @@ public class Character : MonoBehaviour {
 			Debug.Log("No Animator found.");
 		}
 
-		//Set deafult values
+		//Set default values
 		curLoc = transform.position;
 		_health = maxHealth;
+
+		spawnPoint = startingPoint;
+		transform.position = spawnPoint.position;
 
 		healthSlider.value = _health;
 		healthText.text = _health.ToString();
 		goldText.text = "Gold: " + gold;
-		addedGold.text = "";
-		countdownText.text = "";
+		countdownText.text = acquiredCrossbow.text = addedGold.text = "";
 		bowAmmoText.text = bowAmmo.ToString();
 
 		attackSlider = attackSliderObject.GetComponent<Slider> ();
@@ -74,7 +77,7 @@ public class Character : MonoBehaviour {
 		mouseLook.changeCanLook (false);
 		soundBank = gameObject.GetComponentInChildren<SoundBank>();
 
-		crossbowFound = true;
+		crossbowFound = false;
 
 		//Show and hide various parts of the UI
 		backCrossbow.SetActive (true); handCrossbow.SetActive (false);
@@ -100,7 +103,7 @@ public class Character : MonoBehaviour {
 	}
 
 	void Update() {
-		if (attacking && checkAttack) {
+		if (checkAttack) {
 			if (!anim.GetCurrentAnimatorStateInfo(1).IsName ("normalSlash") &&
 				!anim.GetCurrentAnimatorStateInfo(1).IsName ("overheadAttack") &&
 				!anim.GetCurrentAnimatorStateInfo(1).IsName ("quickStab")) {
@@ -265,21 +268,21 @@ public class Character : MonoBehaviour {
 			if (holdAttack >= attackTimer) {
 				anim.SetTrigger ("StrongAttack");
 				Invoke("strongHitSound", 0.6f);
+				Invoke("setCheckAttack", 0.7f);
 			} else {
 				anim.SetTrigger ("NormalAttack");
+				Invoke("setCheckAttack", 0.4f);
 				soundBank.playClip (soundEffect.SWORD_SWING);
 			}
 			attacking = true;
-			sword.swinging = true;
-			Invoke("setCheckAttack", 0.1f);
+
 			attackSliderObject.SetActive (false);
 			holdAttack = 0.0f;
 		//Check for stab input
 		} else if (Input.GetButtonDown ("Stab") && swordEquipped && !attacking) {
 			anim.SetTrigger ("Stab");
-			Invoke("setCheckAttack", 0.1f);
+			Invoke("setCheckAttack", 0.5f);
 			attacking = true;
-			sword.swinging = true;
 		} else if ((Input.GetButton ("AimBow") || Input.GetAxis("AimBowJoystick") >= 0.5f) && !swordEquipped) {
 			anim.SetBool ("Aiming", true);
 			crossbowCamera.SetActive (true); mainCamera.SetActive (false);
@@ -379,6 +382,10 @@ public class Character : MonoBehaviour {
 	void resetGoldText() {
 		addedGold.text = "";
 	}
+		
+	void resetCrossbowText() {
+		acquiredCrossbow.text = "";
+	}
 
 	void strongHitSound() {
 		soundBank.playClip (soundEffect.HEAVY_SWORD_SWING);
@@ -390,6 +397,7 @@ public class Character : MonoBehaviour {
 
 	void setCheckAttack() {
 		checkAttack = !checkAttack;
+		sword.swinging = true;
 	}
 
 	public void takeDamage(int damage) {
@@ -487,6 +495,8 @@ public class Character : MonoBehaviour {
 			Destroy (other.gameObject);
 		} else if (other.gameObject.CompareTag("Crossbow")) {
 			crossbowFound = true;
+			Invoke ("resetCrossbowText", 3.0f);
+			acquiredCrossbow.text = "You acquired the crossbow!";
 
 			Destroy (other.gameObject);
 		}

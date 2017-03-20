@@ -24,7 +24,8 @@ public class PlatformMover : MonoBehaviour {
 		if (activated) {
 			if (backAndForth) {
 				transform.position = Vector3.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
-				if (transform.position == target.position) {
+				float dist = Mathf.Abs(Vector3.Distance (target.position, transform.position));
+				if (dist <= 0.05f) {
 					counter += Time.deltaTime;
 					if (counter >= waitTime) {
 						changeTarget ();

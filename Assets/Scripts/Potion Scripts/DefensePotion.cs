@@ -6,7 +6,7 @@ public class DefensePotion : Potion {
 	// Use this for initialization
 	public DefensePotion() {
 		potionTag = "defense";
-		inventory = 8;
+		inventory = 5;
 		character = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
 	}
 
