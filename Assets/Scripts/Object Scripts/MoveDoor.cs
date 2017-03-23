@@ -1,34 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace Valve.VR.InteractionSystem
+{
+    public class MoveDoor : MonoBehaviour
+    {
+        public Transform door;
+        public Transform doorStart, doorEnd;
+        Transform target;
+        float speed = 8.0f;
+        public GameObject vrPlayer;
+        public GameObject hpREF;
+        private MoveIfDead mid;
+        private hpVR hpvr;
+        bool alreadyChanged = false;
+        public bool runThisOnce = true;
 
-public class MoveDoor : MonoBehaviour {
-	public Transform door;
-	public Transform doorStart, doorEnd;
-	Transform target;
-	float speed = 8.0f;
+        // Use this for initialization
+        void Start()
+        {
 
-	// Use this for initialization
-	void Start () {
-		target = doorStart;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		door.position = Vector3.MoveTowards (door.position, target.position, speed * Time.deltaTime);
-	}
+            mid = vrPlayer.gameObject.GetComponent<MoveIfDead>();
+            hpvr = hpREF.gameObject.GetComponent<hpVR>();
+            target = doorStart;
+        }
 
-	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.tag == "player") {
-			changeTarget ();
-		}
-	}
+        // Update is called once per frame
+        void Update()
+        {
+            door.position = Vector3.MoveTowards(door.position, target.position, speed * Time.deltaTime);
+        }
 
-	public void changeTarget() {
-		if (target == doorStart) {
-			target = doorEnd;
-		} else {
-			target = doorStart;
-		}
-	}
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "player" && !alreadyChanged)
+            {
+                changeTarget();
+                if (runThisOnce == true)
+                {
+                    mid.rRoom = true;
+                    Debug.Log("this ran");
+                    hpvr.spawnedInRangeRoom = true;
+                    runThisOnce = false;
+                }
+            }
+        }
+
+        public void changeTarget()
+        {
+            target = doorEnd;
+            alreadyChanged = true;
+        }
+    }
 }

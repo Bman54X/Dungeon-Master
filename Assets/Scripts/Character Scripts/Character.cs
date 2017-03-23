@@ -13,7 +13,9 @@ public class Character : MonoBehaviour {
 	Transform cameraTransform, spawnPoint;
 	public Transform startingPoint;
 
-	AimIK aimIK;
+    private MoveIfDead mid;
+    public GameObject vrPlayer;
+    AimIK aimIK;
 
     Vector3 moveDirection;
 	Vector3 prevLoc, curLoc, forward, right;
@@ -29,8 +31,11 @@ public class Character : MonoBehaviour {
 	int speedMultiplier = 1, goldMultiplier = 1, defense = 1;
 
 	const float gravity = 9.81f, attackTimer = 1.0f;
-	float speed = 6.0f, jumpSpeed = 15.0f, rotateSpeed = 10.0f, arrowSpeed = 80.0f;
+	float speed = 6.0f, rotateSpeed = 10.0f, arrowSpeed = 80.0f;
 	float potionTimer = 15.0f, holdAttack = 0.0f, walkCounter = 0.0f, jumpCounter = 0.0f;
+    float jumpSpeed = 18.55f;
+
+    public Transform rangeSpawn, VRSpawn;
 
 	public Text healthText, goldText, addedGold, bowAmmoText, countdownText, acquiredCrossbow;
 	public Slider healthSlider;
@@ -49,6 +54,7 @@ public class Character : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        mid = vrPlayer.GetComponentInChildren<MoveIfDead>();
         cc = GetComponent<CharacterController>();
         if (cc == null) {
             Debug.Log("No CharacterController found.");
@@ -103,7 +109,22 @@ public class Character : MonoBehaviour {
 	}
 
 	void Update() {
-		if (checkAttack) {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            transform.position = rangeSpawn.position;
+            crossbowFound = true;
+        } else if (Input.GetKeyDown(KeyCode.M))
+        {
+            transform.position = startingPoint.position;
+            crossbowFound = false;
+        }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            transform.position = VRSpawn.position;
+            mid.vrPlatR = true;
+            crossbowFound = true;
+        }
+        if (checkAttack) {
 			if (!anim.GetCurrentAnimatorStateInfo(1).IsName ("normalSlash") &&
 				!anim.GetCurrentAnimatorStateInfo(1).IsName ("overheadAttack") &&
 				!anim.GetCurrentAnimatorStateInfo(1).IsName ("quickStab")) {
@@ -292,7 +313,7 @@ public class Character : MonoBehaviour {
 			Invoke ("setAnimSpeed", 0.5f);
 
 			if (Input.GetButtonDown ("NormalAttack") && bowAmmo > 0) {
-				bowAmmo--;
+				//bowAmmo--;
 				bowAmmoText.text = bowAmmo.ToString();
 
 				GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;

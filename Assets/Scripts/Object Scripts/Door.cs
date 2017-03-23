@@ -1,41 +1,64 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace Valve.VR.InteractionSystem
+{
+    public class Door : MonoBehaviour
+    {
+        public Transform start, end;
+        int numActivations = 2, totalActivations;
+        float speed;
+        bool activated;
+        public GameObject vrPlayer;
+        public GameObject hpREF;
+        private MoveIfDead mid;
+        private hpVR hpvr;
+        public bool runThisOnce = true;
 
-public class Door : MonoBehaviour {
-	public Transform start, end;
-	int numActivations = 2, totalActivations;
-	float speed;
-	bool activated;
-    public GameObject vrPlayer;
-    private MoveIfDead mid;
-   
-    void Awake() {
-        mid = vrPlayer.gameObject.GetComponent<MoveIfDead>(); 
-        activated = true;
-		speed = 5.0f;
-	}
+        void Awake()
+        {
+            mid = vrPlayer.gameObject.GetComponent<MoveIfDead>();
+            hpvr = hpREF.gameObject.GetComponent<hpVR>();
+            activated = true;
+            speed = 5.0f;
+        }
+        void FixedUpdate()
+        {
+            if (activated)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, end.position, speed * Time.deltaTime);
+                if (runThisOnce == true)
+                {
+                    mid.rRoom = true;
+                    Debug.Log("this ran");
+                    hpvr.spawnedInRangeRoom = true;
+                    runThisOnce = false;
+                }
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, start.position, speed * Time.deltaTime);
+            }
+        }
 
-	void FixedUpdate() {
-		if (activated) {
-			transform.position = Vector3.MoveTowards (transform.position, end.position, speed * Time.deltaTime);
-            mid.rRoom = true;
-        } else {
-			transform.position = Vector3.MoveTowards (transform.position, start.position, speed * Time.deltaTime);
-		}
-	}
-
-	public void setActivation(bool active) {
-		if (active) {
-			totalActivations++;
-			if (totalActivations == numActivations) {
-				activated = active;
-			}
-		} else {
-			if (totalActivations != 0) {
-				totalActivations--;
-			}
-			activated = active;
-		}
-	}
+        public void setActivation(bool active)
+        {
+            if (active)
+            {
+                totalActivations++;
+                if (totalActivations == numActivations)
+                {
+                    activated = active;
+                }
+            }
+            else
+            {
+                if (totalActivations != 0)
+                {
+                    totalActivations--;
+                }
+                activated = active;
+            }
+        }
+    }
 }

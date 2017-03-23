@@ -14,6 +14,7 @@ public class MoveIfDead : MonoBehaviour {
     public Transform deadP;
     public Transform roomP;
     public Transform VRPLAT;
+    public GameObject doorToDestory;
     public Transform VRplat;
     public GameObject VRPLAT2;
     public Transform VRplat2;
@@ -36,22 +37,25 @@ public class MoveIfDead : MonoBehaviour {
         movePifHit2 = VRPLAT2.GetComponent<MovePlayerIfHit>();
         movePifHit3 = VRPLAT3.GetComponent<MovePlayerIfHit>();
         movePifHit4 = VRPLAT4.GetComponent<MovePlayerIfHit>();
-     //   skeletonP.transform.position = VRPLAT.position;
-     //   transform.position = VRPLAT.position;
-	}
+        transform.position = crossbowVRP.position;
+        skeletonP.transform.position = crossbowVRP.position;
+        //   skeletonP.transform.position = VRPLAT.position;
+        //   transform.position = VRPLAT.position;
+    }
 	// Update is called once per frame
 	void Update () {
-        if(crossbowVRpr == true)
-        {
+     
+		if (dead == true){
+            transform.position = deadP.position;
+            skeletonP.transform.position = crossbowVRP.position;
+            dead = false;
+        }
+        if (crossbowVRpr == true){          
             transform.position = crossbowVRP.position;
             skeletonP.transform.position = crossbowVRP.position;
             crossbowVRpr = false;
         }
-		if (dead == true){
-            transform.position = deadP.position;
-            dead = false;
-        }
-        if(dead == false){
+        if (dead == false){
           // transform.position = roomP.position;
          
         }
@@ -93,8 +97,10 @@ public class MoveIfDead : MonoBehaviour {
         }
         if(vrPlatR == true)
         {
+            Destroy(doorToDestory);
             skeletonP.transform.position = VRPLAT.position;
             transform.position = VRPLAT.position;
+            vrPlatR = false;
         }
     }
 }

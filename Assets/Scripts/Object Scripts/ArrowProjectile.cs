@@ -7,7 +7,7 @@ public class ArrowProjectile : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        //Destroy(gameObject, 4.0f);
+        Destroy(gameObject, 4.0f);
     }
 
     public string shooter

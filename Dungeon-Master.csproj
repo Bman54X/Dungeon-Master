@@ -255,6 +255,7 @@
     <Compile Include="Assets\Scripts\Object Scripts\Door.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\Gold.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\HealthVial.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\MoveDoor.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\PlatformMover.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\SetSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\SoundBank.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Assets\Scripts\Potion Scripts\HealthPotion.cs" />
     <Compile Include="Assets\Scripts\Potion Scripts\Potion.cs" />
     <Compile Include="Assets\Scripts\Potion Scripts\SpeedPotion.cs" />
+    <Compile Include="Assets\Scripts\Room Scripts\DeathTrigger.cs" />
     <Compile Include="Assets\Scripts\Room Scripts\DoorClose.cs" />
     <Compile Include="Assets\Scripts\Room Scripts\DoorTrigger.cs" />
     <Compile Include="Assets\Scripts\Room Scripts\Puzzle Room 1\ChangeFloorColor.cs" />
