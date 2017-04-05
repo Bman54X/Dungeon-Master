@@ -24,7 +24,7 @@ public class Character : MonoBehaviour {
 	bool startWalkCounter = false, crossbowFound = false, swordEquipped = true;
 	bool changedPotions = false, potionActivated = false, potionUsed = false;
 	bool paused = false, alive = true, maxHealthAlready = false, aiming = false;
-	bool attacking = false, checkAttack = false;
+	bool attacking = false, checkAttack = false, actionInProgress = false;
 
 	const int maxHealth = 100, maxArrows = 30;
 	int bowAmmo = 10, gold = 0, _health;
@@ -83,10 +83,14 @@ public class Character : MonoBehaviour {
 		mouseLook.changeCanLook (false);
 		soundBank = gameObject.GetComponentInChildren<SoundBank>();
 
-		crossbowFound = false;
+		crossbowFound = true;
 
 		//Show and hide various parts of the UI
-		backCrossbow.SetActive (true); handCrossbow.SetActive (false);
+		if (!crossbowFound) {
+			backCrossbow.SetActive (false);
+		}
+
+		handCrossbow.SetActive (false);
 		backSword.SetActive (false); handSword.SetActive (true);
 		bowIcon.SetActive (false); swordIcon.SetActive (true);
 		attackSliderObject.SetActive (false);
@@ -242,7 +246,7 @@ public class Character : MonoBehaviour {
 		if (waitToJump) {
 			jumpCounter += Time.deltaTime;
 			anim.SetBool ("Jump", true);
-			if (jumpCounter >= 0.4f) {
+			if (jumpCounter >= 0.45f) {
 				jumpCounter = 0.0f;
 				moveDirection.y = jumpSpeed;
                 
@@ -304,17 +308,20 @@ public class Character : MonoBehaviour {
 			anim.SetTrigger ("Stab");
 			Invoke("setCheckAttack", 0.5f);
 			attacking = true;
-		} else if ((Input.GetButton ("AimBow") || Input.GetAxis("AimBowJoystick") >= 0.5f) && !swordEquipped) {
-			anim.SetBool ("Aiming", true);
-			crossbowCamera.SetActive (true); mainCamera.SetActive (false);
-			handCrossbow.SetActive (false); mouseLook.changeCanLook(true);
-			aimIK.solver.IKPositionWeight = 1f;
-			aiming = true;
-			Invoke ("setAnimSpeed", 0.5f);
+		} else if (!swordEquipped && (Input.GetButton ("AimBow") || Input.GetAxis("AimBowJoystick") >= 0.5f)) {
+			if (!aiming) {
+				anim.SetBool ("Aiming", true);
+				aimIK.solver.IKPositionWeight = 1f;
+				Invoke ("setAnimSpeed", 0.4f);
+				Invoke ("setCameras", 0.2f);
+				aiming = true;
+			}
 
-			if (Input.GetButtonDown ("NormalAttack") && bowAmmo > 0) {
-				//bowAmmo--;
+			if (Input.GetButtonDown ("NormalAttack") && bowAmmo > 0 && !actionInProgress) {
+				bowAmmo--;
 				bowAmmoText.text = bowAmmo.ToString();
+				actionInProgress = true;
+				Invoke ("setActionInProgress", 1.0f);
 
 				GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;
 				temp.GetComponent<Rigidbody>().AddForce (arrowSpawn.transform.forward * arrowSpeed, ForceMode.Impulse);
@@ -322,15 +329,17 @@ public class Character : MonoBehaviour {
 				soundBank.playClip (soundEffect.SHOOT_ARROW);
 			}
 		//Check if the player wishes to switch weapons
-		} else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound) {
+		} else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound && !actionInProgress) {
 			anim.SetTrigger ("GetSword");
 			Invoke("switchWeapons", 0.4f);
+			actionInProgress = true;
+			Invoke ("setActionInProgress", 1.0f);
 			soundBank.playClip (soundEffect.SWITCH_WEAPON);
-		} else if ((Input.GetButtonUp("AimBow") || Input.GetAxis("AimBowJoystick") < 0.5f) && !swordEquipped) {
-			anim.SetBool ("Aiming", false);
+		} else if (aiming && !swordEquipped && (Input.GetButtonUp("AimBow") || Input.GetAxis("AimBowJoystick") < 0.5f)) {
+			aiming = false;
 			crossbowCamera.SetActive (false); handCrossbow.SetActive (true);
 			mainCamera.SetActive (true); mouseLook.changeCanLook(false);
-			aiming = false;
+			anim.SetBool ("Aiming", false);
 			aimIK.solver.IKPositionWeight = 0f;﻿
 			anim.speed = 1.0f;
 		}
@@ -416,9 +425,18 @@ public class Character : MonoBehaviour {
 		anim.speed = 0.0f;
 	}
 
+	void setCameras() {
+		crossbowCamera.SetActive (true); mainCamera.SetActive (false);
+		mouseLook.changeCanLook(true); handCrossbow.SetActive (false);
+	}
+
 	void setCheckAttack() {
 		checkAttack = !checkAttack;
 		sword.swinging = true;
+	}
+
+	void setActionInProgress() {
+		actionInProgress = false;
 	}
 
 	public void takeDamage(int damage) {
@@ -516,6 +534,7 @@ public class Character : MonoBehaviour {
 			Destroy (other.gameObject);
 		} else if (other.gameObject.CompareTag("Crossbow")) {
 			crossbowFound = true;
+			backCrossbow.SetActive (true);
 			Invoke ("resetCrossbowText", 3.0f);
 			acquiredCrossbow.text = "You acquired the crossbow!";
 

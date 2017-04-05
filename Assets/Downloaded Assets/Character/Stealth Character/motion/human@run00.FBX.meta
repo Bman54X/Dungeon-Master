@@ -128,9 +128,35 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "Copied Avatar Rig Configuration mis-match. Inbetween
+      bone rotation in copied configuration does not match rotation in animation file\nhuman@run00\nClip
+      'Take 001' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'StealthCharSpine0'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'StealthCharChest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'StealthCharLMiddleFinger1'
+      has scale animation that will be discarded.\n\t'StealthCharLMiddleFinger2' has
+      scale animation that will be discarded.\n\t'StealthCharLRingFinger1' has scale
+      animation that will be discarded.\n\t'StealthCharLRingFinger2' has scale animation
+      that will be discarded.\n\t'StealthCharLIndex1' has scale animation that will
+      be discarded.\n\t'StealthCharLIndex2' has scale animation that will be discarded.\n\t'StealthCharLPinky1'
+      has scale animation that will be discarded.\n\t'StealthCharLPinky2' has scale
+      animation that will be discarded.\n\t'StealthCharLThumb1' has scale animation
+      that will be discarded.\n\t'StealthCharLThumb2' has scale animation that will
+      be discarded.\n\t'StealthCharRMiddleFinger0' has scale animation that will be
+      discarded.\n\t'StealthCharRMiddleFinger1' has scale animation that will be discarded.\n\t'StealthCharRMiddleFinger2'
+      has scale animation that will be discarded.\n\t'StealthCharRRingFinger0' has
+      scale animation that will be discarded.\n\t'StealthCharRRingFinger1' has scale
+      animation that will be discarded.\n\t'StealthCharRRingFinger2' has scale animation
+      that will be discarded.\n\t'StealthCharRIndex0' has scale animation that will
+      be discarded.\n\t'StealthCharRIndex1' has scale animation that will be discarded.\n\t'StealthCharRIndex2'
+      has scale animation that will be discarded.\n\t'StealthCharRPinky0' has scale
+      animation that will be discarded.\n\t'StealthCharRPinky1' has scale animation
+      that will be discarded.\n\t'StealthCharRPinky2' has scale animation that will
+      be discarded.\n\t'StealthCharRThumb0' has scale animation that will be discarded.\n\t'StealthCharRThumb1'
+      has scale animation that will be discarded.\n\t'StealthCharRThumb2' has scale
+      animation that will be discarded.\n"
     animationRetargetingWarnings: 
-    animationDoRetargetingWarnings: 0
+    animationDoRetargetingWarnings: 1
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -155,9 +181,9 @@ ModelImporter:
       loopBlendPositionY: 1
       loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 0
+      keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
-      heightFromFeet: 1
+      heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
