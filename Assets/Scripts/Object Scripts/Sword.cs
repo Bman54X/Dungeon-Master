@@ -30,10 +30,10 @@ public class Sword : MonoBehaviour {
 		set { _hitOnce = value;}
 	}
 
-	void OnTriggerStay(Collider other) {
-		if (other.gameObject.tag == "Switch" && _swinging && !hitOnce) {
+	/*void OnTriggerStay(Collider other) {
+		if (other.CompareTag ("Switch") && _swinging && !hitOnce) {
 			_hitOnce = true;
 			other.gameObject.GetComponent<Switch>().switchActivate();
 		}
-	}
+	}*/
 }

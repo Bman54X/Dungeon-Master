@@ -8,6 +8,7 @@ public class Switch : MonoBehaviour {
 	public PlatformMover platform;
     public GameObject vrPlayer;
     private MoveIfDead mid;
+
 	// Use this for initialization
 	void Start () {
         mid = vrPlayer.gameObject.GetComponent<MoveIfDead>();
@@ -18,10 +19,20 @@ public class Switch : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.CompareTag ("Arrow")) {
+		if (other.CompareTag ("Arrow")) {
 			switchActivate();
             mid.crossbowVRpr = true;
 			Destroy (other.gameObject);
+		}
+	}
+
+	void OnTriggerStay(Collider other) {
+		if (other.CompareTag ("Sword")) {
+			Sword sword = other.GetComponent<Sword> ();
+			if (sword.swinging && !sword.hitOnce) {
+				sword.hitOnce = true;
+				other.gameObject.GetComponent<Switch>().switchActivate();
+			}
 		}
 	}
 
