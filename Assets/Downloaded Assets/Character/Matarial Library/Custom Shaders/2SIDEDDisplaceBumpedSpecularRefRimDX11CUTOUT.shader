@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 // Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
 
@@ -132,7 +134,7 @@ Shader "ManyWorlds/Tessellation/DisplaceRefRimAODX11_2SIDEDCUTOUT" {
                 o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );
                 o.binormalDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
                 TRANSFER_VERTEX_TO_FRAGMENT(o)
                 return o;
             }
@@ -327,7 +329,7 @@ Shader "ManyWorlds/Tessellation/DisplaceRefRimAODX11_2SIDEDCUTOUT" {
                 o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );
                 o.binormalDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
                 TRANSFER_VERTEX_TO_FRAGMENT(o)
                 return o;
             }
@@ -485,7 +487,7 @@ Shader "ManyWorlds/Tessellation/DisplaceRefRimAODX11_2SIDEDCUTOUT" {
                 VertexOutput o;
                 o.uv0 = v.texcoord0;
                 o.normalDir = mul(float4(v.normal,0), unity_WorldToObject).xyz;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
                 TRANSFER_SHADOW_COLLECTOR(o)
                 return o;
             }
@@ -603,7 +605,7 @@ Shader "ManyWorlds/Tessellation/DisplaceRefRimAODX11_2SIDEDCUTOUT" {
                 VertexOutput o;
                 o.uv0 = v.texcoord0;
                 o.normalDir = mul(float4(v.normal,0), unity_WorldToObject).xyz;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
                 TRANSFER_SHADOW_CASTER(o)
                 return o;
             }
