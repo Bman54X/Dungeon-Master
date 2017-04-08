@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
 using RootMotion.FinalIK;
 
@@ -81,7 +80,7 @@ public class Character : MonoBehaviour {
 		attackSlider = attackSliderObject.GetComponent<Slider> ();
 		mouseLook = gameObject.GetComponent<MouseLook>();
 		mouseLook.changeCanLook (false);
-		soundBank = gameObject.GetComponentInChildren<SoundBank>();
+        soundBank = GameObject.FindGameObjectWithTag("SoundBank").GetComponent<SoundBank>();
 
 		crossbowFound = true;
 

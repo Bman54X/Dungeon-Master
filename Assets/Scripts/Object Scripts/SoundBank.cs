@@ -24,7 +24,7 @@ public class SoundBank : MonoBehaviour {
 		clipSource = gameObject.AddComponent<AudioSource> ();
 		clipSource.loop = false;
 		clipSource.playOnAwake = false;
-		clipSource.volume = 0.25f;
+		clipSource.volume = 0.2f;
 	}
 
 	// Use this for initialization

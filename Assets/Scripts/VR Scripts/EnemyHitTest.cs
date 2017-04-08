@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Valve.VR.InteractionSystem
-{
-    public class EnemyHitTest : MonoBehaviour
-    {
+namespace Valve.VR.InteractionSystem {
+    public class EnemyHitTest : MonoBehaviour {
         public GameObject cPlayer;
         public GameObject SwordS;
         public GameObject SwordR;
@@ -13,8 +11,7 @@ namespace Valve.VR.InteractionSystem
         private Character character;
         private GetSpeed Gspeed;
         // Use this for initialization
-        void Start()
-        {
+        void Start() {
             //  SwordR = GameObject.FindGameObjectWithTag("Sword");
             //   Gspeed = SwordR.gameObject.GetComponent<GetSpeed>();
             //cPlayer = GameObject.FindGameObjectWithTag("player");
@@ -53,10 +50,9 @@ namespace Valve.VR.InteractionSystem
                 c.gameObject.transform.position = c.gameObject.transform.position - c.gameObject.transform.right;
                 Instantiate(SwordS, c.gameObject.transform.position, c.gameObject.transform.rotation);
                 hand.DetachObject(c.gameObject);
-            } else if(c.gameObject.tag == "Arrow" && c.gameObject.GetComponent<ArrowProjectile>().shooter == "enemy")
-            {
-                Destroy(c.gameObject);
+            } else if(c.gameObject.tag == "Arrow" && c.gameObject.GetComponent<ArrowProjectile>().shooter == "enemy") {
 				character.takeDamage(10);
+                Destroy(c.gameObject);
             }
         }
     }

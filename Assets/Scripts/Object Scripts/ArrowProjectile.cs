@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ArrowProjectile : MonoBehaviour {
     string _shooter;
@@ -10,8 +8,7 @@ public class ArrowProjectile : MonoBehaviour {
         Destroy(gameObject, 4.0f);
     }
 
-    public string shooter
-    {
+    public string shooter {
         get { return _shooter; }
         set { _shooter = value; }
     }

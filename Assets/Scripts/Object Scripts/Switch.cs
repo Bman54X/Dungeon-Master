@@ -31,7 +31,7 @@ public class Switch : MonoBehaviour {
 			Sword sword = other.GetComponent<Sword> ();
 			if (sword.swinging && !sword.hitOnce) {
 				sword.hitOnce = true;
-				other.gameObject.GetComponent<Switch>().switchActivate();
+				switchActivate();
 			}
 		}
 	}
