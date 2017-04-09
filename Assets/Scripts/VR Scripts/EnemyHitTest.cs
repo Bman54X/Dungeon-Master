@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Valve.VR.InteractionSystem {
     public class EnemyHitTest : MonoBehaviour {
-        public GameObject cPlayer;
-        public GameObject SwordS;
-        public GameObject SwordR;
+        public GameObject cPlayer, SwordS, SwordR;
         private Vector3 BackWardsV;
         private Hand hand;
         private Character character;
         private GetSpeed Gspeed;
+
         // Use this for initialization
         void Start() {
             //  SwordR = GameObject.FindGameObjectWithTag("Sword");
@@ -19,30 +17,24 @@ namespace Valve.VR.InteractionSystem {
         }
 
         // Update is called once per frame
-        void Update()
-        {
+        void Update() {
            SwordR = GameObject.FindGameObjectWithTag("Sword");
-            if (Gspeed != null)
-            {
+            if (Gspeed != null) {
                 Gspeed = SwordR.gameObject.GetComponent<GetSpeed>();
             }
          //   Debug.Log(Gspeed.speed);            
         }
 
-        void OnTriggerEnter(Collider c)
-        {
-            if(c.gameObject.tag == "vrRock")
-            {
+        void OnTriggerEnter(Collider c) {
+            if (c.gameObject.tag == "Arrow" && c.gameObject.GetComponent<ArrowProjectile>().shooter == "enemy") {
+                character.takeDamage(10);
+                Destroy(c.gameObject);
+            } else if (c.gameObject.tag == "vrRock") {
                 character.takeDamage(5);
-            }
-            if(c.gameObject.tag =="vrBomb")
-            {
+            } else if(c.gameObject.tag =="vrBomb") {
                 character.takeDamage(10);
                 Debug.Log("vrbomb");
-            }
-            if (c.gameObject.tag == "vrSword")
-            {
-             //   Debug.Log(SwordR);               
+            } else if (c.gameObject.tag == "vrSword") {  
                 Debug.Log("sword hit enemy");
                
 				character.takeDamage(20);
@@ -50,9 +42,16 @@ namespace Valve.VR.InteractionSystem {
                 c.gameObject.transform.position = c.gameObject.transform.position - c.gameObject.transform.right;
                 Instantiate(SwordS, c.gameObject.transform.position, c.gameObject.transform.rotation);
                 hand.DetachObject(c.gameObject);
-            } else if(c.gameObject.tag == "Arrow" && c.gameObject.GetComponent<ArrowProjectile>().shooter == "enemy") {
-				character.takeDamage(10);
-                Destroy(c.gameObject);
+            }
+        }
+
+        void OnTriggerStay(Collider other) {
+             if (other.CompareTag("Sword")) {
+                Sword sword = other.GetComponent<Sword>();
+                if (sword.swinger == "goblin" && sword.swinging && !sword.hitOnce) {
+                    sword.hitOnce = true;
+                    character.takeDamage(20);
+                }
             }
         }
     }

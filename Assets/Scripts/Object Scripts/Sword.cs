@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Sword : MonoBehaviour {
-	Character player;
 	bool _swinging;
 	bool _hitOnce;
+    string _swinger;
 
 	// Use this for initialization
 	void Start () {
 		swinging = false;
-		player = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
 	}
 	
 	// Update is called once per frame
@@ -20,7 +17,12 @@ public class Sword : MonoBehaviour {
 		}
 	}
 
-	public bool swinging {
+    public string swinger {
+        get { return _swinger; }
+        set { _swinger = value; }
+    }
+
+    public bool swinging {
 		get { return _swinging; }
 		set { _swinging = value;}
 	}
@@ -29,11 +31,4 @@ public class Sword : MonoBehaviour {
 		get { return _hitOnce; }
 		set { _hitOnce = value;}
 	}
-
-	/*void OnTriggerStay(Collider other) {
-		if (other.CompareTag ("Switch") && _swinging && !hitOnce) {
-			_hitOnce = true;
-			other.gameObject.GetComponent<Switch>().switchActivate();
-		}
-	}*/
 }

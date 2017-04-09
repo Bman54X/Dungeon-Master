@@ -95,8 +95,9 @@ public class Character : MonoBehaviour {
 		attackSliderObject.SetActive (false);
 
 		sword = handSword.GetComponent<Sword>();
+        sword.swinger = "player";
 
-		aimIK = gameObject.GetComponent<AimIK>();
+        aimIK = gameObject.GetComponent<AimIK>();
 		aimIK.solver.IKPositionWeight = 0f;﻿
 
 		cameraTransform = mainCamera.transform;

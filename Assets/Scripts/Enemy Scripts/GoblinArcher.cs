@@ -36,22 +36,28 @@ public class GoblinArcher : MonoBehaviour {
 
 	void FixedUpdate() {
         if (playerClose) {
-            Vector3 targetDir = player.position - transform.position;
-            float step = 4.0f * Time.deltaTime;
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
-            transform.rotation = Quaternion.LookRotation(newDir);
-            transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+            RaycastHit hit;
+            if (Physics.Raycast(arrowSpawn.position, player.position - arrowSpawn.position, out hit) && hit.transform.tag == "player") {
+                Vector3 targetDir = player.position - transform.position;
+                float step = 4.0f * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
+                transform.rotation = Quaternion.LookRotation(newDir);
+                transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
 
-            count += Time.deltaTime;
-            if (count >= timeBetweenShots && health > 0) {
+                count += Time.deltaTime;
+                if (count >= timeBetweenShots && health > 0) {
+                    count = 0;
+                    GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;
+                    temp.GetComponent<Rigidbody>().AddForce(arrowSpawn.transform.forward * arrowSpeed, ForceMode.Impulse);
+                    temp.GetComponent<ArrowProjectile>().shooter = "enemy";
+                    soundBank.playClip(soundEffect.SHOOT_ARROW);
+                }
+            } else if (count > 0) {
                 count = 0;
-                GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;
-                temp.GetComponent<Rigidbody>().AddForce(arrowSpawn.transform.forward * arrowSpeed, ForceMode.Impulse);
-                temp.GetComponent<ArrowProjectile>().shooter = "enemy";
-                soundBank.playClip(soundEffect.SHOOT_ARROW);
             }
         }
     }
+
 
 	void OnTriggerEnter(Collider other) {
 		if (other.CompareTag ("Arrow")) {
@@ -66,8 +72,8 @@ public class GoblinArcher : MonoBehaviour {
 	void OnTriggerStay(Collider other) {
 		if (other.CompareTag ("Sword")) {
 			Sword sword = other.GetComponent<Sword> ();
-			if (sword.swinging && !sword.hitOnce) {
-				sword.hitOnce = true;
+            if (sword.swinger == "player" && sword.swinging && !sword.hitOnce) {
+                sword.hitOnce = true;
 				takeDamage (30);
 			}
 		}
