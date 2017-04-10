@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungeon-Master", "Dungeon-Master.csproj", "{8B962B22-7978-D08B-FBD1-368C67B52387}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungeon-Master.Editor", "Dungeon-Master.Editor.csproj", "{07DC42B6-25CF-09FD-1D49-00E7C12DFB18}"

@@ -26,8 +26,9 @@ namespace Valve.VR.InteractionSystem
         // Update is called once per frame
         void Update() {
             if (hp < 1) {
-                sword = GameObject.FindGameObjectWithTag("vrSword");
-                if (hand1.GetComponentInChildren<GetSpeed>() != null) {
+                mid.dead = true;
+              //  sword = GameObject.FindGameObjectWithTag("vrSword");
+              /*  if (hand1.GetComponentInChildren<GetSpeed>() != null) {
                     hand1.DetachObject(sword.gameObject);
                 }else {
                     hand2.DetachObject(sword.gameObject);
@@ -37,8 +38,8 @@ namespace Valve.VR.InteractionSystem
                 {
                  //   hand1.DetachObject()
                     mid.vrPlatR = true;
-                }
-                if (spawnedInRangeRoom == true)
+                }*/
+             /*   if (spawnedInRangeRoom == true)
                 {
                     bow = GameObject.Find("Longbow(Clone)");
                     arrow = GameObject.Find("ArrowHand(Clone)");
@@ -60,7 +61,7 @@ namespace Valve.VR.InteractionSystem
                     mid.cRoom = true;
                     spawnedInRangeRoom = false;
                     spawnedInCroom = true;
-                }
+                }*/
                 hp = 100;
             }
         }
