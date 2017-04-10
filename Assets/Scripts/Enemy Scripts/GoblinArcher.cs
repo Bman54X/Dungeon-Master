@@ -37,12 +37,12 @@ public class GoblinArcher : MonoBehaviour {
 	void FixedUpdate() {
         if (playerClose) {
             RaycastHit hit;
-            if (Physics.Raycast(arrowSpawn.position, player.position - arrowSpawn.position, out hit) && hit.transform.tag == "player") {
+            Vector3 centerBodyPlayer = new Vector3(player.position.x, player.position.y + 1.1f, player.position.z);
+
+            if (Physics.Raycast(arrowSpawn.position, centerBodyPlayer - arrowSpawn.position, out hit) && hit.transform.tag == "player") {
                 Vector3 targetDir = player.position - transform.position;
-                float step = 4.0f * Time.deltaTime;
-                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
-                transform.rotation = Quaternion.LookRotation(newDir);
-                transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+                float step = 5.0f * Time.deltaTime;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDir), step);
 
                 count += Time.deltaTime;
                 if (count >= timeBetweenShots && health > 0) {

@@ -5,9 +5,11 @@ using soundEffect = SoundBank.SoundEffect;
 public class GoblinSwordsman : MonoBehaviour {
     int health;
     Animator anim;
-    float attackingRange = 50.0f;
-    float attackLength = 1.0f, count = 0.0f;
+    float searchRange = 10.0f, attackRange = 1.2f;
+    float attackLength = 1.0f, count = 0.0f, movementSpeed = 3.0f;
+    Vector3 wanderTarget;
     Transform player;
+    bool wandering;
 
     public Sword sword;
 
@@ -16,6 +18,8 @@ public class GoblinSwordsman : MonoBehaviour {
     // Use this for initialization
     void Start() {
         health = 60;
+        wandering = false;
+        wanderTarget = Vector3.zero;
         anim = gameObject.GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("player").transform;
         soundBank = GameObject.FindGameObjectWithTag("SoundBank").GetComponent<SoundBank>();
@@ -24,24 +28,77 @@ public class GoblinSwordsman : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
-        float dist = Mathf.Abs(Vector3.Distance(player.position, transform.position));
+    void FixedUpdate() {
+        if (health > 0) {
+            float dist = Mathf.Abs(Vector3.Distance(player.position, transform.position));
+            Vector3 targetDir = player.position - transform.position;
+            float angle = Vector3.Angle(targetDir, transform.forward);
+            RaycastHit hit;
 
-        if (dist <= attackingRange) {
-            if (!sword.swinging) {
-                count += Time.deltaTime;
+            Vector3 centerBody = new Vector3(transform.position.x, transform.position.y + 1.3f, transform.position.z);
+            Vector3 centerBodyPlayer = new Vector3(player.position.x, player.position.y + 1.1f, player.position.z);
 
-                if (count >= attackLength) {
-                    anim.SetTrigger("Attack1");
-                    sword.swinging = true;
-                    count = 0;
-                    Invoke("resetAttack", attackLength);
+            if (Physics.Raycast(centerBody, centerBodyPlayer - centerBody, out hit) && hit.transform.tag == "player") {
+                wandering = false;
+                if (dist <= searchRange && angle < 45) {
+                    wandering = false;
+                    anim.SetFloat("Speed", 1);
+
+                    float step = 8.0f * Time.deltaTime;
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDir), step);
+
+                    if (dist <= attackRange) {
+                        anim.SetFloat("Speed", 0.5f);
+
+                        if (!sword.swinging) {
+                            count += Time.deltaTime;
+
+                            if (count >= attackLength) {
+                                anim.SetTrigger("Attack1");
+                                sword.swinging = true;
+                                count = 0;
+                                Invoke("resetAttack", attackLength);
+                            }
+                        }
+                    } else {
+                        transform.Translate(0.0f, 0.0f, movementSpeed * Time.deltaTime);
+                    }
+                } else {
+                    wandering = true;
                 }
+            } else {
+                wandering = true;
+            }
+
+            if (wandering) {
+                Wander();
             }
         }
     }
 
-    void FixedUpdate() {
+    void Wander() {
+        float dist = Mathf.Abs(Vector3.Distance(wanderTarget, transform.position));
+        if (dist >= 0.05f) {
+            if (wanderTarget == Vector3.zero) {
+                RaycastHit hit;
+                Vector3 temp, centerBody = new Vector3(transform.position.x, transform.position.y + 0.7f, transform.position.z);
+
+                do {
+                    temp = transform.position + Random.insideUnitSphere * 5.0f;
+                    wanderTarget = new Vector3(temp.x, 4.4f, temp.z);
+                    temp = new Vector3(wanderTarget.x, wanderTarget.y + 0.7f, wanderTarget.z);
+                } while (Physics.Raycast(centerBody, temp - centerBody, out hit, 5.0f));
+            } else {
+                Vector3 targetDir = wanderTarget - transform.position;
+                float step = 6.0f * Time.deltaTime;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDir), step);
+                transform.Translate(0.0f, 0.0f, movementSpeed / 3.0f * Time.deltaTime);
+
+                anim.SetFloat("Speed", 0.2f);
+            }
+        } else {
+            wanderTarget = Vector3.zero;
+        }
     }
 
     void OnTriggerEnter(Collider other) {
