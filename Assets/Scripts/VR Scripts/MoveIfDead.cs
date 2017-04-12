@@ -47,7 +47,7 @@ public class MoveIfDead : MonoBehaviour {
      
 		if (dead == true){
             transform.position = deadP.position;
-            skeletonP.transform.position = crossbowVRP.position;
+            skeletonP.transform.position = deadP.position;
             dead = false;
         }
         if (crossbowVRpr == true){          
