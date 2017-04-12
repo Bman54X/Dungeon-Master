@@ -1,68 +1,26 @@
 Base path: C:/Program Files/Unity/Editor/Data
 Cmd: initializeCompiler
 Cmd: preprocess
-  insize=963 outsize=362 ok=1
+  insize=13108 outsize=4014 ok=1
 Cmd: preprocess
-  insize=6728 outsize=2259 ok=1
+  insize=12571 outsize=3941 ok=1
 Cmd: preprocess
-  insize=13110 outsize=4016 ok=1
+  insize=16615 outsize=5262 ok=1
 Cmd: preprocess
-  insize=12573 outsize=3943 ok=1
+  insize=16272 outsize=4690 ok=1
 Cmd: preprocess
-  insize=16617 outsize=5264 ok=1
+  insize=40330 outsize=10968 ok=1
 Cmd: preprocess
-  insize=16274 outsize=4692 ok=1
+  insize=21414 outsize=8786 ok=1
 Cmd: preprocess
-  insize=40332 outsize=10970 ok=1
+  insize=20293 outsize=7158 ok=1
 Cmd: preprocess
-  insize=21416 outsize=8788 ok=1
+  insize=25111 outsize=9664 ok=1
 Cmd: preprocess
-  insize=20295 outsize=7160 ok=1
+  insize=41714 outsize=11140 ok=1
 Cmd: preprocess
-  insize=1844 outsize=784 ok=1
+  insize=19197 outsize=6399 ok=1
 Cmd: preprocess
-  insize=25113 outsize=9666 ok=1
+  insize=20900 outsize=8737 ok=1
 Cmd: preprocess
-  insize=2607 outsize=887 ok=1
-Cmd: preprocess
-  insize=445 outsize=442 ok=1
-Cmd: preprocess
-  insize=4274 outsize=1549 ok=1
-Cmd: preprocess
-  insize=1819 outsize=1624 ok=1
-Cmd: preprocess
-  insize=967 outsize=1599 ok=1
-Cmd: preprocess
-  insize=41716 outsize=11142 ok=1
-Cmd: preprocess
-  insize=553 outsize=309 ok=1
-Cmd: preprocess
-  insize=19199 outsize=6401 ok=1
-Cmd: preprocess
-  insize=844 outsize=395 ok=1
-Cmd: preprocess
-  insize=20902 outsize=8739 ok=1
-Cmd: preprocess
-  insize=40790 outsize=10963 ok=1
-Cmd: preprocess
-  insize=1014 outsize=360 ok=1
-Cmd: preprocess
-  insize=4267 outsize=1245 ok=1
-Cmd: preprocess
-  insize=580 outsize=580 ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=986 outsize=1778 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=986 outsize=3918 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=1882 outsize=1198 kw=SOFTPARTICLES_ON pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=1882 outsize=758 kw=SOFTPARTICLES_ON pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=6274 outsize=1610 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=6274 outsize=3282 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=6042 outsize=1610 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=6042 outsize=3090 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP ok=1
+  insize=40788 outsize=10961 ok=1

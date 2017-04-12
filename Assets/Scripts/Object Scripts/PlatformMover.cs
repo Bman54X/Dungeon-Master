@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlatformMover : MonoBehaviour {
 	public Transform start, end;
 	Transform target;
 	bool startIsTarget;
-	float waitTime, counter, speed;
+    public float waitTime;
+    float counter, speed;
 	bool activated;
 	public bool backAndForth;
 
@@ -16,7 +15,7 @@ public class PlatformMover : MonoBehaviour {
 		target = start;
 		startIsTarget = true;
 		speed = 5.0f;
-		waitTime = 3.0f; counter = 0.0f;
+		counter = 0.0f;
 	}
 	
 	// Update is called once per frame

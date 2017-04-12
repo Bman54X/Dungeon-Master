@@ -1,19 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DeathTrigger : MonoBehaviour {
 	public GameObject platform, switchh;
 	public Transform spawnPoint, platformStart;
 	bool reset;
-	Character c;
+	Character player;
 
 	void Start() {
-		c = GameObject.FindGameObjectWithTag ("player").GetComponent<Character>();
+		player = GameObject.FindGameObjectWithTag("player").GetComponent<Character>();
 	}
 
 	void LateUpdate() {
-		if (!c.getAlive () && !reset) {
+		if (!player.getAlive() && !reset) {
 			Invoke ("resetRoom", 3.0f);
 			reset = true;
 		}
@@ -21,14 +19,14 @@ public class DeathTrigger : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if (other.tag == "player") {
-			c.takeDamage (10);
+			player.takeDamage (10);
 			resetRoom();
 		}
 	}
 
 	void resetRoom() {
 		switchh.GetComponent<pStartThisRooom>().Reset();
-		c.gameObject.transform.position = spawnPoint.position;
+		player.gameObject.transform.position = spawnPoint.position;
 		platform.transform.position = platformStart.position;
 		reset = false;
 	}

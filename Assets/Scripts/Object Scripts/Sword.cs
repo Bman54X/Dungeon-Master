@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 public class Sword : MonoBehaviour {
-	bool _swinging;
-	bool _hitOnce;
+	bool _swinging, _hitOnce, _strongHit;
     string _swinger;
 
 	// Use this for initialization
@@ -31,4 +30,9 @@ public class Sword : MonoBehaviour {
 		get { return _hitOnce; }
 		set { _hitOnce = value;}
 	}
+
+    public bool strongHit {
+        get { return _strongHit; }
+        set { _strongHit = value; }
+    }
 }

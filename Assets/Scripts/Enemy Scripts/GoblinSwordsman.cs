@@ -9,7 +9,8 @@ public class GoblinSwordsman : MonoBehaviour {
     float attackLength = 1.0f, count = 0.0f, movementSpeed = 3.0f;
     Vector3 wanderTarget;
     Transform player;
-    bool wandering;
+    Character character;
+    bool wandering, damageTaken;
 
     public Sword sword;
 
@@ -18,10 +19,11 @@ public class GoblinSwordsman : MonoBehaviour {
     // Use this for initialization
     void Start() {
         health = 60;
-        wandering = false;
+        wandering = false; damageTaken = false;
         wanderTarget = Vector3.zero;
         anim = gameObject.GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("player").transform;
+        character = player.gameObject.GetComponent<Character>();
         soundBank = GameObject.FindGameObjectWithTag("SoundBank").GetComponent<SoundBank>();
         sword.swinger = "goblin";
         anim.SetFloat("Speed", 0.0f);
@@ -29,7 +31,7 @@ public class GoblinSwordsman : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
-        if (health > 0) {
+        if (health > 0 && character.getAlive()) {
             float dist = Mathf.Abs(Vector3.Distance(player.position, transform.position));
             Vector3 targetDir = player.position - transform.position;
             float angle = Vector3.Angle(targetDir, transform.forward);
@@ -38,14 +40,15 @@ public class GoblinSwordsman : MonoBehaviour {
             Vector3 centerBody = new Vector3(transform.position.x, transform.position.y + 1.3f, transform.position.z);
             Vector3 centerBodyPlayer = new Vector3(player.position.x, player.position.y + 1.1f, player.position.z);
 
-            if (Physics.Raycast(centerBody, centerBodyPlayer - centerBody, out hit) && hit.transform.tag == "player") {
+            if ((Physics.Raycast(centerBody, centerBodyPlayer - centerBody, out hit) && hit.transform.tag == "player") || damageTaken) {
                 wandering = false;
-                if (dist <= searchRange && angle < 45) {
+                if ((dist <= searchRange && angle < 45) || damageTaken) {
                     wandering = false;
                     anim.SetFloat("Speed", 1);
 
                     float step = 8.0f * Time.deltaTime;
                     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDir), step);
+                    transform.rotation = Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y, 0f));
 
                     if (dist <= attackRange) {
                         anim.SetFloat("Speed", 0.5f);
@@ -105,7 +108,8 @@ public class GoblinSwordsman : MonoBehaviour {
         if (other.CompareTag("Arrow")) {
             if (other.GetComponent<ArrowProjectile>().shooter == "player" && health > 0) {
                 anim.SetTrigger("ArrowHit");
-                takeDamage(10);
+                Invoke("resetDamageTaken", 3.0f);
+                takeDamage(20);
             }
             Destroy(other.gameObject);
         }
@@ -116,8 +120,13 @@ public class GoblinSwordsman : MonoBehaviour {
             Sword sword = other.GetComponent<Sword>();
             if (sword.swinger == "player" && sword.swinging && !sword.hitOnce) {
                 sword.hitOnce = true;
+                Invoke("resetDamageTaken", 3.0f);
                 anim.SetTrigger("SwordHit");
-                takeDamage(30);
+                if (sword.strongHit) {
+                    takeDamage(60);
+                } else {
+                    takeDamage(30);
+                }
             }
         }
     }
@@ -126,14 +135,20 @@ public class GoblinSwordsman : MonoBehaviour {
         health -= damage;
         if (health <= 0) {
             anim.SetTrigger("Dead");
+            anim.SetFloat("Speed", 0);
             Invoke("DeadGoblin", 5.0f);
         } else {
+            damageTaken = true;
             if (damage < 20) {
                 soundBank.playClip(soundEffect.LIGHT_HIT);
             } else {
                 soundBank.playClip(soundEffect.STRONG_HIT);
             }
         }
+    }
+
+    void resetDamageTaken() {
+        damageTaken = false;
     }
 
     void resetAttack() {

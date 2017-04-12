@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using RootMotion.FinalIK;
 
 using soundEffect = SoundBank.SoundEffect;
 
@@ -7,6 +8,7 @@ public class GoblinArcher : MonoBehaviour {
 	Animator anim;
 	float shootingRange = 50.0f;
 	Transform player;
+    Character character;
 	bool playerClose;
     float arrowSpeed = 40.0f, timeBetweenShots = 3.0f, count = 0.0f;
 
@@ -14,13 +16,21 @@ public class GoblinArcher : MonoBehaviour {
     public Transform arrowSpawn;
     SoundBank soundBank;
 
-	// Use this for initialization
-	void Start () {
+    AimIK aimIK;
+
+    // Use this for initialization
+    void Start () {
 		health = 30;
 		playerClose = false;
+
 		anim = gameObject.GetComponent<Animator>();
+
 		player = GameObject.FindGameObjectWithTag("player").transform;
+        character = player.gameObject.GetComponent<Character>();
         soundBank = GameObject.FindGameObjectWithTag("SoundBank").GetComponent<SoundBank>();
+
+        aimIK = gameObject.GetComponent<AimIK>();
+        aimIK.solver.IKPositionWeight = 0f;
     }
 	
 	// Update is called once per frame
@@ -34,30 +44,39 @@ public class GoblinArcher : MonoBehaviour {
 		}
 	}
 
-	void FixedUpdate() {
-        if (playerClose) {
-            RaycastHit hit;
-            Vector3 centerBodyPlayer = new Vector3(player.position.x, player.position.y + 1.1f, player.position.z);
+    void FixedUpdate() {
+        if (health > 0 && character.getAlive()) {
+            if (playerClose) {
+                RaycastHit hit;
+                Vector3 centerBodyPlayer = new Vector3(player.position.x, player.position.y + 1.1f, player.position.z);
 
-            if (Physics.Raycast(arrowSpawn.position, centerBodyPlayer - arrowSpawn.position, out hit) && hit.transform.tag == "player") {
-                Vector3 targetDir = player.position - transform.position;
-                float step = 5.0f * Time.deltaTime;
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDir), step);
+                if (Physics.Raycast(arrowSpawn.position, centerBodyPlayer - arrowSpawn.position, out hit) && hit.transform.tag == "player") {
+                    aimIK.solver.IKPositionWeight = 1.0f;
 
-                count += Time.deltaTime;
-                if (count >= timeBetweenShots && health > 0) {
-                    count = 0;
-                    GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;
-                    temp.GetComponent<Rigidbody>().AddForce(arrowSpawn.transform.forward * arrowSpeed, ForceMode.Impulse);
-                    temp.GetComponent<ArrowProjectile>().shooter = "enemy";
-                    soundBank.playClip(soundEffect.SHOOT_ARROW);
+                    Vector3 targetDir = player.position - transform.position;
+                    float step = 5.0f * Time.deltaTime;
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDir), step);
+                    transform.rotation = Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y, 0f));
+
+                    count += Time.deltaTime;
+                    if (count >= timeBetweenShots && health > 0) {
+                        count = 0;
+                        GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;
+                        temp.GetComponent<Rigidbody>().AddForce(arrowSpawn.transform.forward * arrowSpeed, ForceMode.Impulse);
+                        temp.GetComponent<ArrowProjectile>().shooter = "enemy";
+                        soundBank.playClip(soundEffect.SHOOT_ARROW);
+                    }
+                } else {
+                    aimIK.solver.IKPositionWeight = 0f;
+                    if (count > 0) {
+                        count = 0;
+                    }
                 }
-            } else if (count > 0) {
-                count = 0;
+            } else {
+                aimIK.solver.IKPositionWeight = 0f;
             }
         }
     }
-
 
 	void OnTriggerEnter(Collider other) {
 		if (other.CompareTag ("Arrow")) {
@@ -74,8 +93,12 @@ public class GoblinArcher : MonoBehaviour {
 			Sword sword = other.GetComponent<Sword> ();
             if (sword.swinger == "player" && sword.swinging && !sword.hitOnce) {
                 sword.hitOnce = true;
-				takeDamage (30);
-			}
+                if (sword.strongHit) {
+                    takeDamage(60);
+                } else {
+                    takeDamage(30);
+                }
+            }
 		}
 	}
 
@@ -83,7 +106,8 @@ public class GoblinArcher : MonoBehaviour {
 		health -= damage;
 		if (health <= 0) {
 			anim.SetTrigger ("Dead");
-			Invoke ("DeadGoblin", 5.0f);
+            aimIK.solver.IKPositionWeight = 0f;
+            Invoke ("DeadGoblin", 5.0f);
 		} else {
             soundBank.playClip(soundEffect.LIGHT_HIT);
         }

@@ -9,11 +9,11 @@ public class Character : MonoBehaviour {
 	CharacterController cc;
 	Animator anim;
 	public Transform arrowSpawn;
-	Transform cameraTransform, spawnPoint;
+	Transform cameraTransform, spawnPoint, aimCameraTransform;
 	public Transform startingPoint;
 
-    private MoveIfDead mid;
-    public GameObject vrPlayer;
+    /*private MoveIfDead mid;
+    public GameObject vrPlayer;*/
     AimIK aimIK;
 
     Vector3 moveDirection;
@@ -24,6 +24,7 @@ public class Character : MonoBehaviour {
 	bool changedPotions = false, potionActivated = false, potionUsed = false;
 	bool paused = false, alive = true, maxHealthAlready = false, aiming = false;
 	bool attacking = false, checkAttack = false, actionInProgress = false;
+    bool axisInUse = false;
 
 	const int maxHealth = 100, maxArrows = 30;
 	int bowAmmo = 10, gold = 0, _health;
@@ -34,7 +35,7 @@ public class Character : MonoBehaviour {
 	float potionTimer = 15.0f, holdAttack = 0.0f, walkCounter = 0.0f, jumpCounter = 0.0f;
     float jumpSpeed = 18.55f;
 
-    public Transform rangeSpawn, VRSpawn;
+    //public Transform rangeSpawn, VRSpawn;
 
 	public Text healthText, goldText, addedGold, bowAmmoText, countdownText, acquiredCrossbow;
 	public Slider healthSlider;
@@ -53,7 +54,7 @@ public class Character : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        mid = vrPlayer.GetComponentInChildren<MoveIfDead>();
+        //mid = vrPlayer.GetComponentInChildren<MoveIfDead>();
         cc = GetComponent<CharacterController>();
         if (cc == null) {
             Debug.Log("No CharacterController found.");
@@ -101,6 +102,7 @@ public class Character : MonoBehaviour {
 		aimIK.solver.IKPositionWeight = 0f;﻿
 
 		cameraTransform = mainCamera.transform;
+        aimCameraTransform = crossbowCamera.transform;
 		crossbowCamera.SetActive (false);
 
 		//Add all the available potions to the inventory
@@ -113,27 +115,13 @@ public class Character : MonoBehaviour {
 	}
 
 	void Update() {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            transform.position = rangeSpawn.position;
-            crossbowFound = true;
-        } else if (Input.GetKeyDown(KeyCode.M))
-        {
-            transform.position = startingPoint.position;
-            crossbowFound = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.B))
-        {
-            transform.position = VRSpawn.position;
-            mid.vrPlatR = true;
-            crossbowFound = true;
-        }
         if (checkAttack) {
 			if (!anim.GetCurrentAnimatorStateInfo(1).IsName ("normalSlash") &&
 				!anim.GetCurrentAnimatorStateInfo(1).IsName ("overheadAttack") &&
 				!anim.GetCurrentAnimatorStateInfo(1).IsName ("quickStab")) {
 				attacking = false;
 				sword.swinging = false;
+                sword.strongHit = false;
 				checkAttack = false;
 			}
 		}
@@ -153,11 +141,11 @@ public class Character : MonoBehaviour {
 			//Check various inputs
 			checkButtonPresses ();
 
-			if (!aiming) {
-				//Update movement based on player's input
-				float x = Input.GetAxis ("Horizontal");
-				float z = Input.GetAxis ("Vertical");
+            //Update movement based on player's input
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
 
+            if (!aiming) {
 				//Check if the player is holding crouch or walk
 				if (Input.GetButton ("Crouch") && !walking) {
 					anim.SetBool ("CrouchHeld", true);
@@ -228,11 +216,26 @@ public class Character : MonoBehaviour {
 					soundBank.footstepSounds (true);
 				}
 			} else {
-				moveDirection = new Vector3 (0, 0, 0);
-				soundBank.footstepSounds (false);
-			}
+                //Make the forward input be relative to the camera's forward
+                forward = aimCameraTransform.TransformDirection(Vector3.forward);
+                forward.y = 0;
+                forward = forward.normalized;
+                right = new Vector3(forward.z, 0, -forward.x);
+
+                //Update the move direction
+                moveDirection = (x * right + z * forward).normalized;
+
+                moveDirection *= speed / 1.5f * speedMultiplier;
+
+                //Changed the current animation based on the movement speed
+                if (x == 0 && z == 0) {
+                    soundBank.footstepSounds(false);
+                } else {
+                    soundBank.footstepSounds(true);
+                }
+            }
 		} else if (!cc.isGrounded) {
-			RaycastHit hitInfo = new RaycastHit();
+            RaycastHit hitInfo = new RaycastHit();
 			if (Physics.Raycast (new Ray (transform.position, Vector3.down), out hitInfo, 0.2f)) {
 				cc.Move (hitInfo.point - transform.position);
 			}
@@ -240,7 +243,7 @@ public class Character : MonoBehaviour {
 			if (!cc.isGrounded) {
 				soundBank.footstepSounds (false);
 			}
-		}
+        }
 
 		//If jump has been pressed, wait a bit to add jump velocity due to animation delay
 		if (waitToJump) {
@@ -280,56 +283,60 @@ public class Character : MonoBehaviour {
 
 	//Check various inputs
 	void checkButtonPresses() {
-		//Checking attack
-		if (Input.GetButton ("NormalAttack") && swordEquipped && !attacking) {
-			holdAttack += Time.deltaTime;
-			if (holdAttack >= 0.1f) {
-				attackSliderObject.SetActive (true);
-			}
-			attackSlider.value = holdAttack;
-		//When the attack button has been released
-		} else if (Input.GetButtonUp ("NormalAttack") && swordEquipped && !attacking) {
-			//Based on how long the button was held, attack with a weak or strong attack
-			if (holdAttack >= attackTimer) {
-				anim.SetTrigger ("StrongAttack");
-				Invoke("strongHitSound", 0.6f);
-				Invoke("setCheckAttack", 0.7f);
-			} else {
-				anim.SetTrigger ("NormalAttack");
-				Invoke("setCheckAttack", 0.4f);
-				soundBank.playClip (soundEffect.SWORD_SWING);
-			}
-			attacking = true;
+        //Checking attack
+        if (Input.GetButton("NormalAttack") && swordEquipped && !attacking) {
+            holdAttack += Time.deltaTime;
+            if (holdAttack >= 0.1f) {
+                attackSliderObject.SetActive(true);
+            }
+            attackSlider.value = holdAttack;
+            //When the attack button has been released
+        } else if (Input.GetButtonUp("NormalAttack") && swordEquipped && !attacking) {
+            //Based on how long the button was held, attack with a weak or strong attack
+            if (holdAttack >= attackTimer) {
+                anim.SetTrigger("StrongAttack");
+                sword.strongHit = true;
+                Invoke("strongHitSound", 0.6f);
+                Invoke("setCheckAttack", 0.7f);
+            } else {
+                anim.SetTrigger("NormalAttack");
+                Invoke("setCheckAttack", 0.4f);
+                soundBank.playClip(soundEffect.SWORD_SWING);
+            }
+            attacking = true;
 
-			attackSliderObject.SetActive (false);
-			holdAttack = 0.0f;
-		//Check for stab input
-		} else if (Input.GetButtonDown ("Stab") && swordEquipped && !attacking) {
-			anim.SetTrigger ("Stab");
-			Invoke("setCheckAttack", 0.5f);
-			attacking = true;
-		} else if (!swordEquipped && (Input.GetButton ("AimBow") || Input.GetAxis("AimBowJoystick") >= 0.5f)) {
-			if (!aiming) {
-				anim.SetBool ("Aiming", true);
-				aimIK.solver.IKPositionWeight = 1f;
-				Invoke ("setAnimSpeed", 0.4f);
-				Invoke ("setCameras", 0.2f);
-				aiming = true;
-			}
+            attackSliderObject.SetActive(false);
+            holdAttack = 0.0f;
+        //Check for stab input
+        } else if (Input.GetButtonDown("Stab") && swordEquipped && !attacking) {
+            anim.SetTrigger("Stab");
+            Invoke("setCheckAttack", 0.5f);
+            attacking = true;
+        } else if (!swordEquipped && (Input.GetButton("AimBow") || Input.GetAxis("AimBowJoystick") >= 0.5f)) {
+            if (!aiming) {
+                anim.SetBool("Aiming", true);
+                aimIK.solver.IKPositionWeight = 1f;
+                Invoke("setAnimSpeed", 0.4f);
+                Invoke("setCameras", 0.2f);
+                aiming = true;
+            }
 
-			if (Input.GetButtonDown ("NormalAttack") && bowAmmo > 0 && !actionInProgress) {
-				bowAmmo--;
-				bowAmmoText.text = bowAmmo.ToString();
-				actionInProgress = true;
-				Invoke ("setActionInProgress", 1.0f);
+            if (bowAmmo > 0 && !actionInProgress) {
+                if (Input.GetAxisRaw("TriggerShoot") > 0.5f) {
+                    if (axisInUse == false) {
+                        shootArrow();
+                        axisInUse = true;
+                    }
+                } else if (Input.GetButtonDown("NormalAttack")) {
+                    shootArrow();
+                }
+            }
 
-				GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;
-				temp.GetComponent<Rigidbody>().AddForce (arrowSpawn.transform.forward * arrowSpeed, ForceMode.Impulse);
-				temp.GetComponent<ArrowProjectile>().shooter = "player";
-				soundBank.playClip (soundEffect.SHOOT_ARROW);
-			}
-		//Check if the player wishes to switch weapons
-		} else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound && !actionInProgress) {
+            if (Input.GetAxisRaw("TriggerShoot") == 0) {
+                axisInUse = false;
+            }
+            //Check if the player wishes to switch weapons
+        } else if (Input.GetButtonDown ("SwitchWeapon") && crossbowFound && !actionInProgress) {
 			anim.SetTrigger ("GetSword");
 			Invoke("switchWeapons", 0.4f);
 			actionInProgress = true;
@@ -360,20 +367,26 @@ public class Character : MonoBehaviour {
 			changedPotions = true;
 		}
 
-		//Switching potions on joypad
-		if (DPadButtons.right) {
-			currentPotion++;
-			if (currentPotion == 4) {
-				currentPotion = 0;
-			}
-			changedPotions = true;
-		} else if (DPadButtons.left) {
-			currentPotion--;
-			if (currentPotion == -1) {
-				currentPotion = 3;
-			}
-			changedPotions = true;
-		}
+        //Switching potions on joypad
+        if (!actionInProgress) {
+            if (DPadButtons.right) {
+                currentPotion++;
+                if (currentPotion == 4) {
+                    currentPotion = 0;
+                }
+                changedPotions = true;
+                actionInProgress = true;
+                Invoke("setActionInProgress", 1.0f);
+            } else if (DPadButtons.left) {
+                currentPotion--;
+                if (currentPotion == -1) {
+                    currentPotion = 3;
+                }
+                changedPotions = true;
+                actionInProgress = true;
+                Invoke("setActionInProgress", 1.0f);
+            }
+        }
 
 		potionUsed = false;
 		maxHealthAlready = false;
@@ -408,37 +421,6 @@ public class Character : MonoBehaviour {
 		swordEquipped = !swordEquipped;
 	}
 
-	//Reset the added gold text
-	void resetGoldText() {
-		addedGold.text = "";
-	}
-		
-	void resetCrossbowText() {
-		acquiredCrossbow.text = "";
-	}
-
-	void strongHitSound() {
-		soundBank.playClip (soundEffect.HEAVY_SWORD_SWING);
-	}
-
-	void setAnimSpeed() {
-		anim.speed = 0.0f;
-	}
-
-	void setCameras() {
-		crossbowCamera.SetActive (true); mainCamera.SetActive (false);
-		mouseLook.changeCanLook(true); handCrossbow.SetActive (false);
-	}
-
-	void setCheckAttack() {
-		checkAttack = !checkAttack;
-		sword.swinging = true;
-	}
-
-	void setActionInProgress() {
-		actionInProgress = false;
-	}
-
 	public void takeDamage(int damage) {
 		_health -= damage / defense;
 
@@ -454,7 +436,7 @@ public class Character : MonoBehaviour {
 		healthSlider.value = _health;
 		healthText.text = _health.ToString();
 
-		if (_health <= 0) {
+		if (_health <= 0 && alive) {
 			_health = 0;
 
 			//Update health and various text
@@ -464,18 +446,31 @@ public class Character : MonoBehaviour {
 		}
 	}
 
+    void shootArrow() {
+        bowAmmo--;
+        bowAmmoText.text = bowAmmo.ToString();
+        actionInProgress = true;
+        Invoke("setActionInProgress", 1.0f);
+
+        GameObject temp = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as GameObject;
+        temp.GetComponent<Rigidbody>().AddForce(arrowSpawn.transform.forward * arrowSpeed, ForceMode.Impulse);
+        temp.GetComponent<ArrowProjectile>().shooter = "player";
+        soundBank.playClip(soundEffect.SHOOT_ARROW);
+    }
+
 	void playerDeath() {
 		anim.SetTrigger ("Dead");
 		alive = false;
-		Invoke ("respawn", 3.0f);
+        Invoke ("respawn", 3.0f);
 	}
 
 	void respawn() {
 		alive = true;
 		anim.SetTrigger ("Alive");
 		transform.position = spawnPoint.position;
+        Debug.Log(spawnPoint.position);
 
-		//Set deafult values
+		//Set default values
 		curLoc = transform.position;
 		_health = maxHealth;
 
@@ -542,8 +537,39 @@ public class Character : MonoBehaviour {
 		}
 	}
 
-	//various getters and setters
-	public int health {
+    //Reset the added gold text
+    void resetGoldText() {
+        addedGold.text = "";
+    }
+
+    void resetCrossbowText() {
+        acquiredCrossbow.text = "";
+    }
+
+    void strongHitSound() {
+        soundBank.playClip(soundEffect.HEAVY_SWORD_SWING);
+    }
+
+    void setAnimSpeed() {
+        anim.speed = 0.0f;
+    }
+
+    void setCameras() {
+        crossbowCamera.SetActive(true); mainCamera.SetActive(false);
+        mouseLook.changeCanLook(true); handCrossbow.SetActive(false);
+    }
+
+    void setCheckAttack() {
+        checkAttack = !checkAttack;
+        sword.swinging = true;
+    }
+
+    void setActionInProgress() {
+        actionInProgress = false;
+    }
+
+    //various getters and setters
+    public int health {
 		get { return _health; }
 		set { _health = value; }
 	}
