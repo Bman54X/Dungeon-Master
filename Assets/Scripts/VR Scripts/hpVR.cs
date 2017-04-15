@@ -27,6 +27,14 @@ namespace Valve.VR.InteractionSystem
         void Update() {
             if (hp < 1) {
                 mid.dead = true;
+                if(hand1.currentAttachedObject != null)
+                {
+                    hand1.DetachObject(hand1.currentAttachedObject);
+                }
+                if(hand2.currentAttachedObject != null)
+                {
+                    hand2.DetachObject(hand2.currentAttachedObject);
+                }
               //  sword = GameObject.FindGameObjectWithTag("vrSword");
               /*  if (hand1.GetComponentInChildren<GetSpeed>() != null) {
                     hand1.DetachObject(sword.gameObject);
