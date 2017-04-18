@@ -29,9 +29,7 @@ namespace Valve.VR.InteractionSystem
                 transform.position = Vector3.MoveTowards(transform.position, end.position, speed * Time.deltaTime);
                 if (runThisOnce == true)
                 {
-                    mid.rRoom = true;
-                    Debug.Log("this ran");
-                    hpvr.spawnedInRangeRoom = true;
+                    mid.cRoom = true;
                     runThisOnce = false;
                 }
             }
