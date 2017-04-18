@@ -24,11 +24,11 @@ public class ChangeFloorColor : MonoBehaviour {
             gameObject.GetComponent<Renderer>().material.color = Color.red;
             for (int i = 0; i < Floors.Length; i++) {
                 float distance = Vector3.Distance(gameObject.transform.position, Floors[i].transform.position);
-                if(distance <= 2.5) {
+                if(distance <= 3.5) {
                     Floors[i].gameObject.GetComponent<Renderer>().material.color = Color.red;
                 }
 
-				if(distance > 2.5 && !Floors[i].GetComponent<ChangeFloorColor>().startTile) {
+				if(distance > 3.5 && !Floors[i].GetComponent<ChangeFloorColor>().startTile) {
                     Floors[i].gameObject.GetComponent<Renderer>().material.color = Color.blue;
                 }
             }

@@ -12,4 +12,7 @@ public class ArrowProjectile : MonoBehaviour {
         get { return _shooter; }
         set { _shooter = value; }
     }
+    public void destroy() {
+        Destroy(gameObject, 4.0f);
+    }
 }

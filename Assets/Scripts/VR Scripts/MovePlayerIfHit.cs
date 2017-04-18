@@ -17,17 +17,21 @@ public class MovePlayerIfHit : MonoBehaviour {
 		
 	}
     public void OnTriggerEnter(Collider other){
-        if(gameObject.name == "MoveToSpot1"){
-            moveP1 = true;
+        if (other.gameObject.tag == "Arrow"){
+            if (gameObject.name == "MoveToSpot1") {
+                moveP1 = true;
+            }else
+            if (gameObject.name == "MoveToSpot2") {
+                moveP2 = true;
+            }else
+            if (gameObject.name == "MoveToSpot3") {
+                moveP3 = true;
+            }else
+            if (gameObject.name == "MoveToSpot4") {
+                moveP4 = true;
+            }
         }
-        if (gameObject.name == "MoveToSpot2"){
-            moveP2 = true;
-        }
-        if (gameObject.name == "MoveToSpot3"){
-            moveP3 = true;
-        }
-        if (gameObject.name == "MoveToSpot4"){
-            moveP4 = true;
-        }
+
+    
     }
 }

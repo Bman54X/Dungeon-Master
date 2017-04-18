@@ -24,12 +24,19 @@ public class BlowUpOnHit2 : MonoBehaviour {
             if (timer < 0){
                 Explosion();
                 Debug.Log("destorying object");
-                Destroy(transform.parent.gameObject);
+                Destroy(transform.gameObject);
             }
         }
     }
-  
-  
+
+    void OnTriggerEnter(Collider c) {
+        if (c.transform.name == "Platform") {
+            GameObject emptyObject = new GameObject();
+            emptyObject.transform.parent = c.transform;
+            transform.parent = emptyObject.transform;
+        }
+    }
+
     private void Explosion(){
         GameObject clone = Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity);
         Destroy(clone, 1.0f);

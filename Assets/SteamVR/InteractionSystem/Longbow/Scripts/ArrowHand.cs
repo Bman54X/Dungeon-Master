@@ -223,7 +223,7 @@ namespace Valve.VR.InteractionSystem
 		private void FireArrow()
 		{
 			currentArrow.transform.parent = null;
-
+            currentArrow.GetComponent<ArrowProjectile>().enabled = true;
 			Arrow arrow = currentArrow.GetComponent<Arrow>();
 			arrow.shaftRB.isKinematic = false;
 			arrow.shaftRB.useGravity = true;

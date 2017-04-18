@@ -31,9 +31,9 @@ public class Character : MonoBehaviour {
 	int speedMultiplier = 1, goldMultiplier = 1, defense = 1;
 
 	const float gravity = 9.81f, attackTimer = 1.0f;
-	float speed = 6.0f, rotateSpeed = 10.0f, arrowSpeed = 80.0f;
+	float speed = 5.5f, rotateSpeed = 10.0f, arrowSpeed = 80.0f;
 	float potionTimer = 15.0f, holdAttack = 0.0f, walkCounter = 0.0f, jumpCounter = 0.0f;
-    float jumpSpeed = 18.55f;
+    float jumpSpeed = 14;
 
     //public Transform rangeSpawn, VRSpawn;
 
@@ -236,7 +236,7 @@ public class Character : MonoBehaviour {
             }
 		} else if (!cc.isGrounded) {
             RaycastHit hitInfo = new RaycastHit();
-			if (Physics.Raycast (new Ray (transform.position, Vector3.down), out hitInfo, 0.2f)) {
+			if (Physics.Raycast (new Ray (transform.position, Vector3.down), out hitInfo, 0.1f)) {
 				cc.Move (hitInfo.point - transform.position);
 			}
 
@@ -343,13 +343,8 @@ public class Character : MonoBehaviour {
 			Invoke ("setActionInProgress", 1.0f);
 			soundBank.playClip (soundEffect.SWITCH_WEAPON);
 		} else if (aiming && !swordEquipped && (Input.GetButtonUp("AimBow") || Input.GetAxis("AimBowJoystick") < 0.5f)) {
-			aiming = false;
-			crossbowCamera.SetActive (false); handCrossbow.SetActive (true);
-			mainCamera.SetActive (true); mouseLook.changeCanLook(false);
-			anim.SetBool ("Aiming", false);
-			aimIK.solver.IKPositionWeight = 0f;﻿
-			anim.speed = 1.0f;
-		}
+            leaveAiming();
+        }
 
 		//Switching potions on keyboard
 		changedPotions = false;
@@ -422,29 +417,44 @@ public class Character : MonoBehaviour {
 	}
 
 	public void takeDamage(int damage) {
-		_health -= damage / defense;
+        if (alive) {
+            _health -= damage / defense;
 
-		if (damage < 20) {
-			anim.SetTrigger ("Hit1");
-			soundBank.playClip (soundEffect.LIGHT_HIT);
-		} else {
-			anim.SetTrigger ("Hit2");
-			soundBank.playClip (soundEffect.STRONG_HIT);
-		}
+            if (damage < 20) {
+                if (!aiming) {
+                    anim.SetTrigger("Hit1");
+                }
+                soundBank.playClip(soundEffect.LIGHT_HIT);
+            } else {
+                if (!aiming) {
+                    anim.SetTrigger("Hit2");
+                }
+                soundBank.playClip(soundEffect.STRONG_HIT);
+            }
 
-		//Update health and various text
-		healthSlider.value = _health;
-		healthText.text = _health.ToString();
+            //Update health and various text
+            healthSlider.value = _health;
+            healthText.text = _health.ToString();
 
-		if (_health <= 0 && alive) {
-			_health = 0;
+            if (_health <= 0 && alive) {
+                _health = 0;
 
-			//Update health and various text
-			healthText.text = _health.ToString();
+                //Update health and various text
+                healthText.text = _health.ToString();
 
-			playerDeath();
-		}
+                playerDeath();
+            }
+        }
 	}
+
+    void leaveAiming() {
+        aiming = false;
+        crossbowCamera.SetActive(false); handCrossbow.SetActive(true);
+        mainCamera.SetActive(true); mouseLook.changeCanLook(false);
+        anim.SetBool("Aiming", false);
+        aimIK.solver.IKPositionWeight = 0f;
+        anim.speed = 1.0f;
+    }
 
     void shootArrow() {
         bowAmmo--;
@@ -459,6 +469,9 @@ public class Character : MonoBehaviour {
     }
 
 	void playerDeath() {
+        if (aiming) {
+            leaveAiming();
+        }
 		anim.SetTrigger ("Dead");
 		alive = false;
         Invoke ("respawn", 3.0f);

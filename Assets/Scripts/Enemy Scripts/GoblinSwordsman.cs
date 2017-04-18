@@ -43,7 +43,7 @@ public class GoblinSwordsman : MonoBehaviour {
 
             if ((Physics.Raycast(centerBody, centerBodyPlayer - centerBody, out hit) && hit.transform.tag == "player") || damageTaken) {
                 wandering = false;
-                if ((dist <= searchRange && angle < 45) || damageTaken) {
+                if ((dist <= searchRange && angle < 50) || damageTaken) {
                     wandering = false;
                     anim.SetFloat("Speed", 1);
 
@@ -59,7 +59,7 @@ public class GoblinSwordsman : MonoBehaviour {
 
                             if (count >= attackLength) {
                                 anim.SetTrigger("Attack1");
-                                sword.swinging = true;
+                                Invoke("setSwinging", 0.3f);
                                 count = 0;
                                 Invoke("resetAttack", attackLength);
                             }
@@ -76,6 +76,8 @@ public class GoblinSwordsman : MonoBehaviour {
 
             if (wandering) {
                 Wander();
+            } else if (wanderTarget != Vector3.zero) {
+                wanderTarget = Vector3.zero;
             }
         }
     }
@@ -152,6 +154,10 @@ public class GoblinSwordsman : MonoBehaviour {
 
     void resetDamageTaken() {
         damageTaken = false;
+    }
+
+    void setSwinging() {
+        sword.swinging = true;
     }
 
     void resetAttack() {
