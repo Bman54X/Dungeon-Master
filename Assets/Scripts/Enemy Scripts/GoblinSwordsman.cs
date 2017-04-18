@@ -5,7 +5,7 @@ using soundEffect = SoundBank.SoundEffect;
 public class GoblinSwordsman : MonoBehaviour {
     int health;
     Animator anim;
-    float searchRange = 10.0f, attackRange = 1.2f;
+    float searchRange = 10.0f, attackRange = 1.2f, initialYPosition;
     float attackLength = 1.0f, count = 0.0f, movementSpeed = 3.0f;
     Vector3 wanderTarget;
     Transform player;
@@ -19,6 +19,7 @@ public class GoblinSwordsman : MonoBehaviour {
     // Use this for initialization
     void Start() {
         health = 60;
+        initialYPosition = transform.position.y;
         wandering = false; damageTaken = false;
         wanderTarget = Vector3.zero;
         anim = gameObject.GetComponent<Animator>();
@@ -85,16 +86,18 @@ public class GoblinSwordsman : MonoBehaviour {
             if (wanderTarget == Vector3.zero) {
                 RaycastHit hit;
                 Vector3 temp, centerBody = new Vector3(transform.position.x, transform.position.y + 0.7f, transform.position.z);
+                float rayDist;
 
                 do {
                     temp = transform.position + Random.insideUnitSphere * 5.0f;
-                    wanderTarget = new Vector3(temp.x, 4.4f, temp.z);
-                    temp = new Vector3(wanderTarget.x, wanderTarget.y + 0.7f, wanderTarget.z);
-                } while (Physics.Raycast(centerBody, temp - centerBody, out hit, 5.0f));
+                    wanderTarget = new Vector3(temp.x, initialYPosition, temp.z);
+                    rayDist = Mathf.Abs(Vector3.Distance(wanderTarget, centerBody));
+                } while (Physics.Raycast(centerBody, wanderTarget - centerBody, out hit, rayDist));
             } else {
                 Vector3 targetDir = wanderTarget - transform.position;
                 float step = 6.0f * Time.deltaTime;
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDir), step);
+                transform.rotation = Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y, 0f));
                 transform.Translate(0.0f, 0.0f, movementSpeed / 3.0f * Time.deltaTime);
 
                 anim.SetFloat("Speed", 0.2f);
