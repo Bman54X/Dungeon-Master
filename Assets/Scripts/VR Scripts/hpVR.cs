@@ -15,17 +15,29 @@ namespace Valve.VR.InteractionSystem
         public GameObject bow;
         public GameObject arrow;
         public GameObject sword;
+        public bool diedinCroom = false;
         public Hand hand1;
         public Hand hand2;
+        public ParticleSystem d;
+     //   public GameObject xd;
         // Use this for initialization
         void Start() {
             //  parent1 = gameObject.transform.root;
             mid = parent1.GetComponentInChildren<MoveIfDead>();
+            d.Stop();
+            Debug.Log("doing thus");
+          
+
+
         }
 
         // Update is called once per frame
         void Update() {
+          
             if (hp < 1) {
+                if (spawnedInCroom == true) {
+                    diedinCroom = true;
+                }
                 mid.dead = true;
                 if(hand1.currentAttachedObject != null)
                 {
@@ -73,11 +85,20 @@ namespace Valve.VR.InteractionSystem
                 hp = 100;
             }
         }
+        void Playthisnow() {
+            d.Play();
+        }
         private void OnTriggerEnter(Collider c)
         {
             if (c.gameObject.tag == "Sword" && c.gameObject.GetComponent<Sword>().swinging == true)
             {
                 hp = hp - 20;
+                //    vrPlayerHitE.enableEmission = true;
+                //   vrPlayerHitE.Play();
+            //    Playthisnow();  
+                //    //    d.GetComponent<playthiseffectd>().playit = true;
+                //    Debug.Log(d.GetComponent<playthiseffectd>().playit);
+                // vrPlayerHitE.emission.enabled = true;
                 Debug.Log("player sword hit vr");
             }
             if (c.gameObject.tag == "Arrow" && c.gameObject.GetComponent<ArrowProjectile>().shooter == "player")
@@ -97,4 +118,5 @@ namespace Valve.VR.InteractionSystem
         }
 
     }
+   
 }

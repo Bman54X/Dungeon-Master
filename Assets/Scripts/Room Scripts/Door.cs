@@ -24,6 +24,7 @@ namespace Valve.VR.InteractionSystem {
                 transform.position = Vector3.MoveTowards(transform.position, end.position, speed * Time.deltaTime);
                 if (runThisOnce == true) {
                     mid.cRoom = true;
+                    hpvr.spawnedInCroom = true;
                     runThisOnce = false;
                     meleeRoom.SetActive(true);
                 }
