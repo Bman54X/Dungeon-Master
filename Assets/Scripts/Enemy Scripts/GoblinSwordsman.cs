@@ -42,7 +42,6 @@ public class GoblinSwordsman : MonoBehaviour {
             Vector3 centerBodyPlayer = new Vector3(player.position.x, player.position.y + 1.1f, player.position.z);
 
             if ((Physics.Raycast(centerBody, centerBodyPlayer - centerBody, out hit) && hit.transform.tag == "player") || damageTaken) {
-                wandering = false;
                 if ((dist <= searchRange && angle < 50) || damageTaken) {
                     wandering = false;
                     anim.SetFloat("Speed", 1);
@@ -76,23 +75,22 @@ public class GoblinSwordsman : MonoBehaviour {
 
             if (wandering) {
                 Wander();
-            } else if (wanderTarget != Vector3.zero) {
+            } else if (!wandering && wanderTarget != Vector3.zero) {
                 wanderTarget = Vector3.zero;
             }
         }
     }
 
     void Wander() {
-        float dist = Mathf.Abs(Vector3.Distance(wanderTarget, transform.position));
-        if (dist >= 0.05f) {
+        Vector3 temp, centerBody = new Vector3(transform.position.x, transform.position.y + 0.7f, transform.position.z);
+        float dist = Mathf.Abs(Vector3.Distance(wanderTarget, centerBody));
+        if (dist >= 0.2f) {
             if (wanderTarget == Vector3.zero) {
                 RaycastHit hit;
-                Vector3 temp, centerBody = new Vector3(transform.position.x, transform.position.y + 0.7f, transform.position.z);
                 float rayDist;
-
                 do {
                     temp = transform.position + Random.insideUnitSphere * 5.0f;
-                    wanderTarget = new Vector3(temp.x, initialYPosition, temp.z);
+                    wanderTarget = new Vector3(temp.x, initialYPosition + 0.7f, temp.z);
                     rayDist = Mathf.Abs(Vector3.Distance(wanderTarget, centerBody));
                 } while (Physics.Raycast(centerBody, wanderTarget - centerBody, out hit, rayDist));
             } else {
@@ -101,6 +99,7 @@ public class GoblinSwordsman : MonoBehaviour {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDir), step);
                 transform.rotation = Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y, 0f));
                 transform.Translate(0.0f, 0.0f, movementSpeed / 3.0f * Time.deltaTime);
+                Debug.DrawRay(centerBody, wanderTarget - centerBody, Color.red);
 
                 anim.SetFloat("Speed", 0.2f);
             }

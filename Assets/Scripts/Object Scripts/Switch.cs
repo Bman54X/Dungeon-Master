@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Switch : MonoBehaviour {
 	MeshRenderer mesh;
@@ -19,7 +17,7 @@ public class Switch : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.CompareTag ("Arrow")) {
+		if (other.CompareTag ("Arrow") || other.CompareTag("vrRock")) {
 			switchActivate();
             mid.crossbowVRpr = true;
 			Destroy (other.gameObject);

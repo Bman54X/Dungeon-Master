@@ -14,7 +14,7 @@ public class PlatformMover : MonoBehaviour {
 		activated = true;
 		target = start;
 		startIsTarget = true;
-		speed = 5.0f;
+        speed = 5.0f;
 		counter = 0.0f;
 	}
 	
@@ -27,7 +27,7 @@ public class PlatformMover : MonoBehaviour {
 				if (dist <= 0.05f) {
 					counter += Time.deltaTime;
 					if (counter >= waitTime) {
-						changeTarget ();
+						changeTarget();
 					}
 				}
 			} else {

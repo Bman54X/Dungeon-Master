@@ -6,11 +6,11 @@ using soundEffect = SoundBank.SoundEffect;
 public class GoblinArcher : MonoBehaviour {
 	int health;
 	Animator anim;
-	float shootingRange = 50.0f;
+	float shootingRange = 70.0f;
 	Transform player;
     Character character;
 	bool playerClose;
-    float arrowSpeed = 40.0f, timeBetweenShots = 3.0f, count = 0.0f;
+    float arrowSpeed = 50.0f, timeBetweenShots = 3.0f, count = 0.0f;
 
     public GameObject arrowPrefab;
     public Transform arrowSpawn;
@@ -48,9 +48,10 @@ public class GoblinArcher : MonoBehaviour {
         if (health > 0 && character.getAlive()) {
             if (playerClose) {
                 RaycastHit hit;
-                Vector3 centerBodyPlayer = new Vector3(player.position.x, player.position.y + 1.1f, player.position.z);
+                Vector3 centerBodyPlayer = new Vector3(player.position.x, player.position.y + 1.3f, player.position.z);
+                Vector3 centerBody = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
 
-                if (Physics.Raycast(arrowSpawn.position, centerBodyPlayer - arrowSpawn.position, out hit) && hit.transform.tag == "player") {
+                if (Physics.Raycast(centerBody, centerBodyPlayer - centerBody, out hit) && hit.transform.tag == "player") {
                     aimIK.solver.IKPositionWeight = 1.0f;
 
                     Vector3 targetDir = player.position - transform.position;

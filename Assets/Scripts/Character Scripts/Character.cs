@@ -481,7 +481,6 @@ public class Character : MonoBehaviour {
 		alive = true;
 		anim.SetTrigger ("Alive");
 		transform.position = spawnPoint.position;
-        Debug.Log(spawnPoint.position);
 
 		//Set default values
 		curLoc = transform.position;

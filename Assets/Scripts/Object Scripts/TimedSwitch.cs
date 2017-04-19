@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-namespace Valve.VR.InteractionSystem
-{
-    public class TimedSwitch : MonoBehaviour
-    {
+﻿using UnityEngine;
+
+namespace Valve.VR.InteractionSystem {
+    public class TimedSwitch : MonoBehaviour {
         MeshRenderer mesh;
         bool activated;
         public Door door;
@@ -13,21 +10,17 @@ namespace Valve.VR.InteractionSystem
 
 
         // Use this for initialization
-        void Start()
-        {
+        void Start() {
             activated = false;
             mesh = GetComponent<MeshRenderer>();
             mesh.material.color = Color.red;
             door.setActivation(false);
         }
 
-        void Update()
-        {
-            if (activated && !otherSwitch.getActivated())
-            {
+        void Update() {
+            if (activated && !otherSwitch.getActivated()) {
                 counter += Time.deltaTime;
-                if (counter >= resetTime)
-                {
+                if (counter >= resetTime) {
                     counter = 0.0f;
                     activated = false;
                     mesh.material.color = Color.red;
@@ -36,31 +29,24 @@ namespace Valve.VR.InteractionSystem
             }
         }
 
-        void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Arrow"))
-            {
+        void OnTriggerEnter(Collider other) {
+            if (other.CompareTag("Arrow") || other.CompareTag("vrRock")) {
                 switchActivate();
                 Destroy(other.gameObject);
             }
         }
 
-        public void switchActivate()
-        {
-            if (!activated)
-            {
+        public void switchActivate() {
+            if (!activated) {
                 mesh.material.color = Color.green;
-            }
-            else
-            {
+            } else {
                 mesh.material.color = Color.red;
             }
             activated = !activated;
             door.setActivation(activated);
         }
 
-        public bool getActivated()
-        {
+        public bool getActivated() {
             return activated;
         }
     }
